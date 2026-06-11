@@ -78,21 +78,23 @@ class SyntheticProvider:
         # e.g. {"URA": (-0.003, 0.006, 0.9)} = laggard turning up in the last 10%
         self.drift_change_map = drift_change_map or {}
 
-    def get_bars(self, req: BarRequest) -> pd.DataFrame:
-        # hashlib, not hash(): Python string hashing is salted per process,
-        # which silently breaks cross-run reproducibility of "seeded" bars.
-        digest = hashlib.sha256(f"{req.symbol}|{req.interval}|{self.seed}".encode()).hexdigest()
-        rng = np.random.default_rng(int(digest[:8], 16))
-        n = req.lookback_days if req.interval == "1d" else req.lookback_days * 13
-        n = max(n, 60)
-        start = self.start_price_map.get(req.symbol, 100.0)
+    MASTER_BARS = 800   # one master series per (symbol, interval); every
+                        # lookback slices its tail, so spot is identical
+                        # across engines regardless of how much history
+                        # each one requests.
 
-        if req.symbol in self.drift_change_map:
-            early, late, frac = self.drift_change_map[req.symbol]
+    def _build_master(self, symbol: str, interval: str) -> pd.DataFrame:
+        digest = hashlib.sha256(f"{symbol}|{interval}|{self.seed}".encode()).hexdigest()
+        rng = np.random.default_rng(int(digest[:8], 16))
+        n = self.MASTER_BARS
+        start = self.start_price_map.get(symbol, 100.0)
+
+        if symbol in self.drift_change_map:
+            early, late, frac = self.drift_change_map[symbol]
             k = int(n * frac)
             drift_arr = np.concatenate([np.full(k, early), np.full(n - k, late)])
         else:
-            drift_arr = np.full(n, self.drift_map.get(req.symbol, 0.0))
+            drift_arr = np.full(n, self.drift_map.get(symbol, 0.0))
 
         rets = rng.normal(loc=drift_arr, scale=0.011, size=n)
         close = start * np.exp(np.cumsum(rets))
@@ -101,13 +103,62 @@ class SyntheticProvider:
         high = np.maximum(open_, close) * (1 + spread)
         low = np.minimum(open_, close) * (1 - spread)
         volume = rng.integers(1_000_000, 5_000_000, size=n).astype(float)
-        # occasional volume spikes so RVOL logic has something to find
         spikes = rng.choice(n, size=max(1, n // 20), replace=False)
         volume[spikes] *= rng.uniform(2.0, 4.0, size=len(spikes))
 
-        freq = "B" if req.interval == "1d" else "30min"
+        freq = "B" if interval == "1d" else "30min"
         idx = pd.date_range(end=pd.Timestamp.now("UTC").floor("min"), periods=n, freq=freq)
         return pd.DataFrame(
             {"open": open_, "high": high, "low": low, "close": close, "volume": volume},
             index=idx,
         )
+
+    def get_bars(self, req: BarRequest) -> pd.DataFrame:
+        key = (req.symbol, req.interval)
+        if not hasattr(self, "_master"):
+            self._master: dict = {}
+        if key not in self._master:
+            self._master[key] = self._build_master(req.symbol, req.interval)
+        n = req.lookback_days if req.interval == "1d" else min(req.lookback_days * 13, self.MASTER_BARS)
+        n = max(n, 60)
+        return self._master[key].iloc[-n:]
+
+
+class ReplayProvider:
+    """Wraps another provider and replays its bars progressively — get_bars
+    returns history only up to the cursor, advance() moves one bar forward.
+    This is how the alert engine is tested and demoed bar by bar."""
+
+    def __init__(self, base: DataProvider, start_offset: int = 30):
+        self.base = base
+        self.offset = start_offset   # bars held back from "now"
+        self._full: dict[tuple, pd.DataFrame] = {}
+
+    def _full_bars(self, req: BarRequest) -> pd.DataFrame:
+        key = (req.symbol, req.interval)
+        if key not in self._full:
+            self._full[key] = self.base.get_bars(
+                BarRequest(req.symbol, req.interval, req.lookback_days + self.offset))
+        return self._full[key]
+
+    def get_bars(self, req: BarRequest) -> pd.DataFrame:
+        full = self._full_bars(req)
+        end = len(full) - self.offset
+        return full.iloc[:max(end, 10)]
+
+    def advance(self, bars: int = 1) -> bool:
+        self.offset = max(self.offset - bars, 0)
+        return self.offset > 0
+
+
+class ScriptedProvider:
+    """Serves explicit bar DataFrames per symbol — for deterministic lifecycle
+    demos where the price path must be exact. Combine with ReplayProvider."""
+
+    def __init__(self, frames: dict[str, pd.DataFrame]):
+        self.frames = frames
+
+    def get_bars(self, req: BarRequest) -> pd.DataFrame:
+        if req.symbol not in self.frames:
+            raise KeyError(f"No scripted bars for {req.symbol}")
+        return self.frames[req.symbol]

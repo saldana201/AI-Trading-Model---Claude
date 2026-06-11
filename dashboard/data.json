@@ -1,11 +1,11 @@
 {
   "source": "synthetic",
-  "generated_at": "2026-06-11 03:27:00+00:00",
+  "generated_at": "2026-06-11 04:14:00+00:00",
   "regime": {
     "regime": "risk_on",
-    "risk_score": 3.6,
+    "risk_score": 7.4,
     "modifiers": [],
-    "vix_5d_change_pct": -2.4,
+    "vix_5d_change_pct": -5.2,
     "components": [
       {
         "name": "vix_alignment",
@@ -14,10 +14,10 @@
         "contribution": 5.0,
         "evidence": {
           "state": "confirming_bullish",
-          "index_change_pct": 1.59,
-          "vix_change_pct": -1.24,
-          "vix_spot": 7.61,
-          "vix_pivot": 8.34,
+          "index_change_pct": 3.43,
+          "vix_change_pct": -1.19,
+          "vix_spot": 11.41,
+          "vix_pivot": 11.96,
           "vix_below_pivot": true,
           "lookback_days": 3
         }
@@ -28,21 +28,21 @@
         "weight": 1.5,
         "contribution": 2.25,
         "evidence": {
-          "spot": 7.61,
-          "pivot": 8.34,
+          "spot": 11.41,
+          "pivot": 11.96,
           "spot_vs_pivot": "below"
         }
       },
       {
         "name": "index_structure",
-        "score": 0.0,
+        "score": 2.0,
         "weight": 2.0,
-        "contribution": 0.0,
+        "contribution": 4.0,
         "evidence": {
           "symbol": "QQQ",
-          "spot": 1322.29,
-          "weekly_pivot": 1329.06,
-          "above_weekly_pivot": false,
+          "spot": 476.99,
+          "weekly_pivot": 457.94,
+          "above_weekly_pivot": true,
           "ma21_state": "above"
         }
       },
@@ -53,10 +53,10 @@
         "contribution": 0.0,
         "evidence": {
           "phase": "consolidation",
-          "trend_slope_pct_per_bar": 0.059,
-          "short_trend_slope": 0.247,
-          "updown_volume_ratio_20d": 1.95,
-          "range_position_60d": 0.79,
+          "trend_slope_pct_per_bar": -0.06,
+          "short_trend_slope": 0.985,
+          "updown_volume_ratio_20d": 1.28,
+          "range_position_60d": 0.85,
           "rvol_20d": 0.46,
           "recent_volume_fade": false,
           "atr_contraction_7v28": 1.08
@@ -64,20 +64,20 @@
       },
       {
         "name": "momentum",
-        "score": 0.0,
+        "score": 1.0,
         "weight": 1.5,
-        "contribution": 0.0,
+        "contribution": 1.5,
         "evidence": {
-          "daily_rsi": 52.2
+          "daily_rsi": 65.3
         }
       },
       {
         "name": "ma_breadth",
-        "score": 0.0,
+        "score": 2.0,
         "weight": 1.0,
-        "contribution": 0.0,
+        "contribution": 2.0,
         "evidence": {
-          "fraction_above_mas": 0.5,
+          "fraction_above_mas": 1.0,
           "detail": {
             "QQQ": {
               "5": "above",
@@ -88,19 +88,19 @@
               "200": "above"
             },
             "SPY": {
-              "5": "below",
-              "13": "below",
-              "21": "below",
-              "50": "below",
-              "63": "below",
-              "200": "below"
+              "5": "above",
+              "13": "above",
+              "21": "above",
+              "50": "above",
+              "63": "above",
+              "200": "above"
             }
           }
         }
       }
     ],
     "primary_index": "QQQ",
-    "computed_at": "2026-06-11 03:27:00+00:00",
+    "computed_at": "2026-06-11 04:14:00+00:00",
     "not_yet_classified": {
       "trend_day_vs_mean_reversion": "requires intraday bars (Phase 4 alert engine)",
       "sector_breadth": "requires rotation-mcp (Phase 3)"
@@ -109,104 +109,107 @@
   "vix": {
     "levels": {
       "symbol": "^VIX",
-      "spot": 7.61,
-      "pivot": 8.34,
+      "spot": 11.41,
+      "pivot": 11.96,
       "spot_vs_pivot": "below",
-      "upside_target_1": 8.47,
-      "upside_target_2": 8.7,
+      "upside_target_1": 12.2,
+      "upside_target_2": 12.51,
       "downside_target_1": null,
       "downside_target_2": null,
       "clusters": [
         {
-          "price": 8.34,
+          "price": 11.96,
+          "kind": "support",
+          "touches": 1,
+          "strength": 0.33,
+          "first_seen": "2026-05-26 04:14:00+00:00",
+          "last_seen": "2026-05-26 04:14:00+00:00",
+          "members": [
+            11.96
+          ]
+        },
+        {
+          "price": 12.2,
+          "kind": "support",
+          "touches": 1,
+          "strength": 0.307,
+          "first_seen": "2026-05-21 04:14:00+00:00",
+          "last_seen": "2026-05-21 04:14:00+00:00",
+          "members": [
+            12.2
+          ]
+        },
+        {
+          "price": 12.51,
           "kind": "resistance",
-          "touches": 1,
-          "strength": 0.25,
-          "first_seen": "2026-05-27 03:27:00+00:00",
-          "last_seen": "2026-05-27 03:27:00+00:00",
-          "members": [
-            8.34
-          ]
-        },
-        {
-          "price": 8.47,
-          "kind": "support",
-          "touches": 1,
-          "strength": 0.168,
-          "first_seen": "2026-05-04 03:27:00+00:00",
-          "last_seen": "2026-05-04 03:27:00+00:00",
-          "members": [
-            8.47
-          ]
-        },
-        {
-          "price": 8.7,
-          "kind": "support",
           "touches": 2,
-          "strength": 0.548,
-          "first_seen": "2026-05-08 03:27:00+00:00",
-          "last_seen": "2026-05-14 03:27:00+00:00",
-          "members": [
-            8.67,
-            8.73
-          ]
-        },
-        {
-          "price": 8.88,
-          "kind": "resistance",
-          "touches": 3,
           "strength": 1.0,
-          "first_seen": "2026-05-06 03:27:00+00:00",
-          "last_seen": "2026-05-15 03:27:00+00:00",
+          "first_seen": "2026-05-27 04:14:00+00:00",
+          "last_seen": "2026-06-02 04:14:00+00:00",
           "members": [
-            8.85,
-            8.88,
-            8.94
+            12.49,
+            12.52
           ]
         },
         {
-          "price": 10.14,
+          "price": 15.38,
           "kind": "support",
-          "touches": 1,
-          "strength": 0.099,
-          "first_seen": "2026-04-01 03:27:00+00:00",
-          "last_seen": "2026-04-01 03:27:00+00:00",
+          "touches": 3,
+          "strength": 0.8,
+          "first_seen": "2026-04-06 04:14:00+00:00",
+          "last_seen": "2026-04-14 04:14:00+00:00",
           "members": [
-            10.14
+            15.25,
+            15.44,
+            15.47
           ]
         },
         {
-          "price": 10.51,
-          "kind": "resistance",
-          "touches": 1,
-          "strength": 0.104,
-          "first_seen": "2026-04-03 03:27:00+00:00",
-          "last_seen": "2026-04-03 03:27:00+00:00",
+          "price": 15.72,
+          "kind": "mixed",
+          "touches": 2,
+          "strength": 0.412,
+          "first_seen": "2026-04-01 04:14:00+00:00",
+          "last_seen": "2026-04-10 04:14:00+00:00",
           "members": [
-            10.51
+            15.7,
+            15.74
+          ]
+        },
+        {
+          "price": 16.07,
+          "kind": "mixed",
+          "touches": 3,
+          "strength": 0.76,
+          "first_seen": "2026-03-26 04:14:00+00:00",
+          "last_seen": "2026-04-22 04:14:00+00:00",
+          "members": [
+            15.96,
+            16.07,
+            16.18
           ]
         }
       ],
-      "computed_at": "2026-06-11 03:27:00+00:00",
+      "computed_at": "2026-06-11 04:14:00+00:00",
       "window_sessions": 60
     },
     "alignment": {
       "state": "confirming_bullish",
       "evidence": {
-        "index_change_pct": 0.04,
-        "vix_change_pct": -1.24,
-        "vix_spot": 7.61,
-        "vix_pivot": 8.34,
+        "index_change_pct": 3.43,
+        "vix_change_pct": -1.19,
+        "vix_spot": 11.41,
+        "vix_pivot": 11.96,
         "vix_below_pivot": true,
         "lookback_days": 3
       },
       "index_symbol": "QQQ",
       "vix_levels": {
-        "spot": 7.61,
-        "pivot": 8.34,
+        "spot": 11.41,
+        "pivot": 11.96,
         "spot_vs_pivot": "below",
-        "upside_target_1": 8.47,
-        "upside_target_2": 8.7,
+        "upside_target_1": 12.2,
+        "upside_target_2": 12.51,
         "downside_target_1": null,
         "downside_target_2": null
       }
@@ -216,454 +219,474 @@
     "QQQ": {
       "levels": {
         "symbol": "QQQ",
-        "spot": 1322.29,
-        "computed_at": "2026-06-11 03:27:00+00:00",
+        "spot": 476.99,
+        "computed_at": "2026-06-11 04:14:00+00:00",
         "rvol_20d": 0.46,
-        "rvol_50d": 0.45,
+        "rvol_50d": 0.5,
         "session": {
-          "high_of_day": 1331.79,
-          "low_of_day": 1318.27,
-          "prior_day_high": 1335.34,
-          "prior_day_low": 1313.92,
-          "gap": -0.37,
-          "gap_fill_level": 1328.14
+          "high_of_day": 479.75,
+          "low_of_day": 475.19,
+          "prior_day_high": 479.97,
+          "prior_day_low": 476.22,
+          "gap": -0.38,
+          "gap_fill_level": 478.33
         },
         "weekly": {
-          "weekly_pivot": 1329.06,
-          "weekly_ceiling": 1344.34,
-          "weekly_floor": 1303.99,
-          "prior_week_high": 1354.12,
-          "prior_week_low": 1313.78
+          "weekly_pivot": 457.94,
+          "weekly_ceiling": 468.99,
+          "weekly_floor": 451.35,
+          "prior_week_high": 464.54,
+          "prior_week_low": 446.9
         },
         "outliers": {
-          "outlier_upside": 1365.38,
-          "outlier_downside": 1269.09,
-          "atr14": 19.0
+          "outlier_upside": 490.35,
+          "outlier_downside": 445.86,
+          "atr14": 6.92
         },
-        "bullish_trigger": 1337.11,
-        "bearish_trigger": 1297.69,
+        "bullish_trigger": 492.31,
+        "bearish_trigger": 456.23,
         "chop_zone": [
-          1297.69,
-          1337.11
+          456.23,
+          492.31
         ],
         "moving_averages": [
           {
             "ma": 5,
-            "value": 1318.0,
+            "value": 470.46,
             "state": "above",
-            "recent_event": "reclaimed",
-            "distance_pct": 0.33
+            "recent_event": null,
+            "distance_pct": 1.39
           },
           {
             "ma": 13,
-            "value": 1322.27,
+            "value": 458.96,
             "state": "above",
-            "recent_event": "reclaimed",
-            "distance_pct": 0.0
+            "recent_event": null,
+            "distance_pct": 3.93
           },
           {
             "ma": 21,
-            "value": 1321.67,
+            "value": 458.32,
             "state": "above",
-            "recent_event": "reclaimed",
-            "distance_pct": 0.05
+            "recent_event": null,
+            "distance_pct": 4.07
           },
           {
             "ma": 50,
-            "value": 1307.08,
+            "value": 463.15,
             "state": "above",
             "recent_event": "reclaimed",
-            "distance_pct": 1.16
+            "distance_pct": 2.99
           },
           {
             "ma": 63,
-            "value": 1300.58,
+            "value": 464.43,
             "state": "above",
-            "recent_event": null,
-            "distance_pct": 1.67
+            "recent_event": "reclaimed",
+            "distance_pct": 2.7
           },
           {
             "ma": 200,
-            "value": 1124.03,
+            "value": 445.83,
             "state": "above",
             "recent_event": null,
-            "distance_pct": 17.64
+            "distance_pct": 6.99
           }
         ],
         "fractal_clusters": [
           {
-            "price": 1212.4,
+            "price": 443.27,
+            "kind": "support",
+            "touches": 1,
+            "strength": 0.142,
+            "first_seen": "2026-05-26 04:14:00+00:00",
+            "last_seen": "2026-05-26 04:14:00+00:00",
+            "members": [
+              443.27
+            ],
+            "symbol": "QQQ",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 449.17,
+            "kind": "support",
+            "touches": 1,
+            "strength": 0.129,
+            "first_seen": "2026-05-20 04:14:00+00:00",
+            "last_seen": "2026-05-20 04:14:00+00:00",
+            "members": [
+              449.17
+            ],
+            "symbol": "QQQ",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 453.33,
             "kind": "resistance",
             "touches": 1,
-            "strength": 0.034,
-            "first_seen": "2026-02-12 03:27:00+00:00",
-            "last_seen": "2026-02-12 03:27:00+00:00",
+            "strength": 0.145,
+            "first_seen": "2026-05-27 04:14:00+00:00",
+            "last_seen": "2026-05-27 04:14:00+00:00",
             "members": [
-              1212.4
+              453.33
             ],
             "symbol": "QQQ",
             "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
-            "price": 1245.94,
+            "price": 456.23,
             "kind": "support",
-            "touches": 1,
-            "strength": 0.064,
-            "first_seen": "2026-03-23 03:27:00+00:00",
-            "last_seen": "2026-03-23 03:27:00+00:00",
+            "touches": 5,
+            "strength": 1.0,
+            "first_seen": "2026-03-31 04:14:00+00:00",
+            "last_seen": "2026-06-08 04:14:00+00:00",
             "members": [
-              1245.94
+              455.51,
+              456.24,
+              456.4,
+              456.6,
+              456.72
             ],
             "symbol": "QQQ",
             "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
-            "price": 1253.28,
-            "kind": "support",
-            "touches": 2,
-            "strength": 0.274,
-            "first_seen": "2026-04-01 03:27:00+00:00",
-            "last_seen": "2026-04-29 03:27:00+00:00",
-            "members": [
-              1252.47,
-              1253.78
-            ],
-            "symbol": "QQQ",
-            "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "price": 1269.98,
-            "kind": "support",
-            "touches": 3,
-            "strength": 0.49,
-            "first_seen": "2026-03-03 03:27:00+00:00",
-            "last_seen": "2026-05-12 03:27:00+00:00",
-            "members": [
-              1268.88,
-              1269.23,
-              1271.75
-            ],
-            "symbol": "QQQ",
-            "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "price": 1280.53,
-            "kind": "support",
-            "touches": 1,
-            "strength": 0.051,
-            "first_seen": "2026-03-09 03:27:00+00:00",
-            "last_seen": "2026-03-09 03:27:00+00:00",
-            "members": [
-              1280.53
-            ],
-            "symbol": "QQQ",
-            "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "price": 1285.7,
-            "kind": "resistance",
-            "touches": 1,
-            "strength": 0.077,
-            "first_seen": "2026-04-02 03:27:00+00:00",
-            "last_seen": "2026-04-02 03:27:00+00:00",
-            "members": [
-              1285.7
-            ],
-            "symbol": "QQQ",
-            "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "price": 1292.94,
-            "kind": "support",
-            "touches": 1,
-            "strength": 0.172,
-            "first_seen": "2026-05-21 03:27:00+00:00",
-            "last_seen": "2026-05-21 03:27:00+00:00",
-            "members": [
-              1292.94
-            ],
-            "symbol": "QQQ",
-            "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "price": 1297.69,
+            "price": 458.89,
             "kind": "mixed",
             "touches": 3,
-            "strength": 0.792,
-            "first_seen": "2026-02-24 03:27:00+00:00",
-            "last_seen": "2026-06-08 03:27:00+00:00",
+            "strength": 0.597,
+            "first_seen": "2026-05-06 04:14:00+00:00",
+            "last_seen": "2026-05-21 04:14:00+00:00",
             "members": [
-              1297.59,
-              1297.65,
-              1298.38
+              458.01,
+              459.17,
+              459.38
             ],
             "symbol": "QQQ",
             "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
-            "price": 1309.69,
-            "kind": "resistance",
-            "touches": 1,
-            "strength": 0.125,
-            "first_seen": "2026-05-01 03:27:00+00:00",
-            "last_seen": "2026-05-01 03:27:00+00:00",
-            "members": [
-              1309.69
-            ],
-            "symbol": "QQQ",
-            "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "price": 1314.28,
-            "kind": "resistance",
-            "touches": 1,
-            "strength": 0.086,
-            "first_seen": "2026-04-09 03:27:00+00:00",
-            "last_seen": "2026-04-09 03:27:00+00:00",
-            "members": [
-              1314.28
-            ],
-            "symbol": "QQQ",
-            "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "price": 1319.6,
-            "kind": "resistance",
-            "touches": 1,
-            "strength": 0.092,
-            "first_seen": "2026-04-14 03:27:00+00:00",
-            "last_seen": "2026-04-14 03:27:00+00:00",
-            "members": [
-              1319.6
-            ],
-            "symbol": "QQQ",
-            "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "price": 1328.19,
-            "kind": "resistance",
-            "touches": 4,
-            "strength": 0.697,
-            "first_seen": "2026-03-06 03:27:00+00:00",
-            "last_seen": "2026-05-08 03:27:00+00:00",
-            "members": [
-              1327.04,
-              1328.02,
-              1328.26,
-              1329.08
-            ],
-            "symbol": "QQQ",
-            "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "price": 1337.11,
-            "kind": "resistance",
+            "price": 464.43,
+            "kind": "mixed",
             "touches": 3,
-            "strength": 1.0,
-            "first_seen": "2026-05-19 03:27:00+00:00",
-            "last_seen": "2026-06-09 03:27:00+00:00",
+            "strength": 0.537,
+            "first_seen": "2026-04-13 04:14:00+00:00",
+            "last_seen": "2026-06-03 04:14:00+00:00",
             "members": [
-              1336.39,
-              1336.88,
-              1338.23
+              464.1,
+              464.48,
+              464.54
             ],
             "symbol": "QQQ",
             "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
-            "price": 1354.12,
-            "kind": "resistance",
-            "touches": 1,
-            "strength": 0.212,
-            "first_seen": "2026-06-03 03:27:00+00:00",
-            "last_seen": "2026-06-03 03:27:00+00:00",
+            "price": 467.18,
+            "kind": "mixed",
+            "touches": 3,
+            "strength": 0.372,
+            "first_seen": "2026-03-17 04:14:00+00:00",
+            "last_seen": "2026-05-12 04:14:00+00:00",
             "members": [
-              1354.12
+              466.02,
+              467.36,
+              467.72
             ],
             "symbol": "QQQ",
             "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 472.56,
+            "kind": "mixed",
+            "touches": 5,
+            "strength": 0.824,
+            "first_seen": "2026-02-20 04:14:00+00:00",
+            "last_seen": "2026-05-15 04:14:00+00:00",
+            "members": [
+              471.28,
+              472.24,
+              472.78,
+              473.39,
+              473.92
+            ],
+            "symbol": "QQQ",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 475.81,
+            "kind": "support",
+            "touches": 2,
+            "strength": 0.098,
+            "first_seen": "2026-02-25 04:14:00+00:00",
+            "last_seen": "2026-03-05 04:14:00+00:00",
+            "members": [
+              474.97,
+              476.55
+            ],
+            "symbol": "QQQ",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 477.5,
+            "kind": "resistance",
+            "touches": 1,
+            "strength": 0.085,
+            "first_seen": "2026-04-24 04:14:00+00:00",
+            "last_seen": "2026-04-24 04:14:00+00:00",
+            "members": [
+              477.5
+            ],
+            "symbol": "QQQ",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 479.23,
+            "kind": "resistance",
+            "touches": 1,
+            "strength": 0.076,
+            "first_seen": "2026-04-17 04:14:00+00:00",
+            "last_seen": "2026-04-17 04:14:00+00:00",
+            "members": [
+              479.23
+            ],
+            "symbol": "QQQ",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 486.61,
+            "kind": "resistance",
+            "touches": 1,
+            "strength": 0.049,
+            "first_seen": "2026-03-23 04:14:00+00:00",
+            "last_seen": "2026-03-23 04:14:00+00:00",
+            "members": [
+              486.61
+            ],
+            "symbol": "QQQ",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 492.31,
+            "kind": "resistance",
+            "touches": 2,
+            "strength": 0.09,
+            "first_seen": "2026-02-19 04:14:00+00:00",
+            "last_seen": "2026-02-27 04:14:00+00:00",
+            "members": [
+              491.81,
+              492.89
+            ],
+            "symbol": "QQQ",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 496.87,
+            "kind": "resistance",
+            "touches": 1,
+            "strength": 0.026,
+            "first_seen": "2026-02-12 04:14:00+00:00",
+            "last_seen": "2026-02-12 04:14:00+00:00",
+            "members": [
+              496.87
+            ],
+            "symbol": "QQQ",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 500.41,
+            "kind": "resistance",
+            "touches": 1,
+            "strength": 0.04,
+            "first_seen": "2026-03-10 04:14:00+00:00",
+            "last_seen": "2026-03-10 04:14:00+00:00",
+            "members": [
+              500.41
+            ],
+            "symbol": "QQQ",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
           }
         ],
         "levels": [
           {
             "symbol": "QQQ",
-            "level": 1331.79,
+            "level": 479.75,
             "kind": "high_of_day",
             "method": "session",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "QQQ",
-            "level": 1318.27,
+            "level": 475.19,
             "kind": "low_of_day",
             "method": "session",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "QQQ",
-            "level": 1335.34,
+            "level": 479.97,
             "kind": "prior_day_high",
             "method": "session",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "QQQ",
-            "level": 1313.92,
+            "level": 476.22,
             "kind": "prior_day_low",
             "method": "session",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "QQQ",
-            "level": 1328.14,
+            "level": 478.33,
             "kind": "gap_fill_level",
             "method": "session",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "QQQ",
-            "level": 1329.06,
+            "level": 457.94,
             "kind": "weekly_pivot",
             "method": "weekly_pivot",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "QQQ",
-            "level": 1344.34,
+            "level": 468.99,
             "kind": "weekly_ceiling",
             "method": "weekly_pivot",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "QQQ",
-            "level": 1303.99,
+            "level": 451.35,
             "kind": "weekly_floor",
             "method": "weekly_pivot",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "QQQ",
-            "level": 1354.12,
+            "level": 464.54,
             "kind": "prior_week_high",
             "method": "weekly_pivot",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "QQQ",
-            "level": 1313.78,
+            "level": 446.9,
             "kind": "prior_week_low",
             "method": "weekly_pivot",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "QQQ",
-            "level": 1365.38,
+            "level": 490.35,
             "kind": "outlier_upside",
             "method": "atr_extension",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "QQQ",
-            "level": 1269.09,
+            "level": 445.86,
             "kind": "outlier_downside",
             "method": "atr_extension",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "QQQ",
-            "level": 1337.11,
+            "level": 492.31,
             "kind": "bullish_trigger",
             "method": "fractal_cluster",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "QQQ",
-            "level": 1297.69,
+            "level": 456.23,
             "kind": "bearish_trigger",
             "method": "fractal_cluster",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           }
         ]
       },
       "phase": {
         "symbol": "QQQ",
-        "phase": "mark_up",
+        "phase": "consolidation",
         "evidence": {
-          "trend_slope_pct_per_bar": 0.167,
-          "short_trend_slope": 0.224,
-          "updown_volume_ratio_20d": 0.8,
-          "range_position_60d": 0.82,
-          "rvol_20d": 1.13,
+          "trend_slope_pct_per_bar": -0.06,
+          "short_trend_slope": 0.985,
+          "updown_volume_ratio_20d": 1.28,
+          "range_position_60d": 0.85,
+          "rvol_20d": 0.46,
           "recent_volume_fade": false,
-          "atr_contraction_7v28": 0.74
+          "atr_contraction_7v28": 1.08
         },
-        "computed_at": "2026-06-11 03:27:00+00:00"
+        "computed_at": "2026-06-11 04:14:00+00:00"
       },
       "rsi": {
         "symbol": "QQQ",
         "stack": [
           {
             "timeframe": "monthly",
-            "rsi": 99.8,
+            "rsi": 83.2,
             "zone": "overbought",
-            "direction": "flat",
+            "direction": "falling",
             "as_of": "2026-06-30 00:00:00+00:00"
           },
           {
             "timeframe": "weekly",
-            "rsi": 96.6,
-            "zone": "overbought",
+            "rsi": 59.3,
+            "zone": "neutral",
             "direction": "rising",
             "as_of": "2026-06-12 00:00:00+00:00"
           },
           {
             "timeframe": "daily",
-            "rsi": 86.4,
-            "zone": "overbought",
+            "rsi": 65.3,
+            "zone": "neutral",
             "direction": "rising",
-            "as_of": "2026-06-11 03:27:00+00:00"
+            "as_of": "2026-06-11 04:14:00+00:00"
           },
           {
             "timeframe": "1h",
-            "rsi": 50.1,
+            "rsi": 67.2,
             "zone": "neutral",
-            "direction": "falling",
-            "as_of": "2026-06-11 03:00:00+00:00"
+            "direction": "rising",
+            "as_of": "2026-06-11 04:00:00+00:00"
           },
           {
             "timeframe": "30m",
-            "rsi": 41.3,
+            "rsi": 66.7,
             "zone": "neutral",
-            "direction": "rising",
-            "as_of": "2026-06-11 03:27:00+00:00"
+            "direction": "flat",
+            "as_of": "2026-06-11 04:14:00+00:00"
           }
         ]
       },
@@ -672,1186 +695,1281 @@
     "SPY": {
       "levels": {
         "symbol": "SPY",
-        "spot": 730.26,
-        "computed_at": "2026-06-11 03:27:00+00:00",
-        "rvol_20d": 0.52,
-        "rvol_50d": 0.53,
+        "spot": 355.81,
+        "computed_at": "2026-06-11 04:14:00+00:00",
+        "rvol_20d": 0.4,
+        "rvol_50d": 0.4,
         "session": {
-          "high_of_day": 731.46,
-          "low_of_day": 728.59,
-          "prior_day_high": 729.27,
-          "prior_day_low": 718.22,
-          "gap": 6.04,
-          "gap_fill_level": 723.75
+          "high_of_day": 356.8,
+          "low_of_day": 355.03,
+          "prior_day_high": 362.49,
+          "prior_day_low": 358.74,
+          "gap": -3.89,
+          "gap_fill_level": 359.91
         },
         "weekly": {
-          "weekly_pivot": 735.61,
-          "weekly_ceiling": 742.31,
-          "weekly_floor": 726.16,
-          "prior_week_high": 745.06,
-          "prior_week_low": 728.91
+          "weekly_pivot": 347.77,
+          "weekly_ceiling": 351.34,
+          "weekly_floor": 345.19,
+          "prior_week_high": 350.35,
+          "prior_week_low": 344.2
         },
         "outliers": {
-          "outlier_upside": 773.18,
-          "outlier_downside": 698.37,
-          "atr14": 12.21
+          "outlier_upside": 369.55,
+          "outlier_downside": 342.3,
+          "atr14": 4.7
         },
-        "bullish_trigger": 756.23,
-        "bearish_trigger": 716.35,
-        "chop_zone": [
-          716.35,
-          756.23
-        ],
+        "bullish_trigger": null,
+        "bearish_trigger": 353.57,
+        "chop_zone": null,
         "moving_averages": [
           {
             "ma": 5,
-            "value": 731.07,
-            "state": "below",
-            "recent_event": "lost",
-            "distance_pct": -0.11
+            "value": 353.52,
+            "state": "above",
+            "recent_event": null,
+            "distance_pct": 0.65
           },
           {
             "ma": 13,
-            "value": 738.62,
-            "state": "below",
-            "recent_event": "lost",
-            "distance_pct": -1.13
+            "value": 350.57,
+            "state": "above",
+            "recent_event": null,
+            "distance_pct": 1.5
           },
           {
             "ma": 21,
-            "value": 744.97,
-            "state": "below",
-            "recent_event": "lost",
-            "distance_pct": -1.97
+            "value": 348.98,
+            "state": "above",
+            "recent_event": null,
+            "distance_pct": 1.96
           },
           {
             "ma": 50,
-            "value": 746.3,
-            "state": "below",
-            "recent_event": "lost",
-            "distance_pct": -2.15
+            "value": 344.52,
+            "state": "above",
+            "recent_event": null,
+            "distance_pct": 3.28
           },
           {
             "ma": 63,
-            "value": 746.52,
-            "state": "below",
-            "recent_event": "lost",
-            "distance_pct": -2.18
+            "value": 340.62,
+            "state": "above",
+            "recent_event": null,
+            "distance_pct": 4.46
           },
           {
             "ma": 200,
-            "value": 744.33,
-            "state": "below",
-            "recent_event": "lost",
-            "distance_pct": -1.89
+            "value": 300.55,
+            "state": "above",
+            "recent_event": null,
+            "distance_pct": 18.39
           }
         ],
         "fractal_clusters": [
           {
-            "price": 716.35,
+            "price": 294.3,
+            "kind": "support",
+            "touches": 1,
+            "strength": 0.048,
+            "first_seen": "2026-02-23 04:14:00+00:00",
+            "last_seen": "2026-02-23 04:14:00+00:00",
+            "members": [
+              294.3
+            ],
+            "symbol": "SPY",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 298.09,
+            "kind": "support",
+            "touches": 1,
+            "strength": 0.041,
+            "first_seen": "2026-02-12 04:14:00+00:00",
+            "last_seen": "2026-02-12 04:14:00+00:00",
+            "members": [
+              298.09
+            ],
+            "symbol": "SPY",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 300.72,
+            "kind": "support",
+            "touches": 1,
+            "strength": 0.062,
+            "first_seen": "2026-03-10 04:14:00+00:00",
+            "last_seen": "2026-03-10 04:14:00+00:00",
+            "members": [
+              300.72
+            ],
+            "symbol": "SPY",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 307.25,
+            "kind": "resistance",
+            "touches": 1,
+            "strength": 0.045,
+            "first_seen": "2026-02-18 04:14:00+00:00",
+            "last_seen": "2026-02-18 04:14:00+00:00",
+            "members": [
+              307.25
+            ],
+            "symbol": "SPY",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 309.29,
+            "kind": "support",
+            "touches": 2,
+            "strength": 0.175,
+            "first_seen": "2026-03-04 04:14:00+00:00",
+            "last_seen": "2026-03-16 04:14:00+00:00",
+            "members": [
+              309.04,
+              309.58
+            ],
+            "symbol": "SPY",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 314.9,
+            "kind": "resistance",
+            "touches": 1,
+            "strength": 0.055,
+            "first_seen": "2026-03-03 04:14:00+00:00",
+            "last_seen": "2026-03-03 04:14:00+00:00",
+            "members": [
+              314.9
+            ],
+            "symbol": "SPY",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 316.76,
+            "kind": "resistance",
+            "touches": 2,
+            "strength": 0.175,
+            "first_seen": "2026-03-06 04:14:00+00:00",
+            "last_seen": "2026-03-12 04:14:00+00:00",
+            "members": [
+              316.57,
+              316.97
+            ],
+            "symbol": "SPY",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 320.13,
+            "kind": "support",
+            "touches": 1,
+            "strength": 0.076,
+            "first_seen": "2026-03-23 04:14:00+00:00",
+            "last_seen": "2026-03-23 04:14:00+00:00",
+            "members": [
+              320.13
+            ],
+            "symbol": "SPY",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 325.83,
+            "kind": "mixed",
+            "touches": 2,
+            "strength": 0.226,
+            "first_seen": "2026-03-20 04:14:00+00:00",
+            "last_seen": "2026-03-30 04:14:00+00:00",
+            "members": [
+              325.47,
+              326.13
+            ],
+            "symbol": "SPY",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 327.51,
+            "kind": "support",
+            "touches": 1,
+            "strength": 0.103,
+            "first_seen": "2026-04-09 04:14:00+00:00",
+            "last_seen": "2026-04-09 04:14:00+00:00",
+            "members": [
+              327.51
+            ],
+            "symbol": "SPY",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 330.2,
+            "kind": "support",
+            "touches": 1,
+            "strength": 0.094,
+            "first_seen": "2026-04-03 04:14:00+00:00",
+            "last_seen": "2026-04-03 04:14:00+00:00",
+            "members": [
+              330.2
+            ],
+            "symbol": "SPY",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 334.76,
+            "kind": "support",
+            "touches": 2,
+            "strength": 0.462,
+            "first_seen": "2026-05-04 04:14:00+00:00",
+            "last_seen": "2026-05-12 04:14:00+00:00",
+            "members": [
+              334.58,
+              334.96
+            ],
+            "symbol": "SPY",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 337.37,
+            "kind": "resistance",
+            "touches": 2,
+            "strength": 0.262,
+            "first_seen": "2026-04-01 04:14:00+00:00",
+            "last_seen": "2026-04-06 04:14:00+00:00",
+            "members": [
+              337.1,
+              337.66
+            ],
+            "symbol": "SPY",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 341.89,
+            "kind": "support",
+            "touches": 1,
+            "strength": 0.21,
+            "first_seen": "2026-05-22 04:14:00+00:00",
+            "last_seen": "2026-05-22 04:14:00+00:00",
+            "members": [
+              341.89
+            ],
+            "symbol": "SPY",
+            "method": "fractal_cluster",
+            "computed_at": "2026-06-11 04:14:00+00:00"
+          },
+          {
+            "price": 344.4,
             "kind": "support",
             "touches": 3,
-            "strength": 0.448,
-            "first_seen": "2026-04-03 03:27:00+00:00",
-            "last_seen": "2026-06-09 03:27:00+00:00",
+            "strength": 0.907,
+            "first_seen": "2026-04-22 04:14:00+00:00",
+            "last_seen": "2026-06-04 04:14:00+00:00",
             "members": [
-              714.75,
-              716.68,
-              717.45
+              344.15,
+              344.2,
+              345.01
             ],
             "symbol": "SPY",
             "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
-            "price": 726.18,
+            "price": 345.69,
             "kind": "support",
             "touches": 1,
-            "strength": 0.058,
-            "first_seen": "2026-04-14 03:27:00+00:00",
-            "last_seen": "2026-04-14 03:27:00+00:00",
+            "strength": 0.236,
+            "first_seen": "2026-05-29 04:14:00+00:00",
+            "last_seen": "2026-05-29 04:14:00+00:00",
             "members": [
-              726.18
+              345.69
             ],
             "symbol": "SPY",
             "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
-            "price": 728.91,
-            "kind": "support",
+            "price": 349.09,
+            "kind": "resistance",
             "touches": 1,
-            "strength": 0.13,
-            "first_seen": "2026-06-02 03:27:00+00:00",
-            "last_seen": "2026-06-02 03:27:00+00:00",
+            "strength": 0.159,
+            "first_seen": "2026-05-06 04:14:00+00:00",
+            "last_seen": "2026-05-06 04:14:00+00:00",
             "members": [
-              728.91
+              349.09
             ],
             "symbol": "SPY",
             "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
-            "price": 736.2,
-            "kind": "support",
-            "touches": 5,
-            "strength": 0.499,
-            "first_seen": "2026-02-19 03:27:00+00:00",
-            "last_seen": "2026-05-13 03:27:00+00:00",
-            "members": [
-              735.04,
-              735.58,
-              736.27,
-              737.47,
-              738.53
-            ],
-            "symbol": "SPY",
-            "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "price": 741.06,
-            "kind": "support",
-            "touches": 1,
-            "strength": 0.021,
-            "first_seen": "2026-02-11 03:27:00+00:00",
-            "last_seen": "2026-02-11 03:27:00+00:00",
-            "members": [
-              741.06
-            ],
-            "symbol": "SPY",
-            "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "price": 745.09,
-            "kind": "mixed",
-            "touches": 2,
-            "strength": 0.225,
-            "first_seen": "2026-02-24 03:27:00+00:00",
-            "last_seen": "2026-06-03 03:27:00+00:00",
-            "members": [
-              745.06,
-              745.23
-            ],
-            "symbol": "SPY",
-            "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "price": 748.55,
-            "kind": "support",
-            "touches": 1,
-            "strength": 0.113,
-            "first_seen": "2026-05-25 03:27:00+00:00",
-            "last_seen": "2026-05-25 03:27:00+00:00",
-            "members": [
-              748.55
-            ],
-            "symbol": "SPY",
-            "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "price": 756.23,
-            "kind": "mixed",
-            "touches": 6,
+            "price": 353.57,
+            "kind": "resistance",
+            "touches": 3,
             "strength": 1.0,
-            "first_seen": "2026-02-12 03:27:00+00:00",
-            "last_seen": "2026-06-08 03:27:00+00:00",
+            "first_seen": "2026-04-29 04:14:00+00:00",
+            "last_seen": "2026-05-28 04:14:00+00:00",
             "members": [
-              753.02,
-              754.87,
-              756.38,
-              757.3,
-              757.54,
-              757.73
+              353.34,
+              353.36,
+              353.92
             ],
             "symbol": "SPY",
             "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
-            "price": 760.9,
-            "kind": "resistance",
-            "touches": 2,
-            "strength": 0.088,
-            "first_seen": "2026-02-17 03:27:00+00:00",
-            "last_seen": "2026-03-20 03:27:00+00:00",
-            "members": [
-              760.66,
-              761.04
-            ],
-            "symbol": "SPY",
-            "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "price": 764.64,
-            "kind": "resistance",
-            "touches": 2,
-            "strength": 0.205,
-            "first_seen": "2026-02-25 03:27:00+00:00",
-            "last_seen": "2026-05-27 03:27:00+00:00",
-            "members": [
-              764.26,
-              764.72
-            ],
-            "symbol": "SPY",
-            "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "price": 774.76,
-            "kind": "resistance",
-            "touches": 5,
-            "strength": 0.888,
-            "first_seen": "2026-03-26 03:27:00+00:00",
-            "last_seen": "2026-05-21 03:27:00+00:00",
-            "members": [
-              773.6,
-              773.94,
-              775.19,
-              775.36,
-              775.91
-            ],
-            "symbol": "SPY",
-            "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "price": 780.9,
+            "price": 355.33,
             "kind": "resistance",
             "touches": 1,
-            "strength": 0.032,
-            "first_seen": "2026-03-09 03:27:00+00:00",
-            "last_seen": "2026-03-09 03:27:00+00:00",
+            "strength": 0.129,
+            "first_seen": "2026-04-23 04:14:00+00:00",
+            "last_seen": "2026-04-23 04:14:00+00:00",
             "members": [
-              780.9
+              355.33
             ],
             "symbol": "SPY",
             "method": "fractal_cluster",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           }
         ],
         "levels": [
           {
             "symbol": "SPY",
-            "level": 731.46,
+            "level": 356.8,
             "kind": "high_of_day",
             "method": "session",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "SPY",
-            "level": 728.59,
+            "level": 355.03,
             "kind": "low_of_day",
             "method": "session",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "SPY",
-            "level": 729.27,
+            "level": 362.49,
             "kind": "prior_day_high",
             "method": "session",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "SPY",
-            "level": 718.22,
+            "level": 358.74,
             "kind": "prior_day_low",
             "method": "session",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "SPY",
-            "level": 723.75,
+            "level": 359.91,
             "kind": "gap_fill_level",
             "method": "session",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "SPY",
-            "level": 735.61,
+            "level": 347.77,
             "kind": "weekly_pivot",
             "method": "weekly_pivot",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "SPY",
-            "level": 742.31,
+            "level": 351.34,
             "kind": "weekly_ceiling",
             "method": "weekly_pivot",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "SPY",
-            "level": 726.16,
+            "level": 345.19,
             "kind": "weekly_floor",
             "method": "weekly_pivot",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "SPY",
-            "level": 745.06,
+            "level": 350.35,
             "kind": "prior_week_high",
             "method": "weekly_pivot",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "SPY",
-            "level": 728.91,
+            "level": 344.2,
             "kind": "prior_week_low",
             "method": "weekly_pivot",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "SPY",
-            "level": 773.18,
+            "level": 369.55,
             "kind": "outlier_upside",
             "method": "atr_extension",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "SPY",
-            "level": 698.37,
+            "level": 342.3,
             "kind": "outlier_downside",
             "method": "atr_extension",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           },
           {
             "symbol": "SPY",
-            "level": 756.23,
-            "kind": "bullish_trigger",
-            "method": "fractal_cluster",
-            "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
-          },
-          {
-            "symbol": "SPY",
-            "level": 716.35,
+            "level": 353.57,
             "kind": "bearish_trigger",
             "method": "fractal_cluster",
             "timeframe": "1d",
-            "computed_at": "2026-06-11 03:27:00+00:00"
+            "computed_at": "2026-06-11 04:14:00+00:00"
           }
         ]
       },
       "phase": {
         "symbol": "SPY",
-        "phase": "failed_breakdown",
+        "phase": "consolidation",
         "evidence": {
-          "trend_slope_pct_per_bar": -0.068,
-          "short_trend_slope": 0.288,
-          "updown_volume_ratio_20d": 1.28,
-          "range_position_60d": 0.18,
-          "rvol_20d": 1.03,
+          "trend_slope_pct_per_bar": 0.049,
+          "short_trend_slope": 0.655,
+          "updown_volume_ratio_20d": 2.29,
+          "range_position_60d": 0.89,
+          "rvol_20d": 0.4,
           "recent_volume_fade": false,
-          "atr_contraction_7v28": 1.31
+          "atr_contraction_7v28": 0.93
         },
-        "computed_at": "2026-06-11 03:27:00+00:00"
+        "computed_at": "2026-06-11 04:14:00+00:00"
       },
       "rsi": {
         "symbol": "SPY",
         "stack": [
           {
             "timeframe": "monthly",
-            "rsi": 71.1,
+            "rsi": 84.2,
             "zone": "overbought",
             "direction": "rising",
             "as_of": "2026-06-30 00:00:00+00:00"
           },
           {
             "timeframe": "weekly",
-            "rsi": 58.8,
-            "zone": "neutral",
-            "direction": "falling",
+            "rsi": 75.6,
+            "zone": "overbought",
+            "direction": "rising",
             "as_of": "2026-06-12 00:00:00+00:00"
           },
           {
             "timeframe": "daily",
-            "rsi": 45.5,
+            "rsi": 59.7,
             "zone": "neutral",
             "direction": "rising",
-            "as_of": "2026-06-11 03:27:00+00:00"
+            "as_of": "2026-06-11 04:14:00+00:00"
           },
           {
             "timeframe": "1h",
-            "rsi": 81.6,
-            "zone": "overbought",
-            "direction": "rising",
-            "as_of": "2026-06-11 03:00:00+00:00"
+            "rsi": 55.3,
+            "zone": "neutral",
+            "direction": "falling",
+            "as_of": "2026-06-11 04:00:00+00:00"
           },
           {
             "timeframe": "30m",
-            "rsi": 74.3,
-            "zone": "overbought",
-            "direction": "rising",
-            "as_of": "2026-06-11 03:27:00+00:00"
+            "rsi": 48.5,
+            "zone": "neutral",
+            "direction": "falling",
+            "as_of": "2026-06-11 04:14:00+00:00"
           }
         ]
       },
-      "divergences": []
+      "divergences": [
+        {
+          "type": "bearish_divergence",
+          "timeframe": "1d",
+          "pivots": [
+            {
+              "time": "2026-05-21 04:14:00+00:00",
+              "price": 353.36,
+              "rsi": 63.5
+            },
+            {
+              "time": "2026-05-28 04:14:00+00:00",
+              "price": 353.92,
+              "rsi": 60.1
+            }
+          ]
+        }
+      ]
     }
   },
   "rotation": {
     "benchmark": "SPY",
-    "as_of": "2026-06-11 03:27:00+00:00",
+    "as_of": "2026-06-11 04:14:00+00:00",
     "etfs": [
       {
         "symbol": "IGV",
         "relative_perf": {
-          "1w": 2.88,
-          "1w_abs": 0.24,
-          "4w": 17.7,
-          "4w_abs": 12.25,
-          "12w": 29.98,
-          "12w_abs": 34.13,
-          "24w": 49.58,
-          "24w_abs": 56.43,
-          "48w": 152.56,
-          "48w_abs": 173.42
-        },
-        "rvol_20d": 0.42,
-        "ma21": "above",
-        "ma21_event": null,
-        "ma50": "above",
-        "ma200": "above",
-        "rank_1w": 0.6,
-        "rank_4w": 0.97,
-        "rank_12w": 1.0,
-        "status": "leading"
-      },
-      {
-        "symbol": "XLV",
-        "relative_perf": {
-          "1w": 3.04,
-          "1w_abs": 0.41,
-          "4w": 15.94,
-          "4w_abs": 10.49,
-          "12w": 8.29,
-          "12w_abs": 12.44,
-          "24w": -6.07,
-          "24w_abs": 0.78,
-          "48w": -48.19,
-          "48w_abs": -27.34
-        },
-        "rvol_20d": 0.52,
-        "ma21": "above",
-        "ma21_event": null,
-        "ma50": "above",
-        "ma200": "below",
-        "rank_1w": 0.63,
-        "rank_4w": 0.9,
-        "rank_12w": 0.8,
-        "status": "leading"
-      },
-      {
-        "symbol": "IWF",
-        "relative_perf": {
-          "1w": 4.3,
-          "1w_abs": 1.67,
-          "4w": 15.32,
-          "4w_abs": 9.87,
-          "12w": 12.61,
-          "12w_abs": 16.76,
-          "24w": 23.84,
-          "24w_abs": 30.68,
-          "48w": 18.86,
-          "48w_abs": 39.72
-        },
-        "rvol_20d": 0.7,
-        "ma21": "above",
-        "ma21_event": null,
-        "ma50": "above",
-        "ma200": "above",
-        "rank_1w": 0.73,
-        "rank_4w": 0.87,
-        "rank_12w": 0.87,
-        "status": "leading"
-      },
-      {
-        "symbol": "URA",
-        "relative_perf": {
-          "1w": 10.31,
-          "1w_abs": 7.68,
-          "4w": 16.76,
-          "4w_abs": 11.32,
-          "12w": -18.62,
-          "12w_abs": -14.47,
-          "24w": -57.95,
-          "24w_abs": -51.11,
-          "48w": -96.32,
-          "48w_abs": -75.46
-        },
-        "rvol_20d": 0.45,
-        "ma21": "above",
-        "ma21_event": null,
-        "ma50": "above",
-        "ma200": "below",
-        "rank_1w": 1.0,
-        "rank_4w": 0.93,
-        "rank_12w": 0.03,
-        "status": "improving"
-      },
-      {
-        "symbol": "AIQ",
-        "relative_perf": {
-          "1w": 5.1,
-          "1w_abs": 2.46,
-          "4w": 10.49,
-          "4w_abs": 5.05,
-          "12w": -8.07,
-          "12w_abs": -3.93,
-          "24w": -0.19,
-          "24w_abs": 6.65,
-          "48w": 10.08,
-          "48w_abs": 30.94
+          "1w": -2.14,
+          "1w_abs": 0.44,
+          "4w": 6.45,
+          "4w_abs": 11.53,
+          "12w": 20.06,
+          "12w_abs": 31.05,
+          "24w": 75.32,
+          "24w_abs": 99.99,
+          "48w": 115.47,
+          "48w_abs": 161.93
         },
         "rvol_20d": 1.29,
         "ma21": "above",
         "ma21_event": null,
         "ma50": "above",
         "ma200": "above",
-        "rank_1w": 0.87,
-        "rank_4w": 0.8,
-        "rank_12w": 0.3,
-        "status": "improving"
+        "rank_1w": 0.63,
+        "rank_4w": 1.0,
+        "rank_12w": 0.97,
+        "status": "leading"
       },
       {
-        "symbol": "DTCR",
+        "symbol": "XLC",
         "relative_perf": {
-          "1w": 4.87,
-          "1w_abs": 2.24,
-          "4w": 8.71,
-          "4w_abs": 3.27,
-          "12w": -5.28,
-          "12w_abs": -1.14,
-          "24w": -11.0,
-          "24w_abs": -4.16,
-          "48w": -38.01,
-          "48w_abs": -17.15
+          "1w": -0.45,
+          "1w_abs": 2.12,
+          "4w": 4.32,
+          "4w_abs": 9.4,
+          "12w": 3.46,
+          "12w_abs": 14.45,
+          "24w": -5.5,
+          "24w_abs": 19.17,
+          "48w": -13.95,
+          "48w_abs": 32.51
         },
-        "rvol_20d": 1.15,
-        "ma21": "above",
-        "ma21_event": null,
-        "ma50": "above",
-        "ma200": "below",
-        "rank_1w": 0.8,
-        "rank_4w": 0.67,
-        "rank_12w": 0.43,
-        "status": "improving"
-      },
-      {
-        "symbol": "XLE",
-        "relative_perf": {
-          "1w": 5.73,
-          "1w_abs": 3.1,
-          "4w": 2.09,
-          "4w_abs": -3.36,
-          "12w": -5.77,
-          "12w_abs": -1.63,
-          "24w": -12.6,
-          "24w_abs": -5.75,
-          "48w": -29.64,
-          "48w_abs": -8.78
-        },
-        "rvol_20d": 0.76,
-        "ma21": "above",
-        "ma21_event": "reclaimed",
-        "ma50": "below",
-        "ma200": "below",
-        "rank_1w": 0.9,
-        "rank_4w": 0.23,
-        "rank_12w": 0.37,
-        "status": "improving"
-      },
-      {
-        "symbol": "XLB",
-        "relative_perf": {
-          "1w": 9.25,
-          "1w_abs": 6.62,
-          "4w": 19.89,
-          "4w_abs": 14.44,
-          "12w": 0.82,
-          "12w_abs": 4.96,
-          "24w": 9.5,
-          "24w_abs": 16.34,
-          "48w": -11.85,
-          "48w_abs": 9.0
-        },
-        "rvol_20d": 0.62,
+        "rvol_20d": 1.38,
         "ma21": "above",
         "ma21_event": null,
         "ma50": "above",
         "ma200": "above",
-        "rank_1w": 0.97,
-        "rank_4w": 1.0,
-        "rank_12w": 0.63,
-        "status": "neutral"
+        "rank_1w": 0.73,
+        "rank_4w": 0.97,
+        "rank_12w": 0.83,
+        "status": "leading"
       },
       {
-        "symbol": "XAR",
+        "symbol": "NLR",
         "relative_perf": {
-          "1w": 4.75,
-          "1w_abs": 2.12,
-          "4w": 12.7,
-          "4w_abs": 7.26,
-          "12w": 2.26,
-          "12w_abs": 6.4,
-          "24w": 4.79,
-          "24w_abs": 11.63,
-          "48w": -22.94,
-          "48w_abs": -2.08
+          "1w": -0.15,
+          "1w_abs": 2.43,
+          "4w": 1.56,
+          "4w_abs": 6.64,
+          "12w": 21.28,
+          "12w_abs": 32.27,
+          "24w": 36.14,
+          "24w_abs": 60.81,
+          "48w": 89.8,
+          "48w_abs": 136.26
         },
-        "rvol_20d": 1.7,
+        "rvol_20d": 0.39,
         "ma21": "above",
         "ma21_event": null,
         "ma50": "above",
         "ma200": "above",
         "rank_1w": 0.77,
         "rank_4w": 0.83,
-        "rank_12w": 0.7,
-        "status": "neutral"
-      },
-      {
-        "symbol": "AIPO",
-        "relative_perf": {
-          "1w": 0.49,
-          "1w_abs": -2.15,
-          "4w": 9.94,
-          "4w_abs": 4.49,
-          "12w": -2.94,
-          "12w_abs": 1.21,
-          "24w": 14.29,
-          "24w_abs": 21.13,
-          "48w": -23.44,
-          "48w_abs": -2.59
-        },
-        "rvol_20d": 1.18,
-        "ma21": "above",
-        "ma21_event": null,
-        "ma50": "above",
-        "ma200": "above",
-        "rank_1w": 0.2,
-        "rank_4w": 0.77,
-        "rank_12w": 0.53,
-        "status": "neutral"
-      },
-      {
-        "symbol": "NLR",
-        "relative_perf": {
-          "1w": 3.22,
-          "1w_abs": 0.59,
-          "4w": 9.77,
-          "4w_abs": 4.33,
-          "12w": 21.3,
-          "12w_abs": 25.45,
-          "24w": 36.35,
-          "24w_abs": 43.19,
-          "48w": 92.89,
-          "48w_abs": 113.75
-        },
-        "rvol_20d": 0.56,
-        "ma21": "above",
-        "ma21_event": null,
-        "ma50": "above",
-        "ma200": "above",
-        "rank_1w": 0.67,
-        "rank_4w": 0.73,
-        "rank_12w": 0.97,
-        "status": "neutral"
-      },
-      {
-        "symbol": "XLK",
-        "relative_perf": {
-          "1w": 2.32,
-          "1w_abs": -0.32,
-          "4w": 8.86,
-          "4w_abs": 3.42,
-          "12w": 17.85,
-          "12w_abs": 22.0,
-          "24w": 34.39,
-          "24w_abs": 41.23,
-          "48w": 67.73,
-          "48w_abs": 88.59
-        },
-        "rvol_20d": 2.51,
-        "ma21": "above",
-        "ma21_event": null,
-        "ma50": "above",
-        "ma200": "above",
-        "rank_1w": 0.5,
-        "rank_4w": 0.7,
-        "rank_12w": 0.93,
-        "status": "neutral"
+        "rank_12w": 1.0,
+        "status": "leading"
       },
       {
         "symbol": "SMH",
         "relative_perf": {
-          "1w": -0.79,
-          "1w_abs": -3.42,
-          "4w": 7.73,
-          "4w_abs": 2.29,
-          "12w": 15.1,
-          "12w_abs": 19.24,
-          "24w": 74.49,
-          "24w_abs": 81.33,
-          "48w": 185.29,
-          "48w_abs": 206.15
+          "1w": 0.02,
+          "1w_abs": 2.6,
+          "4w": 0.63,
+          "4w_abs": 5.71,
+          "12w": 13.81,
+          "12w_abs": 24.79,
+          "24w": 34.3,
+          "24w_abs": 58.97,
+          "48w": 84.27,
+          "48w_abs": 130.73
         },
-        "rvol_20d": 0.59,
+        "rvol_20d": 0.39,
         "ma21": "above",
         "ma21_event": null,
         "ma50": "above",
         "ma200": "above",
-        "rank_1w": 0.07,
-        "rank_4w": 0.63,
-        "rank_12w": 0.9,
-        "status": "neutral"
+        "rank_1w": 0.8,
+        "rank_4w": 0.8,
+        "rank_12w": 0.93,
+        "status": "leading"
       },
       {
-        "symbol": "XLRE",
+        "symbol": "URNM",
         "relative_perf": {
-          "1w": 1.9,
-          "1w_abs": -0.73,
-          "4w": 7.3,
-          "4w_abs": 1.85,
-          "12w": 10.03,
-          "12w_abs": 14.17,
-          "24w": 1.58,
-          "24w_abs": 8.42,
-          "48w": -17.05,
-          "48w_abs": 3.81
+          "1w": 0.27,
+          "1w_abs": 2.85,
+          "4w": 3.25,
+          "4w_abs": 8.33,
+          "12w": -7.95,
+          "12w_abs": 3.04,
+          "24w": -20.13,
+          "24w_abs": 4.54,
+          "48w": -50.0,
+          "48w_abs": -3.54
         },
-        "rvol_20d": 1.45,
-        "ma21": "below",
-        "ma21_event": "lost",
-        "ma50": "above",
-        "ma200": "above",
-        "rank_1w": 0.37,
-        "rank_4w": 0.6,
-        "rank_12w": 0.83,
-        "status": "neutral"
-      },
-      {
-        "symbol": "SOXX",
-        "relative_perf": {
-          "1w": 5.01,
-          "1w_abs": 2.37,
-          "4w": 6.95,
-          "4w_abs": 1.51,
-          "12w": 5.21,
-          "12w_abs": 9.35,
-          "24w": -2.62,
-          "24w_abs": 4.22,
-          "48w": -13.49,
-          "48w_abs": 7.36
-        },
-        "rvol_20d": 0.93,
+        "rvol_20d": 0.98,
         "ma21": "above",
         "ma21_event": null,
         "ma50": "above",
         "ma200": "above",
         "rank_1w": 0.83,
-        "rank_4w": 0.57,
-        "rank_12w": 0.73,
-        "status": "neutral"
+        "rank_4w": 0.93,
+        "rank_12w": 0.5,
+        "status": "improving"
       },
       {
-        "symbol": "MAGS",
+        "symbol": "SCHG",
         "relative_perf": {
-          "1w": 2.12,
-          "1w_abs": -0.51,
-          "4w": 6.72,
-          "4w_abs": 1.28,
-          "12w": -4.58,
-          "12w_abs": -0.43,
-          "24w": -7.97,
-          "24w_abs": -1.13,
-          "48w": -13.97,
-          "48w_abs": 6.89
+          "1w": 1.23,
+          "1w_abs": 3.81,
+          "4w": 3.19,
+          "4w_abs": 8.27,
+          "12w": -12.04,
+          "12w_abs": -1.05,
+          "24w": -28.24,
+          "24w_abs": -3.57,
+          "48w": -46.67,
+          "48w_abs": -0.21
         },
-        "rvol_20d": 1.3,
+        "rvol_20d": 1.32,
+        "ma21": "above",
+        "ma21_event": null,
+        "ma50": "above",
+        "ma200": "above",
+        "rank_1w": 0.97,
+        "rank_4w": 0.9,
+        "rank_12w": 0.4,
+        "status": "improving"
+      },
+      {
+        "symbol": "URA",
+        "relative_perf": {
+          "1w": 7.77,
+          "1w_abs": 10.35,
+          "4w": 1.95,
+          "4w_abs": 7.03,
+          "12w": -25.49,
+          "12w_abs": -14.5,
+          "24w": -61.41,
+          "24w_abs": -36.74,
+          "48w": -115.34,
+          "48w_abs": -68.89
+        },
+        "rvol_20d": 1.52,
         "ma21": "above",
         "ma21_event": null,
         "ma50": "above",
         "ma200": "below",
-        "rank_1w": 0.43,
-        "rank_4w": 0.53,
-        "rank_12w": 0.5,
-        "status": "neutral"
+        "rank_1w": 1.0,
+        "rank_4w": 0.87,
+        "rank_12w": 0.03,
+        "status": "improving"
       },
       {
-        "symbol": "XES",
+        "symbol": "XLK",
         "relative_perf": {
-          "1w": 7.34,
-          "1w_abs": 4.71,
-          "4w": 6.59,
-          "4w_abs": 1.14,
-          "12w": 6.05,
-          "12w_abs": 10.2,
-          "24w": 2.88,
-          "24w_abs": 9.72,
-          "48w": 4.52,
-          "48w_abs": 25.38
+          "1w": 0.57,
+          "1w_abs": 3.15,
+          "4w": -1.69,
+          "4w_abs": 3.39,
+          "12w": -9.81,
+          "12w_abs": 1.18,
+          "24w": 9.58,
+          "24w_abs": 34.25,
+          "48w": 57.31,
+          "48w_abs": 103.77
         },
-        "rvol_20d": 0.82,
+        "rvol_20d": 1.09,
         "ma21": "above",
         "ma21_event": "reclaimed",
         "ma50": "above",
         "ma200": "above",
-        "rank_1w": 0.93,
-        "rank_4w": 0.5,
-        "rank_12w": 0.77,
-        "status": "neutral"
+        "rank_1w": 0.9,
+        "rank_4w": 0.77,
+        "rank_12w": 0.47,
+        "status": "improving"
       },
       {
-        "symbol": "OIH",
+        "symbol": "XOP",
         "relative_perf": {
-          "1w": 3.29,
-          "1w_abs": 0.65,
-          "4w": 6.36,
-          "4w_abs": 0.91,
-          "12w": -0.64,
-          "12w_abs": 3.51,
-          "24w": -0.73,
-          "24w_abs": 6.12,
-          "48w": 1.61,
-          "48w_abs": 22.47
+          "1w": 0.78,
+          "1w_abs": 3.36,
+          "4w": -2.48,
+          "4w_abs": 2.6,
+          "12w": -15.95,
+          "12w_abs": -4.97,
+          "24w": -40.12,
+          "24w_abs": -15.45,
+          "48w": -47.0,
+          "48w_abs": -0.55
         },
-        "rvol_20d": 0.53,
+        "rvol_20d": 0.42,
+        "ma21": "above",
+        "ma21_event": null,
+        "ma50": "above",
+        "ma200": "below",
+        "rank_1w": 0.93,
+        "rank_4w": 0.6,
+        "rank_12w": 0.3,
+        "status": "improving"
+      },
+      {
+        "symbol": "XAR",
+        "relative_perf": {
+          "1w": 0.3,
+          "1w_abs": 2.88,
+          "4w": -1.94,
+          "4w_abs": 3.14,
+          "12w": -6.2,
+          "12w_abs": 4.78,
+          "24w": -8.43,
+          "24w_abs": 16.24,
+          "48w": -34.0,
+          "48w_abs": 12.46
+        },
+        "rvol_20d": 0.51,
         "ma21": "above",
         "ma21_event": null,
         "ma50": "above",
         "ma200": "above",
-        "rank_1w": 0.7,
-        "rank_4w": 0.47,
-        "rank_12w": 0.6,
+        "rank_1w": 0.87,
+        "rank_4w": 0.73,
+        "rank_12w": 0.57,
         "status": "neutral"
       },
       {
         "symbol": "PAVE",
         "relative_perf": {
-          "1w": 2.54,
-          "1w_abs": -0.09,
-          "4w": 5.29,
-          "4w_abs": -0.16,
-          "12w": -2.76,
-          "12w_abs": 1.39,
-          "24w": -6.34,
-          "24w_abs": 0.51,
-          "48w": -36.84,
-          "48w_abs": -15.98
+          "1w": -4.39,
+          "1w_abs": -1.81,
+          "4w": -1.99,
+          "4w_abs": 3.09,
+          "12w": -0.17,
+          "12w_abs": 10.82,
+          "24w": -22.01,
+          "24w_abs": 2.67,
+          "48w": -44.85,
+          "48w_abs": 1.6
         },
-        "rvol_20d": 1.16,
-        "ma21": "below",
-        "ma21_event": "lost",
-        "ma50": "below",
-        "ma200": "below",
-        "rank_1w": 0.53,
-        "rank_4w": 0.4,
-        "rank_12w": 0.57,
+        "rvol_20d": 0.91,
+        "ma21": "above",
+        "ma21_event": null,
+        "ma50": "above",
+        "ma200": "above",
+        "rank_1w": 0.3,
+        "rank_4w": 0.7,
+        "rank_12w": 0.77,
         "status": "neutral"
       },
       {
-        "symbol": "XLC",
+        "symbol": "MGK",
         "relative_perf": {
-          "1w": 1.17,
-          "1w_abs": -1.46,
-          "4w": 2.66,
-          "4w_abs": -2.79,
-          "12w": -6.8,
-          "12w_abs": -2.65,
-          "24w": -18.08,
-          "24w_abs": -11.24,
-          "48w": -27.09,
-          "48w_abs": -6.23
+          "1w": -4.41,
+          "1w_abs": -1.83,
+          "4w": -2.26,
+          "4w_abs": 2.83,
+          "12w": -1.7,
+          "12w_abs": 9.29,
+          "24w": -19.18,
+          "24w_abs": 5.5,
+          "48w": -42.64,
+          "48w_abs": 3.82
         },
-        "rvol_20d": 0.64,
+        "rvol_20d": 1.32,
+        "ma21": "above",
+        "ma21_event": null,
+        "ma50": "above",
+        "ma200": "above",
+        "rank_1w": 0.27,
+        "rank_4w": 0.67,
+        "rank_12w": 0.7,
+        "status": "neutral"
+      },
+      {
+        "symbol": "DTCR",
+        "relative_perf": {
+          "1w": -2.86,
+          "1w_abs": -0.28,
+          "4w": -2.48,
+          "4w_abs": 2.6,
+          "12w": 2.58,
+          "12w_abs": 13.57,
+          "24w": 1.95,
+          "24w_abs": 26.62,
+          "48w": -32.8,
+          "48w_abs": 13.65
+        },
+        "rvol_20d": 0.38,
+        "ma21": "above",
+        "ma21_event": null,
+        "ma50": "above",
+        "ma200": "above",
+        "rank_1w": 0.53,
+        "rank_4w": 0.63,
+        "rank_12w": 0.8,
+        "status": "neutral"
+      },
+      {
+        "symbol": "AIPO",
+        "relative_perf": {
+          "1w": -4.15,
+          "1w_abs": -1.57,
+          "4w": -2.67,
+          "4w_abs": 2.41,
+          "12w": 5.17,
+          "12w_abs": 16.16,
+          "24w": -10.1,
+          "24w_abs": 14.57,
+          "48w": -53.16,
+          "48w_abs": -6.7
+        },
+        "rvol_20d": 0.78,
         "ma21": "below",
         "ma21_event": "lost",
-        "ma50": "below",
+        "ma50": "above",
+        "ma200": "above",
+        "rank_1w": 0.33,
+        "rank_4w": 0.57,
+        "rank_12w": 0.9,
+        "status": "neutral"
+      },
+      {
+        "symbol": "XLV",
+        "relative_perf": {
+          "1w": -3.73,
+          "1w_abs": -1.15,
+          "4w": -3.0,
+          "4w_abs": 2.08,
+          "12w": 4.49,
+          "12w_abs": 15.48,
+          "24w": 40.05,
+          "24w_abs": 64.72,
+          "48w": 36.45,
+          "48w_abs": 82.91
+        },
+        "rvol_20d": 1.12,
+        "ma21": "below",
+        "ma21_event": "lost",
+        "ma50": "above",
+        "ma200": "above",
+        "rank_1w": 0.43,
+        "rank_4w": 0.53,
+        "rank_12w": 0.87,
+        "status": "neutral"
+      },
+      {
+        "symbol": "IWF",
+        "relative_perf": {
+          "1w": -3.77,
+          "1w_abs": -1.19,
+          "4w": -3.83,
+          "4w_abs": 1.25,
+          "12w": -14.73,
+          "12w_abs": -3.74,
+          "24w": -34.5,
+          "24w_abs": -9.83,
+          "48w": -57.16,
+          "48w_abs": -10.7
+        },
+        "rvol_20d": 0.6,
+        "ma21": "above",
+        "ma21_event": null,
+        "ma50": "above",
         "ma200": "below",
-        "rank_1w": 0.3,
-        "rank_4w": 0.37,
+        "rank_1w": 0.4,
+        "rank_4w": 0.5,
         "rank_12w": 0.33,
         "status": "neutral"
       },
       {
-        "symbol": "IFRA",
+        "symbol": "XES",
         "relative_perf": {
-          "1w": -2.09,
-          "1w_abs": -4.73,
-          "4w": 2.54,
-          "4w_abs": -2.91,
-          "12w": -4.73,
-          "12w_abs": -0.59,
-          "24w": 6.08,
-          "24w_abs": 12.92,
-          "48w": -14.18,
-          "48w_abs": 6.68
+          "1w": -6.23,
+          "1w_abs": -3.65,
+          "4w": -5.1,
+          "4w_abs": -0.01,
+          "12w": -16.92,
+          "12w_abs": -5.93,
+          "24w": -30.95,
+          "24w_abs": -6.28,
+          "48w": -43.86,
+          "48w_abs": 2.6
+        },
+        "rvol_20d": 1.68,
+        "ma21": "below",
+        "ma21_event": "lost",
+        "ma50": "below",
+        "ma200": "below",
+        "rank_1w": 0.07,
+        "rank_4w": 0.4,
+        "rank_12w": 0.27,
+        "status": "neutral"
+      },
+      {
+        "symbol": "XLE",
+        "relative_perf": {
+          "1w": -2.77,
+          "1w_abs": -0.19,
+          "4w": -5.11,
+          "4w_abs": -0.03,
+          "12w": -4.16,
+          "12w_abs": 6.82,
+          "24w": -24.56,
+          "24w_abs": 0.12,
+          "48w": -23.46,
+          "48w_abs": 23.0
+        },
+        "rvol_20d": 2.14,
+        "ma21": "below",
+        "ma21_event": null,
+        "ma50": "above",
+        "ma200": "above",
+        "rank_1w": 0.57,
+        "rank_4w": 0.37,
+        "rank_12w": 0.63,
+        "status": "neutral"
+      },
+      {
+        "symbol": "XLRE",
+        "relative_perf": {
+          "1w": -5.41,
+          "1w_abs": -2.83,
+          "4w": -5.38,
+          "4w_abs": -0.3,
+          "12w": -14.28,
+          "12w_abs": -3.3,
+          "24w": -13.02,
+          "24w_abs": 11.65,
+          "48w": -25.11,
+          "48w_abs": 21.35
         },
         "rvol_20d": 0.79,
         "ma21": "below",
         "ma21_event": null,
         "ma50": "below",
         "ma200": "above",
-        "rank_1w": 0.0,
+        "rank_1w": 0.13,
         "rank_4w": 0.33,
-        "rank_12w": 0.47,
+        "rank_12w": 0.37,
         "status": "neutral"
       },
       {
-        "symbol": "XLP",
+        "symbol": "OIH",
         "relative_perf": {
-          "1w": 2.61,
-          "1w_abs": -0.02,
-          "4w": 2.47,
-          "4w_abs": -2.97,
-          "12w": -11.15,
-          "12w_abs": -7.0,
-          "24w": -16.05,
-          "24w_abs": -9.21,
-          "48w": -42.05,
-          "48w_abs": -21.19
+          "1w": -1.18,
+          "1w_abs": 1.4,
+          "4w": -8.02,
+          "4w_abs": -2.94,
+          "12w": -10.04,
+          "12w_abs": 0.94,
+          "24w": -27.61,
+          "24w_abs": -2.94,
+          "48w": -48.15,
+          "48w_abs": -1.69
         },
-        "rvol_20d": 0.64,
-        "ma21": "below",
+        "rvol_20d": 0.65,
+        "ma21": "above",
         "ma21_event": null,
         "ma50": "below",
+        "ma200": "above",
+        "rank_1w": 0.7,
+        "rank_4w": 0.27,
+        "rank_12w": 0.43,
+        "status": "neutral"
+      },
+      {
+        "symbol": "XLY",
+        "relative_perf": {
+          "1w": -1.76,
+          "1w_abs": 0.82,
+          "4w": -8.93,
+          "4w_abs": -3.84,
+          "12w": -18.84,
+          "12w_abs": -7.86,
+          "24w": -28.2,
+          "24w_abs": -3.53,
+          "48w": -68.32,
+          "48w_abs": -21.86
+        },
+        "rvol_20d": 0.71,
+        "ma21": "below",
+        "ma21_event": "lost",
+        "ma50": "below",
         "ma200": "below",
-        "rank_1w": 0.57,
-        "rank_4w": 0.3,
+        "rank_1w": 0.67,
+        "rank_4w": 0.2,
         "rank_12w": 0.23,
         "status": "neutral"
       },
       {
+        "symbol": "MAGS",
+        "relative_perf": {
+          "1w": -2.29,
+          "1w_abs": 0.29,
+          "4w": -9.15,
+          "4w_abs": -4.07,
+          "12w": -4.76,
+          "12w_abs": 6.22,
+          "24w": -14.04,
+          "24w_abs": 10.63,
+          "48w": -26.63,
+          "48w_abs": 19.83
+        },
+        "rvol_20d": 0.48,
+        "ma21": "below",
+        "ma21_event": null,
+        "ma50": "above",
+        "ma200": "above",
+        "rank_1w": 0.6,
+        "rank_4w": 0.17,
+        "rank_12w": 0.6,
+        "status": "neutral"
+      },
+      {
+        "symbol": "AIQ",
+        "relative_perf": {
+          "1w": -4.86,
+          "1w_abs": -2.28,
+          "4w": -4.05,
+          "4w_abs": 1.03,
+          "12w": -1.3,
+          "12w_abs": 9.69,
+          "24w": -20.38,
+          "24w_abs": 4.29,
+          "48w": -42.45,
+          "48w_abs": 4.01
+        },
+        "rvol_20d": 1.34,
+        "ma21": "below",
+        "ma21_event": "lost",
+        "ma50": "above",
+        "ma200": "above",
+        "rank_1w": 0.2,
+        "rank_4w": 0.47,
+        "rank_12w": 0.73,
+        "status": "deteriorating"
+      },
+      {
         "symbol": "GRID",
         "relative_perf": {
-          "1w": -1.15,
-          "1w_abs": -3.79,
-          "4w": 0.41,
-          "4w_abs": -5.03,
-          "12w": -5.53,
-          "12w_abs": -1.38,
-          "24w": -10.37,
-          "24w_abs": -3.53,
-          "48w": -24.51,
-          "48w_abs": -3.66
+          "1w": -4.72,
+          "1w_abs": -2.14,
+          "4w": -4.57,
+          "4w_abs": 0.51,
+          "12w": -3.13,
+          "12w_abs": 7.86,
+          "24w": -12.68,
+          "24w_abs": 11.99,
+          "48w": -54.67,
+          "48w_abs": -8.22
         },
-        "rvol_20d": 0.41,
+        "rvol_20d": 0.63,
+        "ma21": "below",
+        "ma21_event": null,
+        "ma50": "above",
+        "ma200": "above",
+        "rank_1w": 0.23,
+        "rank_4w": 0.43,
+        "rank_12w": 0.67,
+        "status": "deteriorating"
+      },
+      {
+        "symbol": "XLF",
+        "relative_perf": {
+          "1w": -5.26,
+          "1w_abs": -2.68,
+          "4w": -9.51,
+          "4w_abs": -4.43,
+          "12w": -6.77,
+          "12w_abs": 4.21,
+          "24w": -21.77,
+          "24w_abs": 2.9,
+          "48w": -42.2,
+          "48w_abs": 4.26
+        },
+        "rvol_20d": 0.92,
+        "ma21": "below",
+        "ma21_event": null,
+        "ma50": "below",
+        "ma200": "above",
+        "rank_1w": 0.17,
+        "rank_4w": 0.1,
+        "rank_12w": 0.53,
+        "status": "deteriorating"
+      },
+      {
+        "symbol": "SOXX",
+        "relative_perf": {
+          "1w": -6.24,
+          "1w_abs": -3.67,
+          "4w": -7.48,
+          "4w_abs": -2.4,
+          "12w": -24.59,
+          "12w_abs": -13.6,
+          "24w": -32.62,
+          "24w_abs": -7.95,
+          "48w": -69.54,
+          "48w_abs": -23.08
+        },
+        "rvol_20d": 1.22,
         "ma21": "below",
         "ma21_event": null,
         "ma50": "below",
         "ma200": "below",
         "rank_1w": 0.03,
-        "rank_4w": 0.17,
-        "rank_12w": 0.4,
-        "status": "neutral"
-      },
-      {
-        "symbol": "XLF",
-        "relative_perf": {
-          "1w": 1.56,
-          "1w_abs": -1.07,
-          "4w": 0.31,
-          "4w_abs": -5.14,
-          "12w": -8.9,
-          "12w_abs": -4.76,
-          "24w": -9.78,
-          "24w_abs": -2.94,
-          "48w": -20.65,
-          "48w_abs": 0.2
-        },
-        "rvol_20d": 1.11,
-        "ma21": "below",
-        "ma21_event": null,
-        "ma50": "below",
-        "ma200": "below",
-        "rank_1w": 0.33,
-        "rank_4w": 0.13,
-        "rank_12w": 0.27,
-        "status": "neutral"
-      },
-      {
-        "symbol": "MGK",
-        "relative_perf": {
-          "1w": 0.07,
-          "1w_abs": -2.57,
-          "4w": -0.93,
-          "4w_abs": -6.38,
-          "12w": 0.87,
-          "12w_abs": 5.02,
-          "24w": -12.05,
-          "24w_abs": -5.21,
-          "48w": -21.02,
-          "48w_abs": -0.16
-        },
-        "rvol_20d": 4.15,
-        "ma21": "below",
-        "ma21_event": null,
-        "ma50": "below",
-        "ma200": "below",
-        "rank_1w": 0.13,
-        "rank_4w": 0.03,
-        "rank_12w": 0.67,
-        "status": "deteriorating"
-      },
-      {
-        "symbol": "XLI",
-        "relative_perf": {
-          "1w": 1.95,
-          "1w_abs": -0.68,
-          "4w": 5.46,
-          "4w_abs": 0.02,
-          "12w": -13.51,
-          "12w_abs": -9.37,
-          "24w": -11.04,
-          "24w_abs": -4.19,
-          "48w": -17.87,
-          "48w_abs": 2.98
-        },
-        "rvol_20d": 0.97,
-        "ma21": "above",
-        "ma21_event": "reclaimed",
-        "ma50": "below",
-        "ma200": "below",
-        "rank_1w": 0.4,
-        "rank_4w": 0.43,
-        "rank_12w": 0.13,
-        "status": "lagging"
-      },
-      {
-        "symbol": "URNM",
-        "relative_perf": {
-          "1w": 2.25,
-          "1w_abs": -0.38,
-          "4w": 2.18,
-          "4w_abs": -3.26,
-          "12w": -13.82,
-          "12w_abs": -9.67,
-          "24w": -13.21,
-          "24w_abs": -6.37,
-          "48w": -7.8,
-          "48w_abs": 13.06
-        },
-        "rvol_20d": 0.5,
-        "ma21": "below",
-        "ma21_event": "lost",
-        "ma50": "below",
-        "ma200": "below",
-        "rank_1w": 0.47,
-        "rank_4w": 0.27,
-        "rank_12w": 0.1,
+        "rank_4w": 0.3,
+        "rank_12w": 0.07,
         "status": "lagging"
       },
       {
         "symbol": "XLU",
         "relative_perf": {
-          "1w": 0.09,
-          "1w_abs": -2.55,
-          "4w": 1.21,
-          "4w_abs": -4.24,
-          "12w": -21.9,
-          "12w_abs": -17.75,
-          "24w": -25.85,
-          "24w_abs": -19.01,
-          "48w": -45.93,
-          "48w_abs": -25.07
+          "1w": -3.05,
+          "1w_abs": -0.47,
+          "4w": -8.46,
+          "4w_abs": -3.38,
+          "12w": -20.19,
+          "12w_abs": -9.2,
+          "24w": -52.67,
+          "24w_abs": -28.0,
+          "48w": -94.33,
+          "48w_abs": -47.87
         },
-        "rvol_20d": 1.38,
+        "rvol_20d": 1.32,
         "ma21": "below",
         "ma21_event": null,
         "ma50": "below",
         "ma200": "below",
-        "rank_1w": 0.17,
-        "rank_4w": 0.2,
-        "rank_12w": 0.0,
+        "rank_1w": 0.5,
+        "rank_4w": 0.23,
+        "rank_12w": 0.13,
         "status": "lagging"
       },
       {
-        "symbol": "SCHG",
+        "symbol": "XLB",
         "relative_perf": {
-          "1w": -0.33,
-          "1w_abs": -2.97,
-          "4w": -0.06,
-          "4w_abs": -5.51,
-          "12w": -11.8,
-          "12w_abs": -7.65,
-          "24w": -19.33,
-          "24w_abs": -12.48,
-          "48w": -36.69,
-          "48w_abs": -15.83
+          "1w": -3.23,
+          "1w_abs": -0.65,
+          "4w": -9.27,
+          "4w_abs": -4.19,
+          "12w": -18.95,
+          "12w_abs": -7.96,
+          "24w": -34.53,
+          "24w_abs": -9.86,
+          "48w": -66.07,
+          "48w_abs": -19.61
         },
-        "rvol_20d": 0.35,
+        "rvol_20d": 0.71,
         "ma21": "below",
         "ma21_event": null,
         "ma50": "below",
         "ma200": "below",
-        "rank_1w": 0.1,
-        "rank_4w": 0.1,
+        "rank_1w": 0.47,
+        "rank_4w": 0.13,
         "rank_12w": 0.2,
         "status": "lagging"
       },
       {
-        "symbol": "XLY",
+        "symbol": "XLI",
         "relative_perf": {
-          "1w": 0.51,
-          "1w_abs": -2.12,
-          "4w": -0.57,
-          "4w_abs": -6.02,
-          "12w": -13.28,
-          "12w_abs": -9.13,
-          "24w": -7.42,
-          "24w_abs": -0.58,
-          "48w": -25.86,
-          "48w_abs": -5.0
+          "1w": -3.93,
+          "1w_abs": -1.36,
+          "4w": -10.73,
+          "4w_abs": -5.65,
+          "12w": -19.45,
+          "12w_abs": -8.47,
+          "24w": -22.09,
+          "24w_abs": 2.59,
+          "48w": -58.62,
+          "48w_abs": -12.17
         },
-        "rvol_20d": 0.9,
+        "rvol_20d": 1.02,
         "ma21": "below",
         "ma21_event": null,
         "ma50": "below",
         "ma200": "below",
-        "rank_1w": 0.23,
+        "rank_1w": 0.37,
         "rank_4w": 0.07,
         "rank_12w": 0.17,
         "status": "lagging"
       },
       {
-        "symbol": "XOP",
+        "symbol": "XLP",
         "relative_perf": {
-          "1w": 0.8,
-          "1w_abs": -1.83,
-          "4w": -4.69,
-          "4w_abs": -10.13,
-          "12w": -17.06,
-          "12w_abs": -12.91,
-          "24w": -20.42,
-          "24w_abs": -13.58,
-          "48w": -45.36,
-          "48w_abs": -24.5
+          "1w": -5.43,
+          "1w_abs": -2.85,
+          "4w": -11.54,
+          "4w_abs": -6.46,
+          "12w": -27.46,
+          "12w_abs": -16.47,
+          "24w": -46.81,
+          "24w_abs": -22.14,
+          "48w": -80.32,
+          "48w_abs": -33.86
         },
-        "rvol_20d": 0.76,
+        "rvol_20d": 1.03,
         "ma21": "below",
         "ma21_event": null,
         "ma50": "below",
         "ma200": "below",
-        "rank_1w": 0.27,
+        "rank_1w": 0.1,
+        "rank_4w": 0.03,
+        "rank_12w": 0.0,
+        "status": "lagging"
+      },
+      {
+        "symbol": "IFRA",
+        "relative_perf": {
+          "1w": -7.35,
+          "1w_abs": -4.78,
+          "4w": -15.84,
+          "4w_abs": -10.76,
+          "12w": -23.6,
+          "12w_abs": -12.62,
+          "24w": -43.66,
+          "24w_abs": -18.99,
+          "48w": -77.2,
+          "48w_abs": -30.74
+        },
+        "rvol_20d": 0.96,
+        "ma21": "below",
+        "ma21_event": null,
+        "ma50": "below",
+        "ma200": "below",
+        "rank_1w": 0.0,
         "rank_4w": 0.0,
-        "rank_12w": 0.07,
+        "rank_12w": 0.1,
         "status": "lagging"
       }
     ],
@@ -1860,9 +1978,9 @@
   "setups": {
     "regime": {
       "regime": "risk_on",
-      "risk_score": 3.6,
+      "risk_score": 7.4,
       "modifiers": [],
-      "vix_5d_change_pct": -2.4,
+      "vix_5d_change_pct": -5.2,
       "components": [
         {
           "name": "vix_alignment",
@@ -1871,10 +1989,10 @@
           "contribution": 5.0,
           "evidence": {
             "state": "confirming_bullish",
-            "index_change_pct": 1.59,
-            "vix_change_pct": -1.24,
-            "vix_spot": 7.61,
-            "vix_pivot": 8.34,
+            "index_change_pct": 3.43,
+            "vix_change_pct": -1.19,
+            "vix_spot": 11.41,
+            "vix_pivot": 11.96,
             "vix_below_pivot": true,
             "lookback_days": 3
           }
@@ -1885,21 +2003,21 @@
           "weight": 1.5,
           "contribution": 2.25,
           "evidence": {
-            "spot": 7.61,
-            "pivot": 8.34,
+            "spot": 11.41,
+            "pivot": 11.96,
             "spot_vs_pivot": "below"
           }
         },
         {
           "name": "index_structure",
-          "score": 0.0,
+          "score": 2.0,
           "weight": 2.0,
-          "contribution": 0.0,
+          "contribution": 4.0,
           "evidence": {
             "symbol": "QQQ",
-            "spot": 1322.29,
-            "weekly_pivot": 1329.06,
-            "above_weekly_pivot": false,
+            "spot": 476.99,
+            "weekly_pivot": 457.94,
+            "above_weekly_pivot": true,
             "ma21_state": "above"
           }
         },
@@ -1910,10 +2028,10 @@
           "contribution": 0.0,
           "evidence": {
             "phase": "consolidation",
-            "trend_slope_pct_per_bar": 0.059,
-            "short_trend_slope": 0.247,
-            "updown_volume_ratio_20d": 1.95,
-            "range_position_60d": 0.79,
+            "trend_slope_pct_per_bar": -0.06,
+            "short_trend_slope": 0.985,
+            "updown_volume_ratio_20d": 1.28,
+            "range_position_60d": 0.85,
             "rvol_20d": 0.46,
             "recent_volume_fade": false,
             "atr_contraction_7v28": 1.08
@@ -1921,20 +2039,20 @@
         },
         {
           "name": "momentum",
-          "score": 0.0,
+          "score": 1.0,
           "weight": 1.5,
-          "contribution": 0.0,
+          "contribution": 1.5,
           "evidence": {
-            "daily_rsi": 52.2
+            "daily_rsi": 65.3
           }
         },
         {
           "name": "ma_breadth",
-          "score": 0.0,
+          "score": 2.0,
           "weight": 1.0,
-          "contribution": 0.0,
+          "contribution": 2.0,
           "evidence": {
-            "fraction_above_mas": 0.5,
+            "fraction_above_mas": 1.0,
             "detail": {
               "QQQ": {
                 "5": "above",
@@ -1945,19 +2063,19 @@
                 "200": "above"
               },
               "SPY": {
-                "5": "below",
-                "13": "below",
-                "21": "below",
-                "50": "below",
-                "63": "below",
-                "200": "below"
+                "5": "above",
+                "13": "above",
+                "21": "above",
+                "50": "above",
+                "63": "above",
+                "200": "above"
               }
             }
           }
         }
       ],
       "primary_index": "QQQ",
-      "computed_at": "2026-06-11 03:27:00+00:00",
+      "computed_at": "2026-06-11 04:14:00+00:00",
       "not_yet_classified": {
         "trend_day_vs_mean_reversion": "requires intraday bars (Phase 4 alert engine)",
         "sector_breadth": "requires rotation-mcp (Phase 3)"
@@ -1966,37 +2084,61 @@
     "direction": "long",
     "setups": [
       {
-        "symbol": "CRM",
+        "symbol": "AVGO",
         "direction": "long",
-        "instrument": "stock",
-        "entry_trigger": 493.44,
-        "stop": 483.71,
-        "target_1": 505.61,
-        "target_2": 513.72,
+        "instrument": "call_debit_spread",
+        "entry_trigger": 196.9,
+        "stop": 192.86,
+        "target_1": 201.96,
+        "target_2": 205.33,
         "risk_reward_t1": 1.25,
-        "risk_reward_t2": 2.08,
+        "risk_reward_t2": 2.09,
         "derived_levels": {
           "stop": {
             "formula": "entry - 1.2*ATR14",
             "inputs": [
-              493.44,
-              8.11
+              196.9,
+              3.37
             ]
           },
           "target_1": {
             "formula": "entry + 1.5*ATR14",
             "inputs": [
-              493.44,
-              8.11
+              196.9,
+              3.37
             ]
           },
           "target_2": {
             "formula": "entry + 2.5*ATR14",
             "inputs": [
-              493.44,
-              8.11
+              196.9,
+              3.37
             ]
           }
+        },
+        "options": {
+          "symbol": "AVGO",
+          "spot": 193.74778363724508,
+          "gamma_regime": "negative",
+          "zero_gamma_flip": 203.35,
+          "call_wall": 205.0,
+          "put_wall": 180.0,
+          "reading": "negative gamma: dealers amplify moves; breaks of big-OI strikes can accelerate"
+        },
+        "instrument_suggestion": {
+          "expiry": "2026-07-11",
+          "dte": 30,
+          "iv": 0.3003,
+          "iv_rank": 0.62,
+          "oi": 793,
+          "spread_pct": 0.0211,
+          "expected_move": 16.68,
+          "t1_within_expected_move": true,
+          "notes": [],
+          "instrument": "call_debit_spread",
+          "long_strike": 195.0,
+          "short_strike": 210.0,
+          "reason": "IV rank 62% \u2265 55% \u2014 define risk with a debit spread"
         },
         "confidence": 7.4,
         "score_components": {
@@ -2008,142 +2150,32 @@
             "weight": 1.4
           },
           "index_alignment": {
-            "value": 0.68,
+            "value": 0.87,
             "evidence": {
               "regime": "risk_on",
-              "risk_score": 3.6
+              "risk_score": 7.4
             },
             "weight": 1.2
           },
           "options_alignment": {
-            "value": 0.5,
-            "placeholder": true,
-            "evidence": {
-              "note": "options-mcp lands in Phase 5; scored neutral"
-            },
-            "weight": 0.4
-          },
-          "sector_strength": {
-            "value": 1.0,
-            "evidence": {
-              "sector_etf": "IGV",
-              "status": "leading",
-              "rank_4w": 0.97
-            },
-            "weight": 1.2
-          },
-          "stock_relative_strength": {
-            "value": 0.73,
-            "evidence": {
-              "classification": "canslim_leader",
-              "passes": "8/11"
-            },
-            "weight": 1.2
-          },
-          "volume_rvol": {
-            "value": 0.0,
-            "evidence": {
-              "rvol_20d": 0.57,
-              "phase": "mark_up"
-            },
-            "weight": 1.0
-          },
-          "rsi_confirmation": {
-            "value": 1.0,
-            "evidence": {
-              "daily_rsi": 72.8,
-              "bearish_divergence": false,
-              "bullish_divergence": false
-            },
-            "weight": 0.9
-          },
-          "ma_structure": {
-            "value": 1.0,
-            "evidence": {
-              "mas_above_of_6": 6
-            },
-            "weight": 1.0
-          },
-          "risk_reward": {
-            "value": 0.23,
-            "evidence": {
-              "rr_t1": 1.25,
-              "rr_t2": 2.08
-            },
-            "weight": 1.3
-          },
-          "liquidity": {
-            "value": 1.0,
-            "placeholder": true,
-            "evidence": {
-              "avg_dollar_volume_$m": 1905.0,
-              "note": "options spread/liquidity checks land in Phase 5"
-            },
-            "weight": 0.4
-          },
-          "catalyst_fundamental": {
-            "value": 1.0,
-            "evidence": {
-              "growth_grade": "strong",
-              "days_to_earnings": 45,
-              "in_earnings_window": false
-            },
-            "weight": 1.0
-          }
-        },
-        "risks": [],
-        "sector_etf": "IGV",
-        "sector_status": "leading",
-        "classification": "canslim_leader",
-        "structure": "none",
-        "invalidation": "daily close below 21d MA or VIX reclaims pivot",
-        "earnings_flag": false,
-        "thesis": "CRM long: IGV is leading and the stock screens canslim_leader (8/11 checks). Trade is live only if price reclaims 493.44 \u2014 regime is risk_on (+3.6) with VIX confirming bullish. Risk 483.71, targets 505.61 then 513.72 (R:R 1.25). Invalidated by a daily close back below the 21-day MA or VIX reclaiming its pivot.",
-        "validated": true,
-        "computed_at": "2026-06-11 03:27:00+00:00"
-      },
-      {
-        "symbol": "CCJ",
-        "direction": "long",
-        "instrument": "stock",
-        "entry_trigger": 124.78,
-        "stop": 123.79,
-        "target_1": 126.98,
-        "target_2": 128.51,
-        "risk_reward_t1": 2.22,
-        "risk_reward_t2": 3.77,
-        "derived_levels": {},
-        "confidence": 7.1,
-        "score_components": {
-          "vix_alignment": {
-            "value": 1.0,
-            "evidence": {
-              "state": "confirming_bullish"
-            },
-            "weight": 1.4
-          },
-          "index_alignment": {
-            "value": 0.68,
-            "evidence": {
-              "regime": "risk_on",
-              "risk_score": 3.6
-            },
-            "weight": 1.2
-          },
-          "options_alignment": {
-            "value": 0.5,
-            "placeholder": true,
-            "evidence": {
-              "note": "options-mcp lands in Phase 5; scored neutral"
-            },
-            "weight": 0.4
-          },
-          "sector_strength": {
             "value": 0.8,
             "evidence": {
-              "sector_etf": "URA",
-              "status": "improving",
-              "rank_4w": 0.93
+              "reasons": [
+                "no call-wall resistance before T1",
+                "put wall 180.0 supports below entry"
+              ],
+              "flip": 203.35,
+              "call_wall": 205.0,
+              "put_wall": 180.0
+            },
+            "weight": 1.1
+          },
+          "sector_strength": {
+            "value": 1.0,
+            "evidence": {
+              "sector_etf": "SMH",
+              "status": "leading",
+              "rank_4w": 0.8
             },
             "weight": 1.2
           },
@@ -2156,17 +2188,17 @@
             "weight": 1.2
           },
           "volume_rvol": {
-            "value": 0.62,
+            "value": 0.55,
             "evidence": {
-              "rvol_20d": 1.51,
+              "rvol_20d": 1.41,
               "phase": "mark_up"
             },
             "weight": 1.0
           },
           "rsi_confirmation": {
-            "value": 0.36,
+            "value": 1.0,
             "evidence": {
-              "daily_rsi": 53.9,
+              "daily_rsi": 82.7,
               "bearish_divergence": false,
               "bullish_divergence": false
             },
@@ -2180,77 +2212,101 @@
             "weight": 1.0
           },
           "risk_reward": {
-            "value": 0.91,
+            "value": 0.24,
             "evidence": {
-              "rr_t1": 2.22,
-              "rr_t2": 3.77
+              "rr_t1": 1.25,
+              "rr_t2": 2.09
             },
             "weight": 1.3
           },
           "liquidity": {
-            "value": 0.74,
-            "placeholder": true,
+            "value": 0.31,
             "evidence": {
-              "avg_dollar_volume_$m": 367.8,
-              "note": "options spread/liquidity checks land in Phase 5"
+              "oi": 793,
+              "spread_pct": 0.0211,
+              "instrument": "call_debit_spread"
             },
-            "weight": 0.4
+            "weight": 0.8
           },
           "catalyst_fundamental": {
-            "value": 0.25,
+            "value": 0.6,
             "evidence": {
-              "growth_grade": "weak",
-              "days_to_earnings": 42,
+              "growth_grade": "moderate",
+              "days_to_earnings": 51,
               "in_earnings_window": false
             },
             "weight": 1.0
           }
         },
         "risks": [],
-        "sector_etf": "URA",
-        "sector_status": "improving",
+        "sector_etf": "SMH",
+        "sector_status": "leading",
         "classification": "canslim_leader",
         "structure": "none",
         "invalidation": "daily close below 21d MA or VIX reclaims pivot",
         "earnings_flag": false,
-        "thesis": "CCJ long: URA is improving and the stock screens canslim_leader (9/11 checks). Trade is live only if price reclaims 124.78 \u2014 regime is risk_on (+3.6) with VIX confirming bullish. Risk 123.79, targets 126.98 then 128.51 (R:R 2.22). Invalidated by a daily close back below the 21-day MA or VIX reclaiming its pivot.",
+        "thesis": "AVGO long: SMH is leading and the stock screens canslim_leader (9/11 checks). Trade is live only if price reclaims 196.9 \u2014 regime is risk_on (+7.4) with VIX confirming bullish. Risk 192.86, targets 201.96 then 205.33 (R:R 1.25). Invalidated by a daily close back below the 21-day MA or VIX reclaiming its pivot.",
         "validated": true,
-        "computed_at": "2026-06-11 03:27:00+00:00"
+        "computed_at": "2026-06-11 04:14:00+00:00"
       },
       {
-        "symbol": "PLTR",
+        "symbol": "NOW",
         "direction": "long",
-        "instrument": "stock",
-        "entry_trigger": 566.94,
-        "stop": 555.12,
-        "target_1": 581.72,
-        "target_2": 591.57,
+        "instrument": "call_debit_spread",
+        "entry_trigger": 1584.73,
+        "stop": 1560.42,
+        "target_1": 1615.12,
+        "target_2": 1635.38,
         "risk_reward_t1": 1.25,
         "risk_reward_t2": 2.08,
         "derived_levels": {
           "stop": {
             "formula": "entry - 1.2*ATR14",
             "inputs": [
-              566.94,
-              9.85
+              1584.73,
+              20.26
             ]
           },
           "target_1": {
             "formula": "entry + 1.5*ATR14",
             "inputs": [
-              566.94,
-              9.85
+              1584.73,
+              20.26
             ]
           },
           "target_2": {
             "formula": "entry + 2.5*ATR14",
             "inputs": [
-              566.94,
-              9.85
+              1584.73,
+              20.26
             ]
           }
         },
-        "confidence": 7.0,
+        "options": {
+          "symbol": "NOW",
+          "spot": 1558.667992521059,
+          "gamma_regime": "negative",
+          "zero_gamma_flip": 1638.01,
+          "call_wall": 1640.0,
+          "put_wall": 1470.0,
+          "reading": "negative gamma: dealers amplify moves; breaks of big-OI strikes can accelerate"
+        },
+        "instrument_suggestion": {
+          "expiry": "2026-07-11",
+          "dte": 30,
+          "iv": 0.3006,
+          "iv_rank": 0.62,
+          "oi": 769,
+          "spread_pct": 0.02,
+          "expected_move": 134.06,
+          "t1_within_expected_move": true,
+          "notes": [],
+          "instrument": "call_debit_spread",
+          "long_strike": 1580.0,
+          "short_strike": 1640.0,
+          "reason": "IV rank 62% \u2265 55% \u2014 define risk with a debit spread"
+        },
+        "confidence": 7.3,
         "score_components": {
           "vix_alignment": {
             "value": 1.0,
@@ -2260,27 +2316,198 @@
             "weight": 1.4
           },
           "index_alignment": {
-            "value": 0.68,
+            "value": 0.87,
             "evidence": {
               "regime": "risk_on",
-              "risk_score": 3.6
+              "risk_score": 7.4
             },
             "weight": 1.2
           },
           "options_alignment": {
-            "value": 0.5,
-            "placeholder": true,
+            "value": 0.8,
             "evidence": {
-              "note": "options-mcp lands in Phase 5; scored neutral"
+              "reasons": [
+                "no call-wall resistance before T1",
+                "put wall 1470.0 supports below entry"
+              ],
+              "flip": 1638.01,
+              "call_wall": 1640.0,
+              "put_wall": 1470.0
             },
-            "weight": 0.4
+            "weight": 1.1
           },
           "sector_strength": {
             "value": 1.0,
             "evidence": {
               "sector_etf": "IGV",
               "status": "leading",
-              "rank_4w": 0.97
+              "rank_4w": 1.0
+            },
+            "weight": 1.2
+          },
+          "stock_relative_strength": {
+            "value": 0.82,
+            "evidence": {
+              "classification": "canslim_leader",
+              "passes": "9/11"
+            },
+            "weight": 1.2
+          },
+          "volume_rvol": {
+            "value": 0.52,
+            "evidence": {
+              "rvol_20d": 1.37,
+              "phase": "mark_up"
+            },
+            "weight": 1.0
+          },
+          "rsi_confirmation": {
+            "value": 0.95,
+            "evidence": {
+              "daily_rsi": 68.8,
+              "bearish_divergence": false,
+              "bullish_divergence": false
+            },
+            "weight": 0.9
+          },
+          "ma_structure": {
+            "value": 0.83,
+            "evidence": {
+              "mas_above_of_6": 5
+            },
+            "weight": 1.0
+          },
+          "risk_reward": {
+            "value": 0.23,
+            "evidence": {
+              "rr_t1": 1.25,
+              "rr_t2": 2.08
+            },
+            "weight": 1.3
+          },
+          "liquidity": {
+            "value": 0.31,
+            "evidence": {
+              "oi": 769,
+              "spread_pct": 0.02,
+              "instrument": "call_debit_spread"
+            },
+            "weight": 0.8
+          },
+          "catalyst_fundamental": {
+            "value": 0.6,
+            "evidence": {
+              "growth_grade": "moderate",
+              "days_to_earnings": 26,
+              "in_earnings_window": false
+            },
+            "weight": 1.0
+          }
+        },
+        "risks": [],
+        "sector_etf": "IGV",
+        "sector_status": "leading",
+        "classification": "canslim_leader",
+        "structure": "none",
+        "invalidation": "daily close below 21d MA or VIX reclaims pivot",
+        "earnings_flag": false,
+        "thesis": "NOW long: IGV is leading and the stock screens canslim_leader (9/11 checks). Trade is live only if price reclaims 1584.73 \u2014 regime is risk_on (+7.4) with VIX confirming bullish. Risk 1560.42, targets 1615.12 then 1635.38 (R:R 1.25). Invalidated by a daily close back below the 21-day MA or VIX reclaiming its pivot.",
+        "validated": true,
+        "computed_at": "2026-06-11 04:14:00+00:00"
+      },
+      {
+        "symbol": "PLTR",
+        "direction": "long",
+        "instrument": "call_debit_spread",
+        "entry_trigger": 243.45,
+        "stop": 239.08,
+        "target_1": 248.91,
+        "target_2": 252.55,
+        "risk_reward_t1": 1.25,
+        "risk_reward_t2": 2.08,
+        "derived_levels": {
+          "stop": {
+            "formula": "entry - 1.2*ATR14",
+            "inputs": [
+              243.45,
+              3.64
+            ]
+          },
+          "target_1": {
+            "formula": "entry + 1.5*ATR14",
+            "inputs": [
+              243.45,
+              3.64
+            ]
+          },
+          "target_2": {
+            "formula": "entry + 2.5*ATR14",
+            "inputs": [
+              243.45,
+              3.64
+            ]
+          }
+        },
+        "options": {
+          "symbol": "PLTR",
+          "spot": 241.25635499992822,
+          "gamma_regime": "negative",
+          "zero_gamma_flip": 253.53,
+          "call_wall": 255.0,
+          "put_wall": 225.0,
+          "reading": "negative gamma: dealers amplify moves; breaks of big-OI strikes can accelerate"
+        },
+        "instrument_suggestion": {
+          "expiry": "2026-07-11",
+          "dte": 30,
+          "iv": 0.3009,
+          "iv_rank": 0.62,
+          "oi": 795,
+          "spread_pct": 0.0209,
+          "expected_move": 20.81,
+          "t1_within_expected_move": true,
+          "notes": [],
+          "instrument": "call_debit_spread",
+          "long_strike": 240.0,
+          "short_strike": 255.0,
+          "reason": "IV rank 62% \u2265 55% \u2014 define risk with a debit spread"
+        },
+        "confidence": 7.3,
+        "score_components": {
+          "vix_alignment": {
+            "value": 1.0,
+            "evidence": {
+              "state": "confirming_bullish"
+            },
+            "weight": 1.4
+          },
+          "index_alignment": {
+            "value": 0.87,
+            "evidence": {
+              "regime": "risk_on",
+              "risk_score": 7.4
+            },
+            "weight": 1.2
+          },
+          "options_alignment": {
+            "value": 0.8,
+            "evidence": {
+              "reasons": [
+                "no call-wall resistance before T1",
+                "put wall 225.0 supports below entry"
+              ],
+              "flip": 253.53,
+              "call_wall": 255.0,
+              "put_wall": 225.0
+            },
+            "weight": 1.1
+          },
+          "sector_strength": {
+            "value": 1.0,
+            "evidence": {
+              "sector_etf": "IGV",
+              "status": "leading",
+              "rank_4w": 1.0
             },
             "weight": 1.2
           },
@@ -2293,9 +2520,9 @@
             "weight": 1.2
           },
           "volume_rvol": {
-            "value": 0.0,
+            "value": 0.4,
             "evidence": {
-              "rvol_20d": 0.68,
+              "rvol_20d": 1.22,
               "phase": "mark_up"
             },
             "weight": 1.0
@@ -2303,7 +2530,7 @@
           "rsi_confirmation": {
             "value": 1.0,
             "evidence": {
-              "daily_rsi": 82.6,
+              "daily_rsi": 74.2,
               "bearish_divergence": false,
               "bullish_divergence": false
             },
@@ -2325,13 +2552,13 @@
             "weight": 1.3
           },
           "liquidity": {
-            "value": 1.0,
-            "placeholder": true,
+            "value": 0.31,
             "evidence": {
-              "avg_dollar_volume_$m": 1503.4,
-              "note": "options spread/liquidity checks land in Phase 5"
+              "oi": 795,
+              "spread_pct": 0.0209,
+              "instrument": "call_debit_spread"
             },
-            "weight": 0.4
+            "weight": 0.8
           },
           "catalyst_fundamental": {
             "value": 0.6,
@@ -2350,44 +2577,68 @@
         "structure": "none",
         "invalidation": "daily close below 21d MA or VIX reclaims pivot",
         "earnings_flag": false,
-        "thesis": "PLTR long: IGV is leading and the stock screens canslim_leader (8/11 checks). Trade is live only if price reclaims 566.94 \u2014 regime is risk_on (+3.6) with VIX confirming bullish. Risk 555.12, targets 581.72 then 591.57 (R:R 1.25). Invalidated by a daily close back below the 21-day MA or VIX reclaiming its pivot.",
+        "thesis": "PLTR long: IGV is leading and the stock screens canslim_leader (8/11 checks). Trade is live only if price reclaims 243.45 \u2014 regime is risk_on (+7.4) with VIX confirming bullish. Risk 239.08, targets 248.91 then 252.55 (R:R 1.25). Invalidated by a daily close back below the 21-day MA or VIX reclaiming its pivot.",
         "validated": true,
-        "computed_at": "2026-06-11 03:27:00+00:00"
+        "computed_at": "2026-06-11 04:14:00+00:00"
       },
       {
-        "symbol": "UNH",
+        "symbol": "NVDA",
         "direction": "long",
-        "instrument": "stock",
-        "entry_trigger": 139.27,
-        "stop": 136.98,
-        "target_1": 142.14,
-        "target_2": 144.05,
+        "instrument": "call_debit_spread",
+        "entry_trigger": 147.45,
+        "stop": 144.63,
+        "target_1": 150.97,
+        "target_2": 153.32,
         "risk_reward_t1": 1.25,
-        "risk_reward_t2": 2.09,
+        "risk_reward_t2": 2.08,
         "derived_levels": {
           "stop": {
             "formula": "entry - 1.2*ATR14",
             "inputs": [
-              139.27,
-              1.91
+              147.45,
+              2.35
             ]
           },
           "target_1": {
             "formula": "entry + 1.5*ATR14",
             "inputs": [
-              139.27,
-              1.91
+              147.45,
+              2.35
             ]
           },
           "target_2": {
             "formula": "entry + 2.5*ATR14",
             "inputs": [
-              139.27,
-              1.91
+              147.45,
+              2.35
             ]
           }
         },
-        "confidence": 6.9,
+        "options": {
+          "symbol": "NVDA",
+          "spot": 146.82960489564866,
+          "gamma_regime": "negative",
+          "zero_gamma_flip": 154.97,
+          "call_wall": 155.0,
+          "put_wall": 140.0,
+          "reading": "negative gamma: dealers amplify moves; breaks of big-OI strikes can accelerate"
+        },
+        "instrument_suggestion": {
+          "expiry": "2026-07-11",
+          "dte": 30,
+          "iv": 0.3022,
+          "iv_rank": 0.62,
+          "oi": 775,
+          "spread_pct": 0.0204,
+          "expected_move": 12.72,
+          "t1_within_expected_move": true,
+          "notes": [],
+          "instrument": "call_debit_spread",
+          "long_strike": 145.0,
+          "short_strike": 155.0,
+          "reason": "IV rank 62% \u2265 55% \u2014 define risk with a debit spread"
+        },
+        "confidence": 7.3,
         "score_components": {
           "vix_alignment": {
             "value": 1.0,
@@ -2397,27 +2648,32 @@
             "weight": 1.4
           },
           "index_alignment": {
-            "value": 0.68,
+            "value": 0.87,
             "evidence": {
               "regime": "risk_on",
-              "risk_score": 3.6
+              "risk_score": 7.4
             },
             "weight": 1.2
           },
           "options_alignment": {
-            "value": 0.5,
-            "placeholder": true,
+            "value": 0.8,
             "evidence": {
-              "note": "options-mcp lands in Phase 5; scored neutral"
+              "reasons": [
+                "no call-wall resistance before T1",
+                "put wall 140.0 supports below entry"
+              ],
+              "flip": 154.97,
+              "call_wall": 155.0,
+              "put_wall": 140.0
             },
-            "weight": 0.4
+            "weight": 1.1
           },
           "sector_strength": {
             "value": 1.0,
             "evidence": {
-              "sector_etf": "XLV",
+              "sector_etf": "SMH",
               "status": "leading",
-              "rank_4w": 0.9
+              "rank_4w": 0.8
             },
             "weight": 1.2
           },
@@ -2430,17 +2686,183 @@
             "weight": 1.2
           },
           "volume_rvol": {
-            "value": 0.0,
+            "value": 0.36,
             "evidence": {
-              "rvol_20d": 0.68,
-              "phase": "mark_down"
+              "rvol_20d": 1.17,
+              "phase": "mark_up"
             },
             "weight": 1.0
           },
           "rsi_confirmation": {
+            "value": 1.0,
+            "evidence": {
+              "daily_rsi": 81.9,
+              "bearish_divergence": false,
+              "bullish_divergence": false
+            },
+            "weight": 0.9
+          },
+          "ma_structure": {
+            "value": 1.0,
+            "evidence": {
+              "mas_above_of_6": 6
+            },
+            "weight": 1.0
+          },
+          "risk_reward": {
+            "value": 0.23,
+            "evidence": {
+              "rr_t1": 1.25,
+              "rr_t2": 2.08
+            },
+            "weight": 1.3
+          },
+          "liquidity": {
+            "value": 0.31,
+            "evidence": {
+              "oi": 775,
+              "spread_pct": 0.0204,
+              "instrument": "call_debit_spread"
+            },
+            "weight": 0.8
+          },
+          "catalyst_fundamental": {
+            "value": 0.6,
+            "evidence": {
+              "growth_grade": "moderate",
+              "days_to_earnings": 39,
+              "in_earnings_window": false
+            },
+            "weight": 1.0
+          }
+        },
+        "risks": [],
+        "sector_etf": "SMH",
+        "sector_status": "leading",
+        "classification": "canslim_leader",
+        "structure": "none",
+        "invalidation": "daily close below 21d MA or VIX reclaims pivot",
+        "earnings_flag": false,
+        "thesis": "NVDA long: SMH is leading and the stock screens canslim_leader (8/11 checks). Trade is live only if price reclaims 147.45 \u2014 regime is risk_on (+7.4) with VIX confirming bullish. Risk 144.63, targets 150.97 then 153.32 (R:R 1.25). Invalidated by a daily close back below the 21-day MA or VIX reclaiming its pivot.",
+        "validated": true,
+        "computed_at": "2026-06-11 04:14:00+00:00"
+      },
+      {
+        "symbol": "LEU",
+        "direction": "long",
+        "instrument": "call_debit_spread",
+        "entry_trigger": 147.68,
+        "stop": 144.55,
+        "target_1": 151.59,
+        "target_2": 154.21,
+        "risk_reward_t1": 1.25,
+        "risk_reward_t2": 2.09,
+        "derived_levels": {
+          "stop": {
+            "formula": "entry - 1.2*ATR14",
+            "inputs": [
+              147.68,
+              2.61
+            ]
+          },
+          "target_1": {
+            "formula": "entry + 1.5*ATR14",
+            "inputs": [
+              147.68,
+              2.61
+            ]
+          },
+          "target_2": {
+            "formula": "entry + 2.5*ATR14",
+            "inputs": [
+              147.68,
+              2.61
+            ]
+          }
+        },
+        "options": {
+          "symbol": "LEU",
+          "spot": 146.78843673093905,
+          "gamma_regime": "unknown",
+          "zero_gamma_flip": null,
+          "call_wall": 155.0,
+          "put_wall": 140.0,
+          "reading": "flip not resolvable from this chain"
+        },
+        "instrument_suggestion": {
+          "expiry": "2026-07-11",
+          "dte": 30,
+          "iv": 0.3022,
+          "iv_rank": 0.62,
+          "oi": 776,
+          "spread_pct": 0.0205,
+          "expected_move": 12.72,
+          "t1_within_expected_move": true,
+          "notes": [],
+          "instrument": "call_debit_spread",
+          "long_strike": 145.0,
+          "short_strike": 155.0,
+          "reason": "IV rank 62% \u2265 55% \u2014 define risk with a debit spread"
+        },
+        "confidence": 7.2,
+        "score_components": {
+          "vix_alignment": {
+            "value": 1.0,
+            "evidence": {
+              "state": "confirming_bullish"
+            },
+            "weight": 1.4
+          },
+          "index_alignment": {
             "value": 0.87,
             "evidence": {
-              "daily_rsi": 66.8,
+              "regime": "risk_on",
+              "risk_score": 7.4
+            },
+            "weight": 1.2
+          },
+          "options_alignment": {
+            "value": 0.8,
+            "evidence": {
+              "reasons": [
+                "no call-wall resistance before T1",
+                "put wall 140.0 supports below entry"
+              ],
+              "flip": null,
+              "call_wall": 155.0,
+              "put_wall": 140.0
+            },
+            "weight": 1.1
+          },
+          "sector_strength": {
+            "value": 0.8,
+            "evidence": {
+              "sector_etf": "URA",
+              "status": "improving",
+              "rank_4w": 0.87
+            },
+            "weight": 1.2
+          },
+          "stock_relative_strength": {
+            "value": 0.82,
+            "evidence": {
+              "classification": "canslim_leader",
+              "passes": "9/11"
+            },
+            "weight": 1.2
+          },
+          "volume_rvol": {
+            "value": 1.0,
+            "evidence": {
+              "rvol_20d": 2.7,
+              "phase": "mark_up"
+            },
+            "weight": 1.0
+          },
+          "rsi_confirmation": {
+            "value": 0.7,
+            "evidence": {
+              "daily_rsi": 62.5,
               "bearish_divergence": false,
               "bullish_divergence": false
             },
@@ -2462,199 +2884,93 @@
             "weight": 1.3
           },
           "liquidity": {
-            "value": 0.97,
-            "placeholder": true,
+            "value": 0.31,
             "evidence": {
-              "avg_dollar_volume_$m": 483.2,
-              "note": "options spread/liquidity checks land in Phase 5"
+              "oi": 776,
+              "spread_pct": 0.0205,
+              "instrument": "call_debit_spread"
             },
-            "weight": 0.4
+            "weight": 0.8
           },
           "catalyst_fundamental": {
-            "value": 0.6,
+            "value": 0.25,
             "evidence": {
-              "growth_grade": "moderate",
-              "days_to_earnings": 24,
+              "growth_grade": "weak",
+              "days_to_earnings": 37,
               "in_earnings_window": false
             },
             "weight": 1.0
           }
         },
         "risks": [],
-        "sector_etf": "XLV",
-        "sector_status": "leading",
+        "sector_etf": "URA",
+        "sector_status": "improving",
         "classification": "canslim_leader",
         "structure": "none",
         "invalidation": "daily close below 21d MA or VIX reclaims pivot",
         "earnings_flag": false,
-        "thesis": "UNH long: XLV is leading and the stock screens canslim_leader (8/11 checks). Trade is live only if price reclaims 139.27 \u2014 regime is risk_on (+3.6) with VIX confirming bullish. Risk 136.98, targets 142.14 then 144.05 (R:R 1.25). Invalidated by a daily close back below the 21-day MA or VIX reclaiming its pivot.",
+        "thesis": "LEU long: URA is improving and the stock screens canslim_leader (9/11 checks). Trade is live only if price reclaims 147.68 \u2014 regime is risk_on (+7.4) with VIX confirming bullish. Risk 144.55, targets 151.59 then 154.21 (R:R 1.25). Invalidated by a daily close back below the 21-day MA or VIX reclaiming its pivot.",
         "validated": true,
-        "computed_at": "2026-06-11 03:27:00+00:00"
+        "computed_at": "2026-06-11 04:14:00+00:00"
       },
       {
-        "symbol": "NOW",
+        "symbol": "VST",
         "direction": "long",
-        "instrument": "stock",
-        "entry_trigger": 486.84,
-        "stop": 477.74,
-        "target_1": 499.92,
-        "target_2": 505.79,
-        "risk_reward_t1": 1.44,
-        "risk_reward_t2": 2.08,
-        "derived_levels": {
-          "stop": {
-            "formula": "entry - 1.2*ATR14",
-            "inputs": [
-              486.84,
-              7.58
-            ]
-          },
-          "target_2": {
-            "formula": "entry + 2.5*ATR14",
-            "inputs": [
-              486.84,
-              7.58
-            ]
-          }
-        },
-        "confidence": 6.4,
-        "score_components": {
-          "vix_alignment": {
-            "value": 1.0,
-            "evidence": {
-              "state": "confirming_bullish"
-            },
-            "weight": 1.4
-          },
-          "index_alignment": {
-            "value": 0.68,
-            "evidence": {
-              "regime": "risk_on",
-              "risk_score": 3.6
-            },
-            "weight": 1.2
-          },
-          "options_alignment": {
-            "value": 0.5,
-            "placeholder": true,
-            "evidence": {
-              "note": "options-mcp lands in Phase 5; scored neutral"
-            },
-            "weight": 0.4
-          },
-          "sector_strength": {
-            "value": 1.0,
-            "evidence": {
-              "sector_etf": "IGV",
-              "status": "leading",
-              "rank_4w": 0.97
-            },
-            "weight": 1.2
-          },
-          "stock_relative_strength": {
-            "value": 0.73,
-            "evidence": {
-              "classification": "canslim_leader",
-              "passes": "8/11"
-            },
-            "weight": 1.2
-          },
-          "volume_rvol": {
-            "value": 0.01,
-            "evidence": {
-              "rvol_20d": 0.71,
-              "phase": "mark_up"
-            },
-            "weight": 1.0
-          },
-          "rsi_confirmation": {
-            "value": 0.67,
-            "evidence": {
-              "daily_rsi": 61.8,
-              "bearish_divergence": false,
-              "bullish_divergence": false
-            },
-            "weight": 0.9
-          },
-          "ma_structure": {
-            "value": 0.67,
-            "evidence": {
-              "mas_above_of_6": 4
-            },
-            "weight": 1.0
-          },
-          "risk_reward": {
-            "value": 0.23,
-            "evidence": {
-              "rr_t1": 1.44,
-              "rr_t2": 2.08
-            },
-            "weight": 1.3
-          },
-          "liquidity": {
-            "value": 1.0,
-            "placeholder": true,
-            "evidence": {
-              "avg_dollar_volume_$m": 1601.5,
-              "note": "options spread/liquidity checks land in Phase 5"
-            },
-            "weight": 0.4
-          },
-          "catalyst_fundamental": {
-            "value": 0.6,
-            "evidence": {
-              "growth_grade": "moderate",
-              "days_to_earnings": 26,
-              "in_earnings_window": false
-            },
-            "weight": 1.0
-          }
-        },
-        "risks": [],
-        "sector_etf": "IGV",
-        "sector_status": "leading",
-        "classification": "canslim_leader",
-        "structure": "pullback",
-        "invalidation": "daily close below 21d MA or VIX reclaims pivot",
-        "earnings_flag": false,
-        "thesis": "NOW long: IGV is leading and the stock screens canslim_leader (8/11 checks). Trade is live only if price reclaims 486.84 \u2014 regime is risk_on (+3.6) with VIX confirming bullish. Risk 477.74, targets 499.92 then 505.79 (R:R 1.44). Invalidated by a daily close back below the 21-day MA or VIX reclaiming its pivot.",
-        "validated": true,
-        "computed_at": "2026-06-11 03:27:00+00:00"
-      },
-      {
-        "symbol": "XOM",
-        "direction": "long",
-        "instrument": "stock",
-        "entry_trigger": 128.47,
-        "stop": 126.55,
-        "target_1": 130.87,
-        "target_2": 132.47,
+        "instrument": "call_debit_spread",
+        "entry_trigger": 243.35,
+        "stop": 239.5,
+        "target_1": 248.16,
+        "target_2": 251.38,
         "risk_reward_t1": 1.25,
-        "risk_reward_t2": 2.08,
+        "risk_reward_t2": 2.09,
         "derived_levels": {
           "stop": {
             "formula": "entry - 1.2*ATR14",
             "inputs": [
-              128.47,
-              1.6
+              243.35,
+              3.21
             ]
           },
           "target_1": {
             "formula": "entry + 1.5*ATR14",
             "inputs": [
-              128.47,
-              1.6
+              243.35,
+              3.21
             ]
           },
           "target_2": {
             "formula": "entry + 2.5*ATR14",
             "inputs": [
-              128.47,
-              1.6
+              243.35,
+              3.21
             ]
           }
         },
-        "confidence": 6.4,
+        "options": {
+          "symbol": "VST",
+          "spot": 241.92360079004078,
+          "gamma_regime": "negative",
+          "zero_gamma_flip": 253.23,
+          "call_wall": 255.0,
+          "put_wall": 225.0,
+          "reading": "negative gamma: dealers amplify moves; breaks of big-OI strikes can accelerate"
+        },
+        "instrument_suggestion": {
+          "expiry": "2026-07-11",
+          "dte": 30,
+          "iv": 0.3014,
+          "iv_rank": 0.62,
+          "oi": 789,
+          "spread_pct": 0.0195,
+          "expected_move": 20.9,
+          "t1_within_expected_move": true,
+          "notes": [],
+          "instrument": "call_debit_spread",
+          "long_strike": 240.0,
+          "short_strike": 255.0,
+          "reason": "IV rank 62% \u2265 55% \u2014 define risk with a debit spread"
+        },
+        "confidence": 7.1,
         "score_components": {
           "vix_alignment": {
             "value": 1.0,
@@ -2664,27 +2980,32 @@
             "weight": 1.4
           },
           "index_alignment": {
-            "value": 0.68,
+            "value": 0.87,
             "evidence": {
               "regime": "risk_on",
-              "risk_score": 3.6
+              "risk_score": 7.4
             },
             "weight": 1.2
           },
           "options_alignment": {
-            "value": 0.5,
-            "placeholder": true,
-            "evidence": {
-              "note": "options-mcp lands in Phase 5; scored neutral"
-            },
-            "weight": 0.4
-          },
-          "sector_strength": {
             "value": 0.8,
             "evidence": {
-              "sector_etf": "XLE",
-              "status": "improving",
-              "rank_4w": 0.23
+              "reasons": [
+                "no call-wall resistance before T1",
+                "put wall 225.0 supports below entry"
+              ],
+              "flip": 253.23,
+              "call_wall": 255.0,
+              "put_wall": 225.0
+            },
+            "weight": 1.1
+          },
+          "sector_strength": {
+            "value": 1.0,
+            "evidence": {
+              "sector_etf": "NLR",
+              "status": "leading",
+              "rank_4w": 0.83
             },
             "weight": 1.2
           },
@@ -2697,18 +3018,18 @@
             "weight": 1.2
           },
           "volume_rvol": {
-            "value": 0.0,
+            "value": 0.16,
             "evidence": {
-              "rvol_20d": 0.35,
+              "rvol_20d": 0.91,
               "phase": "mark_up"
             },
             "weight": 1.0
           },
           "rsi_confirmation": {
-            "value": 0.2,
+            "value": 1.0,
             "evidence": {
-              "daily_rsi": 60.5,
-              "bearish_divergence": true,
+              "daily_rsi": 81.6,
+              "bearish_divergence": false,
               "bullish_divergence": false
             },
             "weight": 0.9
@@ -2721,47 +3042,283 @@
             "weight": 1.0
           },
           "risk_reward": {
-            "value": 0.23,
+            "value": 0.24,
             "evidence": {
               "rr_t1": 1.25,
-              "rr_t2": 2.08
+              "rr_t2": 2.09
             },
             "weight": 1.3
           },
           "liquidity": {
-            "value": 0.85,
-            "placeholder": true,
+            "value": 0.32,
             "evidence": {
-              "avg_dollar_volume_$m": 425.4,
-              "note": "options spread/liquidity checks land in Phase 5"
+              "oi": 789,
+              "spread_pct": 0.0195,
+              "instrument": "call_debit_spread"
             },
-            "weight": 0.4
+            "weight": 0.8
           },
           "catalyst_fundamental": {
-            "value": 1.0,
+            "value": 0.6,
             "evidence": {
-              "growth_grade": "strong",
-              "days_to_earnings": 33,
+              "growth_grade": "moderate",
+              "days_to_earnings": 26,
               "in_earnings_window": false
             },
             "weight": 1.0
           }
         },
-        "risks": [
-          "daily bearish RSI divergence active"
-        ],
-        "sector_etf": "XLE",
-        "sector_status": "improving",
+        "risks": [],
+        "sector_etf": "NLR",
+        "sector_status": "leading",
         "classification": "canslim_leader",
         "structure": "none",
         "invalidation": "daily close below 21d MA or VIX reclaims pivot",
         "earnings_flag": false,
-        "thesis": "XOM long: XLE is improving and the stock screens canslim_leader (8/11 checks). Trade is live only if price reclaims 128.47 \u2014 regime is risk_on (+3.6) with VIX confirming bullish. Risk 126.55, targets 130.87 then 132.47 (R:R 1.25). Invalidated by a daily close back below the 21-day MA or VIX reclaiming its pivot.",
+        "thesis": "VST long: NLR is leading and the stock screens canslim_leader (8/11 checks). Trade is live only if price reclaims 243.35 \u2014 regime is risk_on (+7.4) with VIX confirming bullish. Risk 239.5, targets 248.16 then 251.38 (R:R 1.25). Invalidated by a daily close back below the 21-day MA or VIX reclaiming its pivot.",
         "validated": true,
-        "computed_at": "2026-06-11 03:27:00+00:00"
+        "computed_at": "2026-06-11 04:14:00+00:00"
       }
     ],
-    "suppressed": [],
+    "suppressed": [
+      {
+        "symbol": "UEC",
+        "reason": "R:R T1 0.83 / T2 2.53 below 1.0/2.0 floors"
+      }
+    ],
     "no_trade": false
+  },
+  "options": {
+    "QQQ": {
+      "symbol": "QQQ",
+      "spot": 476.9864120023799,
+      "zero_gamma_flip": 497.66,
+      "call_wall": 500.0,
+      "put_wall": 450.0,
+      "net_gex_$m": 12.1,
+      "gamma_regime": "negative",
+      "profile": [
+        {
+          "strike": 390.0,
+          "gex_$m": 0.0,
+          "vanna_$m": 0.0
+        },
+        {
+          "strike": 400.0,
+          "gex_$m": 0.0,
+          "vanna_$m": 0.0
+        },
+        {
+          "strike": 410.0,
+          "gex_$m": 0.0,
+          "vanna_$m": 0.0
+        },
+        {
+          "strike": 420.0,
+          "gex_$m": 0.0,
+          "vanna_$m": 0.0
+        },
+        {
+          "strike": 430.0,
+          "gex_$m": 0.0,
+          "vanna_$m": 0.0
+        },
+        {
+          "strike": 440.0,
+          "gex_$m": 0.0,
+          "vanna_$m": 0.0
+        },
+        {
+          "strike": 450.0,
+          "gex_$m": -39.64,
+          "vanna_$m": 7.38
+        },
+        {
+          "strike": 460.0,
+          "gex_$m": 0.0,
+          "vanna_$m": 0.0
+        },
+        {
+          "strike": 470.0,
+          "gex_$m": 0.0,
+          "vanna_$m": 0.0
+        },
+        {
+          "strike": 480.0,
+          "gex_$m": 0.0,
+          "vanna_$m": 0.0
+        },
+        {
+          "strike": 490.0,
+          "gex_$m": 0.0,
+          "vanna_$m": 0.0
+        },
+        {
+          "strike": 500.0,
+          "gex_$m": 51.76,
+          "vanna_$m": 8.13
+        },
+        {
+          "strike": 510.0,
+          "gex_$m": 0.0,
+          "vanna_$m": 0.0
+        },
+        {
+          "strike": 520.0,
+          "gex_$m": 0.0,
+          "vanna_$m": 0.0
+        },
+        {
+          "strike": 530.0,
+          "gex_$m": 0.0,
+          "vanna_$m": 0.0
+        },
+        {
+          "strike": 540.0,
+          "gex_$m": 0.0,
+          "vanna_$m": 0.0
+        },
+        {
+          "strike": 550.0,
+          "gex_$m": 0.0,
+          "vanna_$m": 0.0
+        },
+        {
+          "strike": 560.0,
+          "gex_$m": 0.0,
+          "vanna_$m": 0.0
+        }
+      ],
+      "convention": "dealers long calls / short puts (approximation)"
+    }
+  },
+  "alert_feed": {
+    "label": "simulated lifecycle demo (scripted bars)",
+    "events": [
+      {
+        "trade_id": "a220ba340e",
+        "symbol": "NVDA",
+        "direction": "long",
+        "from_state": "WATCHING",
+        "to_state": "TRIGGERED",
+        "reason": "entry trigger broken",
+        "price": 142.6,
+        "bar_time": "2026-06-02 00:00:00",
+        "details": {
+          "entry_trigger": 142.5,
+          "rvol": 1.0,
+          "attempt": 1
+        },
+        "message": "[NVDA LONG] trigger fired @ 142.6\n  entry trigger broken (2026-06-02 00:00:00)\n  plan: entry 142.5 \u00b7 stop 139.8 \u00b7 T1 147.0 \u00b7 T2 151.0\n  entry_trigger=142.5 \u00b7 rvol=1.0 \u00b7 attempt=1\n  why: Breakout over 142.50 with SMH leading and VIX below pivot; targets 147 then 151."
+      },
+      {
+        "trade_id": "a220ba340e",
+        "symbol": "NVDA",
+        "direction": "long",
+        "from_state": "TRIGGERED",
+        "to_state": "ACTIVE",
+        "reason": "trigger held through the next bar",
+        "price": 143.5,
+        "bar_time": "2026-06-03 00:00:00",
+        "details": {
+          "entry_price": 142.6
+        },
+        "message": "[NVDA LONG] entry confirmed @ 143.5\n  trigger held through the next bar (2026-06-03 00:00:00)\n  plan: entry 142.5 \u00b7 stop 139.8 \u00b7 T1 147.0 \u00b7 T2 151.0\n  entry_price=142.6"
+      },
+      {
+        "trade_id": "b23f62665c",
+        "symbol": "AMD",
+        "direction": "long",
+        "from_state": "WATCHING",
+        "to_state": "TRIGGERED",
+        "reason": "entry trigger broken",
+        "price": 121.4,
+        "bar_time": "2026-06-03 00:00:00",
+        "details": {
+          "entry_trigger": 120.8,
+          "rvol": 1.0,
+          "attempt": 1
+        },
+        "message": "[AMD LONG] trigger fired @ 121.4\n  entry trigger broken (2026-06-03 00:00:00)\n  plan: entry 120.8 \u00b7 stop 117.9 \u00b7 T1 125.5 \u00b7 T2 129.0\n  entry_trigger=120.8 \u00b7 rvol=1.0 \u00b7 attempt=1\n  why: Continuation over 120.80 while index alignment holds."
+      },
+      {
+        "trade_id": "a220ba340e",
+        "symbol": "NVDA",
+        "direction": "long",
+        "from_state": "ACTIVE",
+        "to_state": "TRIMMED_T1",
+        "reason": "target 1 reached \u2014 trim and move stop to breakeven",
+        "price": 147.5,
+        "bar_time": "2026-06-04 00:00:00",
+        "details": {
+          "target_1": 147.0,
+          "new_stop": 142.6
+        },
+        "message": "[NVDA LONG] target 1 \u2014 trim @ 147.5\n  target 1 reached \u2014 trim and move stop to breakeven (2026-06-04 00:00:00)\n  target_1=147.0 \u00b7 new_stop=142.6"
+      },
+      {
+        "trade_id": "a220ba340e",
+        "symbol": "NVDA",
+        "direction": "long",
+        "from_state": "TRIMMED_T1",
+        "to_state": "TRAILING",
+        "reason": "trailing engaged",
+        "price": 147.5,
+        "bar_time": "2026-06-04 00:00:00",
+        "details": {
+          "trail_distance": 2.4
+        },
+        "message": "[NVDA LONG] trailing engaged @ 147.5\n  trailing engaged (2026-06-04 00:00:00)\n  trail_distance=2.4"
+      },
+      {
+        "trade_id": "b23f62665c",
+        "symbol": "AMD",
+        "direction": "long",
+        "from_state": "TRIGGERED",
+        "to_state": "ACTIVE",
+        "reason": "trigger held through the next bar",
+        "price": 122.0,
+        "bar_time": "2026-06-04 00:00:00",
+        "details": {
+          "entry_price": 121.4
+        },
+        "message": "[AMD LONG] entry confirmed @ 122.0\n  trigger held through the next bar (2026-06-04 00:00:00)\n  plan: entry 120.8 \u00b7 stop 117.9 \u00b7 T1 125.5 \u00b7 T2 129.0\n  entry_price=121.4"
+      },
+      {
+        "trade_id": "a220ba340e",
+        "symbol": "NVDA",
+        "direction": "long",
+        "from_state": "TRAILING",
+        "to_state": "CLOSED",
+        "reason": "target 2 reached \u2014 full exit",
+        "price": 151.4,
+        "bar_time": "2026-06-08 00:00:00",
+        "details": {
+          "target_2": 151.0
+        },
+        "message": "[NVDA LONG] trade closed @ 151.4\n  target 2 reached \u2014 full exit (2026-06-08 00:00:00)\n  target_2=151.0"
+      },
+      {
+        "trade_id": "b23f62665c",
+        "symbol": "AMD",
+        "direction": "long",
+        "from_state": "ACTIVE",
+        "to_state": "DETERIORATED",
+        "reason": "market guard fired \u2014 setup conditions broke; exit recommended",
+        "price": 121.8,
+        "bar_time": "2026-06-09 00:00:00",
+        "details": {
+          "vix_spot": 19.4,
+          "vix_pivot": 17.38,
+          "index_spot": 518.0,
+          "index_weekly_pivot": 532.83
+        },
+        "message": "[AMD LONG] setup deteriorated \u2014 exit recommended @ 121.8\n  market guard fired \u2014 setup conditions broke; exit recommended (2026-06-09 00:00:00)\n  vix_spot=19.4 \u00b7 vix_pivot=17.38 \u00b7 index_spot=518.0 \u00b7 index_weekly_pivot=532.83"
+      }
+    ],
+    "final_states": {
+      "NVDA": "CLOSED",
+      "AMD": "DETERIORATED"
+    }
   }
 }

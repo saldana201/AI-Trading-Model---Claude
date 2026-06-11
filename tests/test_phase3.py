@@ -45,7 +45,7 @@ def test_rotation_leader_and_improver_detected():
     # Engineer an unambiguous leader (drift edge >> noise over 4w/12w) and a
     # laggard turning up only in the last ~5% of the window.
     prov = bull_world(extra_drift={"SMH": 0.012, "XLK": 0.002},
-                      drift_change={"URA": (-0.008, 0.012, 0.95)})
+                      drift_change={"URA": (-0.008, 0.012, 0.985)})
     board = RotationEngine(prov, universe=["XLK", "SMH", "URA", "XLP", "XLU",
                                            "XLE", "XLF", "XLV", "IGV"]).get_leaderboard()
     by = {e["symbol"]: e for e in board["etfs"]}

@@ -24,23 +24,35 @@ from engines.rotation_mcp.logic import RotationEngine
 from engines.screener_mcp.logic import ScreenerEngine
 from engines.fundamentals_mcp.logic import (
     FundamentalsEngine, SyntheticFundamentals, YFinanceFundamentals)
+from engines.options_mcp.logic import OptionsEngine
+from engines.options_mcp.providers import SyntheticOptions, YFinanceOptions
 from orchestrator.composer import SetupComposer
 from orchestrator.llm import make_thesis_writer
+from scripts.demo_alerts import run_demo
 
 INDEX_SYMBOLS = ["QQQ", "SPY"]
 
 
 def build_provider():
     if os.environ.get("CONFLUENCE_DATA", "yfinance") == "synthetic":
+        # Drifts compound over the 800-bar master; start prices are chosen so
+        # final (displayed) prices land at realistic values.
         return SyntheticProvider(
-            drift_map={"^VIX": -0.005, "QQQ": 0.0025, "SPY": 0.0015,
+            drift_map={"QQQ": 0.0025, "SPY": 0.0015,
                        "SMH": 0.0045, "IGV": 0.0035, "XLK": 0.003, "NLR": 0.003,
                        "NVDA": 0.005, "AVGO": 0.0045, "AMD": 0.004,
                        "CRM": 0.0035, "NOW": 0.0035, "PLTR": 0.004,
                        "MSFT": 0.0035, "CEG": 0.004, "VST": 0.0045,
                        "XLU": -0.002, "XLP": -0.001},
-            drift_change_map={"URA": (-0.008, 0.012, 0.95)},
-            start_price_map={"^VIX": 18.0, "QQQ": 520.0, "SPY": 600.0},
+            drift_change_map={"URA": (-0.005, 0.012, 0.985),
+                              # VIX: flat regime, bleeding out over the last ~30 sessions
+                              "^VIX": (0.0005, -0.006, 0.96)},
+            start_price_map={"^VIX": 12.4, "QQQ": 75.0, "SPY": 180.0,
+                             "SMH": 7.5, "IGV": 7.0, "XLK": 22.0, "NLR": 10.0,
+                             "NVDA": 3.5, "AVGO": 9.0, "AMD": 9.0,
+                             "CRM": 16.0, "NOW": 60.0, "PLTR": 7.0,
+                             "MSFT": 30.0, "CEG": 13.0, "VST": 5.5,
+                             "XLU": 400.0, "XLP": 180.0, "URA": 3500.0},
         ), "synthetic"
     return YFinanceProvider(), "yfinance"
 
@@ -55,11 +67,14 @@ def build_snapshot() -> dict:
     rotation = RotationEngine(provider)
     fundamentals = FundamentalsEngine(
         SyntheticFundamentals() if source == "synthetic" else YFinanceFundamentals())
+    options = OptionsEngine(
+        provider,
+        SyntheticOptions(iv_rank=0.62) if source == "synthetic" else YFinanceOptions())
     composer = SetupComposer(
         provider=provider, regime_engine=regime, rotation_engine=rotation,
         levels_engine=levels, volume_engine=volume, momentum_engine=momentum,
         fundamentals_engine=fundamentals, screener_engine=ScreenerEngine(provider),
-        thesis_writer=make_thesis_writer())
+        thesis_writer=make_thesis_writer(), options_engine=options)
 
     vix_levels = vix.get_levels()
     snapshot = {
@@ -73,6 +88,8 @@ def build_snapshot() -> dict:
         "indices": {},
         "rotation": rotation.get_leaderboard(),
         "setups": composer.compose(),
+        "options": {"QQQ": options.get_gex_profile("QQQ")},
+        "alert_feed": run_demo(),
     }
     for sym in INDEX_SYMBOLS:
         snapshot["indices"][sym] = {

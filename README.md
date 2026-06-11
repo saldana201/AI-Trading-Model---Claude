@@ -1,4 +1,4 @@
-# Confluence — Phases 1–3: engines, orchestrator, dashboard
+# Confluence — Phases 1–5: engines, orchestrator, alerts, options, dashboard
 
 Phase 1 of the trade entry/exit forecasting system (see `trade-forecasting-app-design.md`).
 Two deterministic MCP servers and the shared fractal/level core they're built on.
@@ -128,11 +128,62 @@ the stand-aside reason instead of forcing trades.
 Reproducibility note: synthetic bars are seeded with sha256, not Python's
 process-salted `hash()` — runs are now identical across processes.
 
-## Next (Phase 4)
+## Phase 4 additions — the alert engine
 
-The alert engine: predicate trees over `check_level_break` + VIX conditions,
-the trade-lifecycle state machine (WATCHING → TRIGGERED → ACTIVE → trim/trail →
-exit, incl. DETERIORATED), and push/webhook delivery.
+| Component | What it does |
+|---|---|
+| alerts/predicates.py | JSON predicate trees (all/any/not over level_break, vix pivot, rvol, price checks); every evaluation returns its evidence trail. No LLM in the detection path. |
+| alerts/lifecycle.py | The state machine: WATCHING → TRIGGERED → ACTIVE → TRIMMED_T1 → TRAILING → CLOSED, with INVALIDATED / STOPPED / DETERIORATED exits. Triggers must hold (one re-arm, then invalidated); T1 trims and moves the stop to breakeven; trailing clamps to breakeven. |
+| alerts/engine.py | Arms composer setups, ticks every bar: market guard (VIX reclaims pivot + index loses weekly pivot → DETERIORATED), persists, fans out to sinks. One broken sink never blocks the others. |
+| alerts/store.py | SQLite trades + events (Timescale in production). |
+| alerts/sinks.py | Console, JSONL, and webhook (Discord-compatible) delivery, stdlib-only. |
+| scripts/alertd.py | Polling daemon: arms the morning game plan, ticks on an interval, optional DISCORD_WEBHOOK_URL. |
+| scripts/demo_alerts.py | Scripted lifecycle demo feeding the dashboard: NVDA full winner (trigger → trim → trail → T2), AMD deteriorated when VIX pops over pivot while QQQ loses its weekly pivot. |
+
+ReplayProvider / ScriptedProvider replay bars progressively so the whole alert
+path is testable bar by bar. The dashboard gains the Alert Feed panel with
+lifecycle badges.
+
+Run it:
+
+```bash
+CONFLUENCE_DATA=synthetic python -m scripts.snapshot   # game plan
+CONFLUENCE_DATA=synthetic python -m scripts.alertd --interval 5 --ticks 3
+python -m scripts.demo_alerts                          # scripted lifecycle demo
+```
+
+## Phase 5 additions — the options layer
+
+| Component | What it does |
+|---|---|
+| engines/options_mcp/greeks.py | Black-Scholes gamma/vanna + expected move, stdlib-only |
+| engines/options_mcp/providers.py | Chain abstraction: SyntheticOptions (engineerable walls/IV-rank/spreads) and YFinanceOptions (live; iv_rank honestly None) |
+| engines/options_mcp/logic.py | Per-strike GEX ($m / 1% move) and vanna, zero-gamma flip (cumulative-GEX crossing), call/put walls, dealer-zone reading, contract quality, and PRD §13 contract selection |
+| orchestrator updates | options_alignment and liquidity score components are now REAL when a chain feed exists (weights restored to 1.1 / 0.8) and degrade gracefully to labeled placeholders when it doesn't |
+
+GEX convention (documented approximation): dealers long calls / short puts —
+a positioning estimate, never dealer ground truth.
+
+Contract selection rules: strike at/inside the entry trigger; swing expiry
+21–50 DTE; IV rank ≥ 55% → debit spread with the short leg at T2; liquidity
+gates OI ≥ 500 and spread ≤ 8% of mid (fallback: stock, with the reason);
+expected-move check flags a T1 beyond the contract's 1σ move.
+
+Dashboard gains the Options Positioning panel (GEX-by-strike chart, flip,
+walls, dealer-zone reading) and instrument suggestion lines on every setup
+card (e.g. `CALL DEBIT SPREAD · 2180 / 2290 · exp 2026-07-11 (31d) · OI 774 ·
+spread 2.0%`).
+
+Provider fix worth noting: SyntheticProvider now generates one 800-bar master
+series per symbol and every lookback slices its tail — previously different
+lookbacks produced different prices for the same symbol, which surfaced the
+moment two engines (levels vs options) asked for different histories.
+
+## Next (Phase 6)
+
+Migrate the dashboard into the Next.js monorepo (`/api/snapshot` route + one
+React component per panel), add the chat route over the MCP tool mesh, and
+expose the whole system as a composite `confluence-mcp` server.
 
 ---
 

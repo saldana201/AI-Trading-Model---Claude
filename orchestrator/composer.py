@@ -54,7 +54,7 @@ class SetupComposer:
     def __init__(self, provider, regime_engine, rotation_engine, levels_engine,
                  volume_engine, momentum_engine, fundamentals_engine,
                  screener_engine, watchlist: dict[str, list[str]] | None = None,
-                 thesis_writer=None):
+                 thesis_writer=None, options_engine=None):
         self.provider = provider
         self.regime = regime_engine
         self.rotation = rotation_engine
@@ -65,6 +65,7 @@ class SetupComposer:
         self.screener = screener_engine
         self.watchlist = watchlist or DEFAULT_WATCHLIST
         self.thesis_writer = thesis_writer  # optional LLM upgrade (orchestrator/llm.py)
+        self.options = options_engine       # optional until a chain feed exists
 
     # ---------- construction ----------
 
@@ -211,6 +212,17 @@ class SetupComposer:
                 "avg_dollar_volume_m": round(dollar_vol, 1),
                 "fundamentals": fund,
             }
+            options_payload = None
+            if self.options is not None:
+                try:
+                    ctx["options_alignment"] = self.options.get_alignment(
+                        sym, direction, setup["entry_trigger"], setup["target_1"])
+                    ctx["contract"] = self.options.select_contract(
+                        sym, direction, setup["entry_trigger"],
+                        setup["target_1"], setup["target_2"])
+                    options_payload = self.options.get_dealer_zones(sym)
+                except Exception:
+                    options_payload = None   # degrade to placeholder scoring
             scored = score_setup(direction, ctx)
             if scored["score"] < MIN_SCORE:
                 suppressed.append({"symbol": sym,
@@ -218,7 +230,8 @@ class SetupComposer:
                 continue
 
             evidence = {"levels": level_payload, "regime": regime, "screen": screen,
-                        "phase": phase, "fundamentals": fund, "sector": etf}
+                        "phase": phase, "fundamentals": fund, "sector": etf,
+                        "options": options_payload}
             check = validate_setup(setup, evidence)
             if not check["valid"]:
                 suppressed.append({"symbol": sym, "reason": "failed evidence validation",
@@ -226,6 +239,9 @@ class SetupComposer:
                 continue
 
             setup |= {
+                "options": options_payload,
+                "instrument_suggestion": ctx.get("contract"),
+                "instrument": (ctx.get("contract") or {}).get("instrument", "stock"),
                 "confidence": scored["score"],
                 "score_components": scored["components"],
                 "risks": scored["risks"],

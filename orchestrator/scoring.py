@@ -11,14 +11,14 @@ from __future__ import annotations
 WEIGHTS = {
     "vix_alignment": 1.4,
     "index_alignment": 1.2,
-    "options_alignment": 0.4,    # placeholder until options-mcp (Phase 5)
+    "options_alignment": 1.1,    # real when options-mcp data present
     "sector_strength": 1.2,
     "stock_relative_strength": 1.2,
     "volume_rvol": 1.0,
     "rsi_confirmation": 0.9,
     "ma_structure": 1.0,
     "risk_reward": 1.3,
-    "liquidity": 0.4,            # dollar-volume proxy until options-mcp
+    "liquidity": 0.8,            # contract-based when options-mcp present
     "catalyst_fundamental": 1.0,
 }
 
@@ -53,10 +53,18 @@ def score_setup(direction: str, ctx: dict) -> dict:
         "value": _clamp(0.5 + (rs if not flip else -rs) / 20),
         "evidence": {"regime": ctx["regime"], "risk_score": rs},
     }
-    comps["options_alignment"] = {
-        "value": 0.5, "placeholder": True,
-        "evidence": {"note": "options-mcp lands in Phase 5; scored neutral"},
-    }
+    oa = ctx.get("options_alignment")
+    if oa:
+        comps["options_alignment"] = {
+            "value": oa["value"],
+            "evidence": {"reasons": oa["reasons"], "flip": oa["flip"],
+                         "call_wall": oa["call_wall"], "put_wall": oa["put_wall"]},
+        }
+    else:
+        comps["options_alignment"] = {
+            "value": 0.5, "placeholder": True,
+            "evidence": {"note": "options data unavailable; scored neutral"},
+        }
     comps["sector_strength"] = {
         "value": directional(ROTATION_VALUE.get(ctx["sector_status"], 0.45)),
         "evidence": {"sector_etf": ctx["sector_etf"], "status": ctx["sector_status"],
@@ -94,12 +102,23 @@ def score_setup(direction: str, ctx: dict) -> dict:
         "value": _clamp((rr2 - 1.5) / 2.5),   # 1.5:1 -> 0, 4:1 -> 1 (vs T2 objective)
         "evidence": {"rr_t1": ctx["risk_reward_t1"], "rr_t2": ctx.get("risk_reward_t2")},
     }
-    dv = ctx["avg_dollar_volume_m"]
-    comps["liquidity"] = {
-        "value": _clamp(dv / 500), "placeholder": True,
-        "evidence": {"avg_dollar_volume_$m": dv,
-                     "note": "options spread/liquidity checks land in Phase 5"},
-    }
+    contract = ctx.get("contract")
+    if contract and contract.get("instrument") not in (None, "stock"):
+        liq = _clamp(min(contract["oi"] / 2000, 1.0)
+                     * _clamp(1.0 - contract["spread_pct"] * 10))
+        comps["liquidity"] = {
+            "value": liq,
+            "evidence": {"oi": contract["oi"],
+                         "spread_pct": contract["spread_pct"],
+                         "instrument": contract["instrument"]},
+        }
+    else:
+        dv = ctx["avg_dollar_volume_m"]
+        comps["liquidity"] = {
+            "value": _clamp(dv / 500), "placeholder": True,
+            "evidence": {"avg_dollar_volume_$m": dv,
+                         "note": "no liquid contract — dollar-volume proxy"},
+        }
     fund = ctx["fundamentals"]
     cat_v = GRADE_VALUE[fund["growth_grade"]]
     if fund["in_earnings_window"]:
@@ -128,5 +147,9 @@ def score_setup(direction: str, ctx: dict) -> dict:
         risks.append("daily bearish RSI divergence active")
     if ctx["bullish_divergence"] and flip:
         risks.append("daily bullish RSI divergence active")
+    if oa and oa["value"] < 0.4:
+        risks.append("options positioning headwind: " + "; ".join(oa["reasons"]))
+    if contract and contract.get("t1_within_expected_move") is False:
+        risks.append("target 1 sits outside the contract's expected move")
 
     return {"score": score, "components": comps, "risks": risks}
