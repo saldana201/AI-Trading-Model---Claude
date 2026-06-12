@@ -180,3 +180,16 @@ def test_composer_degrades_when_options_engine_breaks():
     for s in out["setups"]:
         assert s["options"] is None and s["instrument"] == "stock"
         assert s["score_components"]["options_alignment"].get("placeholder") is True
+
+
+def test_num_coercion_handles_live_chain_garbage():
+    """Regression: yfinance returns NaN for thin strikes; NaN is truthy so
+    `v or 0` does not catch it (the live /api/snapshot 500)."""
+    import math
+    from engines.options_mcp.providers import _num
+    assert _num(float("nan")) == 0.0
+    assert _num(float("inf"), 5.0) == 5.0
+    assert _num(None) == 0.0
+    assert _num("not a number", 1.5) == 1.5
+    assert _num(42) == 42.0
+    assert int(_num(float("nan"))) == 0   # the exact crashing call path

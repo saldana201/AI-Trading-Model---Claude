@@ -162,3 +162,37 @@ class ScriptedProvider:
         if req.symbol not in self.frames:
             raise KeyError(f"No scripted bars for {req.symbol}")
         return self.frames[req.symbol]
+
+
+class CachedProvider:
+    """TTL cache over any provider (design doc §3: engines never hit vendors
+    redundantly). On live yfinance, a single snapshot touches the same
+    symbols from several engines — without this, that's dozens of duplicate
+    HTTP fetches and a fast path to Yahoo rate limits."""
+
+    def __init__(self, base: DataProvider, ttl_s: float = 300.0, clock=None):
+        import threading
+        import time as _time
+        self.base = base
+        self.ttl_s = ttl_s
+        self._clock = clock or _time.time
+        self._cache: dict[tuple, tuple[float, pd.DataFrame]] = {}
+        self._lock = threading.Lock()
+        self.misses = 0   # observable for tests/health
+
+    def get_bars(self, req: BarRequest) -> pd.DataFrame:
+        key = (req.symbol, req.interval, req.lookback_days)
+        now = self._clock()
+        with self._lock:
+            hit = self._cache.get(key)
+            if hit and now - hit[0] < self.ttl_s:
+                return hit[1]
+        df = self.base.get_bars(req)   # fetch outside the lock
+        with self._lock:
+            self._cache[key] = (now, df)
+            self.misses += 1
+        return df
+
+    def invalidate(self) -> None:
+        with self._lock:
+            self._cache.clear()

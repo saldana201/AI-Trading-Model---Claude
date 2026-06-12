@@ -46,10 +46,14 @@ def gex_profile(chain: dict) -> dict:
 
     # Zero-gamma flip: where the cumulative net-GEX curve crosses zero
     # (low-strike puts dominate below, calls above) — linear interpolation.
+    # Live chains carry strikes 50%+ away from spot whose near-zero gamma
+    # makes the cumulative curve cross on noise far from the money, so the
+    # flip is computed within a ±20% band around spot.
+    band = [k for k in strikes if abs(k - spot) / spot <= 0.20] or strikes
     flip = None
     cum = 0.0
     prev_k, prev_cum = None, None
-    for k in strikes:
+    for k in band:
         cum += per_strike_gex[k]
         if prev_cum is not None and prev_cum < 0 <= cum:
             frac = -prev_cum / (cum - prev_cum) if cum != prev_cum else 0.5

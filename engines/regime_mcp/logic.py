@@ -65,8 +65,31 @@ def _momentum_score(daily) -> tuple[float, dict]:
     return s, {"daily_rsi": round(val, 1)}
 
 
+def _sector_breadth_score(rotation_engine) -> tuple[float, dict]:
+    """Real breadth from the 31-ETF rotation universe: fraction above the
+    21-day MA, tilted by the leading-vs-lagging count."""
+    board = rotation_engine.get_leaderboard()
+    rows = [e for e in board["etfs"] if e.get("ma21") in ("above", "below")]
+    if not rows:
+        return 0.0, {"source": "sector_universe", "note": "no usable rows"}
+    frac = sum(e["ma21"] == "above" for e in rows) / len(rows)
+    statuses = [e["status"] for e in rows]
+    tilt = (statuses.count("leading") - statuses.count("lagging")
+            - statuses.count("deteriorating") * 0.5) / max(len(rows), 1)
+    score = (frac - 0.5) * 3.2 + tilt * 1.6
+    return round(max(-2.0, min(2.0, score)), 2), {
+        "source": "sector_universe", "etfs": len(rows),
+        "fraction_above_ma21": round(frac, 2),
+        "leading": statuses.count("leading"),
+        "improving": statuses.count("improving"),
+        "deteriorating": statuses.count("deteriorating"),
+        "lagging": statuses.count("lagging"),
+    }
+
+
 def _breadth_score(symbol_dailies: dict) -> tuple[float, dict]:
-    """MA-stack breadth proxy across tracked indices (sectors join in Phase 3)."""
+    """MA-stack proxy fallback when no rotation engine is wired in
+    (e.g. cheap backtest passes)."""
     checks, above = 0, 0
     detail = {}
     for sym, daily in symbol_dailies.items():
@@ -80,7 +103,8 @@ def _breadth_score(symbol_dailies: dict) -> tuple[float, dict]:
     return round((frac - 0.5) * 4, 2), {"fraction_above_mas": round(frac, 2), "detail": detail}
 
 
-def compute_regime(provider: DataProvider, index_symbols=("QQQ", "SPY")) -> dict:
+def compute_regime(provider: DataProvider, index_symbols=("QQQ", "SPY"),
+                   rotation_engine=None) -> dict:
     vix = provider.get_bars(BarRequest(VIX_SYMBOL, "1d", 180))
     dailies = {s: provider.get_bars(BarRequest(s, "1d", 400)) for s in index_symbols}
     primary = dailies[index_symbols[0]]
@@ -115,7 +139,10 @@ def compute_regime(provider: DataProvider, index_symbols=("QQQ", "SPY")) -> dict
     s, ev = _momentum_score(primary)
     add("momentum", s, ev)
 
-    s, ev = _breadth_score(dailies)
+    if rotation_engine is not None:
+        s, ev = _sector_breadth_score(rotation_engine)
+    else:
+        s, ev = _breadth_score(dailies)
     add("ma_breadth", s, ev)
 
     raw = sum(c["contribution"] for c in components)
@@ -138,16 +165,20 @@ def compute_regime(provider: DataProvider, index_symbols=("QQQ", "SPY")) -> dict
         "components": components,
         "primary_index": index_symbols[0],
         "computed_at": str(primary.index[-1]),
-        "not_yet_classified": {
-            "trend_day_vs_mean_reversion": "requires intraday bars (Phase 4 alert engine)",
-            "sector_breadth": "requires rotation-mcp (Phase 3)",
-        },
+        "not_yet_classified": (
+            {"trend_day_vs_mean_reversion":
+                 "requires intraday bars (streaming ingest)"}
+            if rotation_engine is not None else
+            {"trend_day_vs_mean_reversion":
+                 "requires intraday bars (streaming ingest)",
+             "sector_breadth": "rotation engine not wired into this instance"}),
     }
 
 
 class RegimeEngine:
-    def __init__(self, provider: DataProvider):
+    def __init__(self, provider: DataProvider, rotation_engine=None):
         self.provider = provider
+        self.rotation = rotation_engine
 
     def get_regime(self) -> dict:
-        return compute_regime(self.provider)
+        return compute_regime(self.provider, rotation_engine=self.rotation)

@@ -26,9 +26,11 @@ from engines.shared.providers import BarRequest
 from .scoring import score_setup
 from .validator import validate_setup
 
-MIN_SCORE = 6.0
-MIN_RR_T1 = 1.0   # T1 is the trim level
-MIN_RR_T2 = 2.0   # T2 is the measured objective — the design doc's 2:1 floor
+import os as _os
+
+MIN_SCORE = float(_os.environ.get("CONFLUENCE_MIN_SCORE", "6.0"))
+MIN_RR_T1 = float(_os.environ.get("CONFLUENCE_MIN_RR_T1", "1.0"))  # trim level
+MIN_RR_T2 = float(_os.environ.get("CONFLUENCE_MIN_RR_T2", "2.0"))  # 2:1 objective
 
 # Sector ETF -> representative liquid names. User-configurable; the real app
 # derives membership from fundamentals-mcp sector tags.
@@ -50,6 +52,22 @@ DEFAULT_WATCHLIST = {
 }
 
 
+def load_watchlist(path: str = "watchlist.json") -> dict[str, list[str]]:
+    """Merge an optional repo-root watchlist.json over the defaults.
+    Keys are sector ETFs from the rotation universe; values are tickers.
+    A custom key REPLACES that sector's default list."""
+    import json
+    import pathlib
+    p = pathlib.Path(path)
+    if not p.is_absolute():
+        p = pathlib.Path(__file__).resolve().parent.parent / path
+    if not p.exists():
+        return DEFAULT_WATCHLIST
+    custom = {k.upper(): [s.upper() for s in v]
+              for k, v in json.loads(p.read_text()).items()}
+    return {**DEFAULT_WATCHLIST, **custom}
+
+
 class SetupComposer:
     def __init__(self, provider, regime_engine, rotation_engine, levels_engine,
                  volume_engine, momentum_engine, fundamentals_engine,
@@ -63,7 +81,7 @@ class SetupComposer:
         self.momentum = momentum_engine
         self.fundamentals = fundamentals_engine
         self.screener = screener_engine
-        self.watchlist = watchlist or DEFAULT_WATCHLIST
+        self.watchlist = watchlist or load_watchlist()
         self.thesis_writer = thesis_writer  # optional LLM upgrade (orchestrator/llm.py)
         self.options = options_engine       # optional until a chain feed exists
 
@@ -117,6 +135,13 @@ class SetupComposer:
         risk = abs(entry - stop)
         if risk <= 0:
             return None
+        # Geometry vs the live market: a long whose stop sits at/above spot
+        # (entry far overhead) would invalidate on its first bar — not a
+        # tradeable setup, suppress at construction.
+        if direction == "long" and stop >= spot:
+            return None
+        if direction == "short" and stop <= spot:
+            return None
         return {
             "symbol": symbol, "direction": direction, "instrument": "stock",
             "entry_trigger": round(entry, 2), "stop": round(stop, 2),
@@ -151,14 +176,18 @@ class SetupComposer:
         vix_state = next(c for c in regime["components"]
                          if c["name"] == "vix_alignment")["evidence"]["state"]
 
-        if regime["regime"] == "chop":
+        forced = _os.environ.get("CONFLUENCE_FORCE_DIRECTION", "").lower()
+        if forced not in ("long", "short"):
+            forced = None
+
+        if regime["regime"] == "chop" and not forced:
             return {"regime": regime, "setups": [], "suppressed": [],
-                    "no_trade": True,
+                    "no_trade": True, "forced": False,
                     "reason": f"Regime is chop (score {regime['risk_score']:+.1f}) "
                               f"with VIX {vix_state.replace('_', ' ')} — "
                               "no-trade conditions. Standing aside is the setup."}
 
-        direction = "long" if regime["regime"] == "risk_on" else "short"
+        direction = forced or ("long" if regime["regime"] == "risk_on" else "short")
         candidates = self.rotation.get_rotation_candidates()
         active_etfs = candidates["leading"] + candidates["improving"]
 
@@ -262,4 +291,4 @@ class SetupComposer:
         setups.sort(key=lambda s: -s["confidence"])
         return {"regime": regime, "direction": direction,
                 "setups": setups[:max_setups], "suppressed": suppressed,
-                "no_trade": False}
+                "no_trade": False, "forced": bool(forced)}

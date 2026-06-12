@@ -26,6 +26,17 @@ class OptionsProvider(Protocol):
     def get_chain(self, symbol: str, spot: float) -> dict: ...
 
 
+def _num(v, default: float = 0.0) -> float:
+    """NaN/None/inf-safe float coercion. Live yfinance chains return NaN for
+    volume/OI/bid/ask/IV on thin strikes, and NaN is truthy — `v or 0` does
+    NOT catch it."""
+    try:
+        f = float(v)
+    except (TypeError, ValueError):
+        return default
+    return default if math.isnan(f) or math.isinf(f) else f
+
+
 def _nice_step(spot: float) -> float:
     for limit, step in ((25, 0.5), (60, 1.0), (120, 2.5), (300, 5.0)):
         if spot < limit:
@@ -108,14 +119,18 @@ class YFinanceOptions:
             chain = t.option_chain(exp)
             for typ, df in (("call", chain.calls), ("put", chain.puts)):
                 for _, row in df.iterrows():
-                    bid = float(row.get("bid") or 0)
-                    ask = float(row.get("ask") or 0)
-                    mid = round((bid + ask) / 2, 4) if ask > 0 else float(row.get("lastPrice") or 0)
+                    strike = _num(row.get("strike"))
+                    if strike <= 0:
+                        continue
+                    bid = _num(row.get("bid"))
+                    ask = _num(row.get("ask"))
+                    mid = (round((bid + ask) / 2, 4) if ask > 0
+                           else _num(row.get("lastPrice")))
                     contracts.append({
-                        "expiry": exp, "dte": dte, "strike": float(row["strike"]),
-                        "type": typ, "iv": float(row.get("impliedVolatility") or 0),
-                        "oi": int(row.get("openInterest") or 0),
-                        "volume": int(row.get("volume") or 0),
+                        "expiry": exp, "dte": dte, "strike": strike,
+                        "type": typ, "iv": _num(row.get("impliedVolatility")),
+                        "oi": int(_num(row.get("openInterest"))),
+                        "volume": int(_num(row.get("volume"))),
                         "bid": bid, "mid": mid, "ask": ask,
                     })
         return {"symbol": symbol, "spot": spot, "iv_rank": self.iv_rank,

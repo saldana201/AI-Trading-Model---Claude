@@ -1,0 +1,16 @@
+{
+  "SMH": [ "NVDA", "AVGO", "AMD", "MU" ],
+  "SOXX": [ "NVDA", "AVGO", "AMD" ],
+  "XLK": [ "MSFT", "AAPL", "ORCL" ],
+  "IGV": [ "CRM", "NOW", "PLTR" ],
+  "MAGS": [ "META", "GOOGL", "AMZN" ],
+  "XLE": [ "XOM", "CVX" ],
+  "XOP": [ "FANG", "DVN" ],
+  "URA": [ "CCJ", "LEU" ],
+  "URNM": [ "CCJ", "UEC" ],
+  "NLR": [ "CEG", "VST" ],
+  "PAVE": [ "PWR", "ETN" ],
+  "GRID": [ "ETN", "VRT" ],
+  "XLV": [ "LLY", "UNH" ],
+  "XLF": [ "JPM", "GS" ]
+}

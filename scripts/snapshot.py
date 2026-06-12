@@ -63,8 +63,8 @@ def build_snapshot() -> dict:
     levels = LevelsEngine(provider)
     volume = VolumeEngine(provider)
     momentum = MomentumEngine(provider)
-    regime = RegimeEngine(provider)
     rotation = RotationEngine(provider)
+    regime = RegimeEngine(provider, rotation_engine=rotation)
     fundamentals = FundamentalsEngine(
         SyntheticFundamentals() if source == "synthetic" else YFinanceFundamentals())
     options = OptionsEngine(

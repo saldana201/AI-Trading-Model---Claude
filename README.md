@@ -1,4 +1,4 @@
-# Confluence — Phases 1–5: engines, orchestrator, alerts, options, dashboard
+# Confluence — Phases 1–8: the full system, live + backtested
 
 Phase 1 of the trade entry/exit forecasting system (see `trade-forecasting-app-design.md`).
 Two deterministic MCP servers and the shared fractal/level core they're built on.
@@ -179,11 +179,99 @@ series per symbol and every lookback slices its tail — previously different
 lookbacks produced different prices for the same symbol, which surfaced the
 moment two engines (levels vs options) asked for different histories.
 
-## Next (Phase 6)
+## Phase 6 additions — gateway, Next.js app, chat, composite MCP
 
-Migrate the dashboard into the Next.js monorepo (`/api/snapshot` route + one
-React component per panel), add the chat route over the MCP tool mesh, and
-expose the whole system as a composite `confluence-mcp` server.
+| Component | What it does |
+|---|---|
+| apps/api (FastAPI) | GET /api/health, GET /api/snapshot (TTL-cached, ?refresh=1), POST /api/chat. CORS for localhost:3000. |
+| orchestrator/chat.py | Two-mode chat over the engine tool mesh: Anthropic SDK tool-use loop when ANTHROPIC_API_KEY + CONFLUENCE_MODEL are set; a deterministic intent router otherwise that answers the PRD §10 canonical questions straight from engine output (clearly labeled). Degrades to "correct but less fluent", never silence. |
+| apps/web (Next.js 14) | The dashboard as a real app: one React server component per panel (RegimeStrip, VixPanel, IndexPanel, TapePanel, OptionsPanel, RotationTable, SetupCards, AlertFeed) sharing the same class names/design system as the static dashboard, plus a client Chat component. Page is force-dynamic and renders a clear "API offline" state. |
+| confluence_mcp/server.py | The whole system as ONE MCP server: get_game_plan, get_regime, get_levels, get_setups, get_rotation, get_dealer_zones, ask. Plug into Claude Desktop / Claude Code. |
+
+### Running the full stack
+
+```bash
+# 1) backend (synthetic offline world, or omit env for live yfinance)
+CONFLUENCE_DATA=synthetic uvicorn apps.api.main:app --port 8000
+
+# 2) frontend
+cd apps/web && npm install && npm run dev          # http://localhost:3000
+# production: npm run build && npm start
+
+# 3) optional LLM chat
+export ANTHROPIC_API_KEY=...   CONFLUENCE_MODEL=<current model>   # docs.claude.com
+
+# 4) the whole system in Claude Desktop / Claude Code
+CONFLUENCE_DATA=synthetic python -m confluence_mcp.server
+```
+
+Claude Desktop config for the composite server:
+
+```json
+{ "mcpServers": { "confluence": {
+    "command": "python", "args": ["-m", "confluence_mcp.server"],
+    "cwd": "/path/to/confluence",
+    "env": { "CONFLUENCE_DATA": "synthetic" } } } }
+```
+
+### Monorepo layout
+
+```
+confluence/
+├── engines/            # 9 deterministic MCP servers + shared core
+├── orchestrator/       # composer, scoring, validator, chat, optional LLM
+├── alerts/             # predicates, lifecycle state machine, store, sinks
+├── apps/api/           # FastAPI gateway
+├── apps/web/           # Next.js dashboard + chat
+├── confluence_mcp/     # composite MCP server
+├── dashboard/          # Phase 2–5 single-file dashboard (still works standalone)
+├── scripts/            # snapshot, alertd, demo_alerts
+└── tests/              # 89 tests across all six phases
+```
+
+## Phase 7 additions — live feed + live dashboard
+
+| Component | What it does |
+|---|---|
+| CachedProvider | TTL bar cache wrapping any provider — one snapshot no longer hits yfinance dozens of times for the same symbols. Tune with CONFLUENCE_BARS_TTL (default 300s) / CONFLUENCE_QUOTE_TTL (15s). |
+| GET /api/quotes | Lightweight spot / change% / RVOL for the ticker strip (defaults QQQ, SPY, ^VIX + any armed symbols). |
+| GET /api/stream | Server-sent events: `hello`, `quote` every CONFLUENCE_QUOTE_INTERVAL (15s), and `alert` events from the live alert engine. Keepalives every 30s. |
+| POST /api/alerts/arm · /tick · GET /state | Arm the current game plan into the Phase 4 lifecycle engine; ticked automatically by the background pump every CONFLUENCE_ALERT_INTERVAL (60s) while anything is armed. |
+| apps/web Live components | LiveTicker (SSE with polling fallback + connection dot), LiveFeed (demo seed + streamed alerts highlighted), ArmButton on the setups panel, SnapshotRefresher (auto router.refresh every 2 min + manual ↻). |
+
+Hardening that came out of making it live: the SQLite store is now
+thread-safe (FastAPI sync routes run on a threadpool); the composer gained a
+geometry guard so no setup can arm with its stop on the wrong side of spot
+(instant-invalidation by construction); and an arm-survival test asserts every
+composed setup survives its first tick.
+
+Live-cadence reality check: quotes refresh on the interval, but the bar feed
+is still daily yfinance — so triggers/stops evaluate on daily closes. True
+intraday alerting needs the 1m/5m streaming ingest from the design doc; the
+predicates and state machine are unchanged when that lands.
+
+## Phase 8 additions — backtest harness + real sector breadth
+
+| Component | What it does |
+|---|---|
+| backtest/harness.py | Replays history with ReplayProvider: composes setups as-of each step, steps each through the live lifecycle state machine over the actual subsequent bars, and records R-multiple outcomes under live trade-management semantics (half off at T1, breakeven stop, trail). |
+| backtest/run.py | CLI: `python -m backtest.run --span 252 --step 5 --horizon 15` (synthetic or live; CONFLUENCE_FORCE_DIRECTION applies). Writes backtest/results.json. |
+| Calibration report | Win rate / avg R / expectancy per confidence bucket (does ≥7.5 beat <6.5?), final-state counts, fill rate, and per-component winners-vs-losers edge — the empirical basis for re-tuning WEIGHTS and the gate floors. |
+| Regime breadth | The ma_breadth component now uses REAL sector breadth (fraction of the 31-ETF universe above the 21-day MA + leading-vs-lagging tilt) wherever the rotation engine is wired (gateway, snapshot, composite MCP); the MA-proxy remains as the cheap fallback used inside backtests. |
+
+Backtest caveats are first-class in the output: fills at trigger-bar close
+(no slippage/commissions), guard levels frozen at compose time, and daily-bar
+resolution (the close decides when one bar spans both stop and target).
+Treat results as relative calibration (bucket vs bucket, component vs
+component), not absolute P&L forecasts.
+
+### What remains before live trading use
+
+Backtest the level/confluence heuristics and tune score weights against
+outcomes (every engine output is timestamped for exactly this); swap yfinance
+for a real-time feed + streaming ingest for intraday alerting; replace SQLite
+with TimescaleDB; harden the gateway (auth, rate limits). And the standing
+disclaimer stands: decision support, not investment advice.
 
 ---
 
