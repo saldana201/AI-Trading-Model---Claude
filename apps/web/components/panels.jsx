@@ -326,6 +326,38 @@ export function SetupCards({ setups }) {
       <h2>Setups <span className="num">
         {setups.setups.length} active · {setups.direction} · {(setups.suppressed || []).length} suppressed
       </span>{setups.forced && <span className="state warn" style={{ marginLeft: 10 }}>FORCED — test mode, regime gate bypassed</span>}</h2>
+      {setups.setups.length === 0 && setups.funnel && (
+        <div className="notrade" style={{ marginTop: 10 }}>
+          <b>No setups cleared the gates.</b>{" "}
+          {setups.funnel.candidate_stocks} candidate{setups.funnel.candidate_stocks === 1 ? "" : "s"} from{" "}
+          {setups.funnel.active_sectors.join(", ") || "no active sectors"};{" "}
+          screen results: {Object.entries(setups.funnel.screen_classifications)
+            .map(([k, v]) => `${k.replaceAll("_", " ")} ×${v}`).join(", ") || "none"};{" "}
+          {setups.funnel.passed_screen} passed the screen
+          ({setups.funnel.kept_classes.join(" / ")}).
+          {setups.funnel.sectors_without_watchlist_entries.length > 0 && (
+            <> Active sectors with no watchlist entries:{" "}
+            <span className="num">{setups.funnel.sectors_without_watchlist_entries.join(", ")}</span>
+            {" "}— add names for these in watchlist.json.</>
+          )}
+          {(setups.suppressed || []).length > 0 && (
+            <> Suppressed: {setups.suppressed.map((s) => `${s.symbol}${s.pinned ? " 📌" : ""} (${s.reason})`).join("; ")}.</>
+          )}
+        </div>
+      )}
+      {setups.funnel?.pinned_outcomes && Object.keys(setups.funnel.pinned_outcomes).length > 0 && (
+        <div className="pinned-trace">
+          <div className="eyebrow">Pinned tickers</div>
+          {Object.entries(setups.funnel.pinned_outcomes).map(([sym, disp]) => (
+            <div className="pintrace" key={sym}>
+              <span className="num">📌 {sym}</span>
+              <span className={disp === "setup" ? "state good" : "why"}>
+                {disp === "setup" ? "active setup" : disp}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
       {setups.setups.map((x) => (
         <div className="setup" key={x.symbol}>
           <div className="head">
@@ -375,6 +407,46 @@ export function AlertFeed({ feed }) {
           </div>
         ))}
       </div>
+    </section>
+  );
+}
+
+export function JournalPanel({ journal }) {
+  const s = journal.summary?.overall || {};
+  const rows = (journal.rows || []).slice().reverse().slice(0, 20);
+  const rTone = (r) => r == null ? "var(--muted)" : r > 0 ? "var(--bull)" : "var(--bear)";
+  return (
+    <section className="card" style={{ marginTop: 18 }} aria-label="Trade journal">
+      <h2>Journal <span className="num">
+        {s.n ? `${s.n} resolved · win ${(s.win_rate * 100).toFixed(0)}% · avg ${s.avg_r > 0 ? "+" : ""}${s.avg_r}R` : "no resolved trades yet"}
+        {journal.counts?.open ? ` · ${journal.counts.open} open` : ""}
+        {journal.counts?.pending ? ` · ${journal.counts.pending} armed` : ""}
+      </span></h2>
+      {rows.length === 0 ? (
+        <div className="empty" style={{ marginTop: 10 }}>
+          Arm the game plan — every trade lifecycle lands here as an R-multiple outcome.
+        </div>
+      ) : (
+        <table className="rot">
+          <thead><tr><th>Symbol</th><th>Dir</th><th>Status</th><th>Entry</th><th>Exit / mark</th><th>R</th><th>Conf</th><th>Reason</th></tr></thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.trade_id}>
+                <td className="num">{r.symbol}</td>
+                <td>{r.direction}</td>
+                <td><span className={`badge ${r.final_state}`}>{r.status}</span></td>
+                <td className="num">{r.entry_price ?? "—"}</td>
+                <td className="num">{r.exit_or_mark ?? "—"}</td>
+                <td className="num" style={{ color: rTone(r.realized_r) }}>
+                  {r.realized_r == null ? "—" : `${r.realized_r > 0 ? "+" : ""}${r.realized_r}`}
+                </td>
+                <td className="num">{r.confidence ?? "—"}</td>
+                <td className="why" style={{ textAlign: "left" }}>{r.exit_reason}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </section>
   );
 }

@@ -160,6 +160,15 @@ class ChatService:
         def reply(text, tools):
             return {"reply": text, "mode": "deterministic", "tool_calls": tools}
 
+        def safe(name, args):
+            """Per-symbol tool call that degrades to an error note instead of
+            raising — a 404 ticker must never kill the chat turn."""
+            try:
+                return tb.call(name, args), None
+            except Exception as exc:
+                sym = args.get("symbol") or ",".join(args.get("symbols", []))
+                return None, f"{sym}: no data ({type(exc).__name__}) — check the ticker"
+
         if "regime" in q or ("market" in q and ("tone" in q or "today" in q)):
             r = tb.call("get_regime", {})
             top = sorted(r["components"], key=lambda c: -abs(c["contribution"]))[:3]
@@ -208,7 +217,10 @@ class ChatService:
         if "level" in q:
             parts, tools = [], []
             for sym in (syms or ["QQQ", "SPY"]):
-                L = tb.call("get_index_levels", {"symbol": sym})
+                L, err = safe("get_index_levels", {"symbol": sym})
+                if err:
+                    parts.append(err)
+                    continue
                 parts.append(
                     f"{sym} {L['spot']}: bull trigger {L['bullish_trigger']}, "
                     f"bear trigger {L['bearish_trigger']}, weekly pivot "
@@ -237,13 +249,17 @@ class ChatService:
                 parts.append(f"{r['symbol']}: {ext}% above the 21d MA, "
                              f"{r['pct_off_52w_high']}% off highs — {verdict} "
                              f"({r['classification'].replace('_', ' ')})")
+            for sym, msg in res.get("errors", {}).items():
+                parts.append(f"{sym}: no data — check the ticker")
             return reply(" · ".join(parts) or "No screen data for those symbols.",
                          ["screen"])
 
         if ("accumulation" in q or "distribution" in q or "phase" in q
                 or "mark-up" in q or "mark up" in q):
             sym = syms[0] if syms else "QQQ"
-            ph = tb.call("classify_phase", {"symbol": sym})
+            ph, err = safe("classify_phase", {"symbol": sym})
+            if err:
+                return reply(err, [])
             ev = ph["evidence"]
             return reply(
                 f"{sym} reads as {ph['phase'].replace('_', ' ')} — trend "
@@ -253,7 +269,9 @@ class ChatService:
 
         if "gamma" in q or "dealer" in q or "wall" in q or "options" in q:
             sym = syms[0] if syms else "QQQ"
-            z = tb.call("get_dealer_zones", {"symbol": sym})
+            z, err = safe("get_dealer_zones", {"symbol": sym})
+            if err:
+                return reply(err, [])
             return reply(
                 f"{sym}: {z['gamma_regime']} gamma (flip {z['zero_gamma_flip']}, "
                 f"call wall {z['call_wall']}, put wall {z['put_wall']}). "
@@ -273,7 +291,10 @@ class ChatService:
 
         if "rsi" in q or "momentum" in q:
             sym = syms[0] if syms else "QQQ"
-            st = tb.call("get_rsi_stack", {"symbol": sym})["stack"]
+            res, err = safe("get_rsi_stack", {"symbol": sym})
+            if err:
+                return reply(err, [])
+            st = res["stack"]
             return reply(sym + " RSI: " + ", ".join(
                 f"{s['timeframe']} {s['rsi']} ({s['zone']})" for s in st),
                 ["get_rsi_stack"])

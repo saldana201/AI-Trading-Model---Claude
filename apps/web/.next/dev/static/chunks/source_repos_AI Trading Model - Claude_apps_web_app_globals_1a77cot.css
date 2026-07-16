@@ -861,4 +861,29 @@ footer {
   background: none;
 }
 
+.rotchip.pinned {
+  color: var(--gold);
+  background: #d9b36a1f;
+  border: 1px solid #d9b36a59;
+}
+
+.pinned-trace {
+  border-top: 1px dashed var(--line);
+  margin-top: 14px;
+  padding-top: 10px;
+}
+
+.pintrace {
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 5px;
+  font-size: 12px;
+  display: flex;
+}
+
+.pintrace .num {
+  min-width: 90px;
+  color: var(--gold);
+}
+
 /*# sourceMappingURL=source_repos_AI%20Trading%20Model%20-%20Claude_apps_web_app_globals_1a77cot.css.map*/

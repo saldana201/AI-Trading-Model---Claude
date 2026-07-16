@@ -1,4 +1,4 @@
-# Confluence — Phases 1–8: the full system, live + backtested
+# Confluence — Phases 1–11: full system, live, backtested, automated
 
 Phase 1 of the trade entry/exit forecasting system (see `trade-forecasting-app-design.md`).
 Two deterministic MCP servers and the shared fractal/level core they're built on.
@@ -249,6 +249,43 @@ Live-cadence reality check: quotes refresh on the interval, but the bar feed
 is still daily yfinance — so triggers/stops evaluate on daily closes. True
 intraday alerting needs the 1m/5m streaming ingest from the design doc; the
 predicates and state machine are unchanged when that lands.
+
+## Phase 11 — pinned tickers made observable (debugging the loop)
+
+Pinning *worked* but was invisible: a pinned name that screened as `no_setup`
+or fell to a quality gate just disappeared, indistinguishable from "the
+feature is broken." This phase makes a pin's fate fully traceable.
+
+| Fix | What changed |
+|---|---|
+| Robust path resolution | watchlist.json is found whether you launch uvicorn from the repo root or elsewhere — searched in `CONFLUENCE_WATCHLIST`, the CWD, then the repo root, with an INFO log naming the file it loaded (or "using defaults"). |
+| Startup + health visibility | The terminal prints `data=… · pinned=… · autoarm=…` on boot, and GET /api/health now returns `pinned`, `watchlist_sectors`, and `autoarm_et` so you can confirm config without guessing. |
+| Full pinned tracing | Every pin gets a disposition in `funnel.pinned_outcomes`: `"setup"`, or the exact gate that stopped it (screen classification, no level structure, R:R floor, confidence floor, validation). Suppression records carry a `pinned` flag. The dashboard renders a "Pinned tickers" trace under the setups panel. |
+
+Key insight from the debug: pinning bypasses the *rotation* gate, never the
+*quality* gates — so a pinned ticker only becomes a card if it also passes the
+screen, confidence, and R:R checks. The trace tells you which of those it
+missed. To see pinned names set up regardless, combine with
+`CONFLUENCE_FORCE_DIRECTION` (test mode) or loosen `CONFLUENCE_MIN_SCORE`.
+
+## Phase 10 additions — pinned tickers + morning automation
+
+| Component | What it does |
+|---|---|
+| Pinned tickers | A `"_pinned": ["TSLA", ...]` list in watchlist.json. Pinned names are ALWAYS screened, regardless of sector rotation status — the rotation gate is bypassed, the quality gates (screen classification, confidence floor, R:R, geometry) are not. If a pinned name lives under a watchlist sector, it carries that sector's real status; otherwise it gets the PINNED pseudo-sector (rotation score 0.5, gold chip). Setups carry a `pinned` flag; the funnel reports `pinned_candidates`. The chop gate still stands. |
+| orchestrator/brief.py | The daily game plan as markdown, rendered from the same snapshot the dashboard consumes (the brief and the board can never disagree). Defensive against partial snapshots. |
+| Auto-arm scheduler | Set `CONFLUENCE_AUTOARM_ET=08:30` and the background pump, once per day at/after that ET time: rebuilds the snapshot, arms the game plan, writes `briefs/YYYY-MM-DD.md`, broadcasts a `brief` SSE event, and (if `CONFLUENCE_DISCORD_WEBHOOK` is set) posts the brief to Discord. Tested with injected clocks: fires once, never double-arms, fires again the next day. |
+
+Daily-driver setup: `CONFLUENCE_DATA=yfinance CONFLUENCE_AUTOARM_ET=08:30 uvicorn apps.api.main:app --port 8000` — leave it running and the game plan arms itself before the open.
+
+## Phase 9 additions — the outcome journal
+
+| Component | What it does |
+|---|---|
+| alerts/journal.py | Stored trades + event trails -> R-multiple outcomes under the exact backtest semantics (half at T1, breakeven, trail; open positions marked to quote, water-mark fallback). Feeds the same calibration report — live and backtest results share one definition of "win". |
+| GET /api/journal | rows (per-trade: status pending/open/closed/no_fill, entry, exit/mark, R, confidence, reason) + summary + counts. |
+| Persistence | CONFLUENCE_ALERT_DB now defaults to `alerts.db` (a file) so the journal survives restarts, and LiveAlerts re-arms every non-terminal trade from the store on startup — a gateway restart never orphans an open position's monitoring. |
+| Dashboard | Journal panel: resolved-trade win rate and average R in the header, last 20 trades in a table with color-coded R. |
 
 ## Phase 8 additions — backtest harness + real sector breadth
 

@@ -2,7 +2,7 @@ import Chat from "../components/Chat";
 import { LiveTicker, LiveFeed, ArmButton, SnapshotRefresher } from "../components/Live";
 import {
   RegimeStrip, VixPanel, IndexPanel, TapePanel,
-  OptionsPanel, RotationTable, SetupCards,
+  OptionsPanel, RotationTable, SetupCards, JournalPanel,
 } from "../components/panels";
 
 export const dynamic = "force-dynamic";
@@ -19,8 +19,18 @@ async function getSnapshot() {
   }
 }
 
+async function getJournal() {
+  try {
+    const r = await fetch(`${API}/api/journal`, { cache: "no-store" });
+    if (!r.ok) throw new Error(String(r.status));
+    return await r.json();
+  } catch {
+    return null;
+  }
+}
+
 export default async function Page() {
-  const d = await getSnapshot();
+  const [d, journal] = await Promise.all([getSnapshot(), getJournal()]);
   return (
     <div className="wrap">
       <header>
@@ -61,6 +71,7 @@ export default async function Page() {
             </div>
           </section>
           <LiveFeed initial={d.alert_feed} />
+          {journal && <JournalPanel journal={journal} />}
         </>
       )}
 

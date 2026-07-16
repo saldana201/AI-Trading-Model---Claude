@@ -113,3 +113,39 @@ def test_backtest_runs_end_to_end():
     if rep["overall"].get("n"):
         assert -5 < rep["overall"]["avg_r"] < 5   # sane R range
     assert rep["caveats"]
+
+
+# ---------- chat resilience (the live 404 incident) ----------
+
+def test_chat_bad_ticker_degrades_not_500():
+    from orchestrator.chat import ChatService, EngineToolbox
+
+    class BoomLevels:
+        def get_levels(self, symbol):
+            if symbol == "BADX":
+                raise RuntimeError("no data for BADX — unknown ticker")
+            return {"spot": 100.0, "bullish_trigger": 101, "bearish_trigger": 99,
+                    "weekly": {"weekly_pivot": 100, "weekly_ceiling": 102,
+                               "weekly_floor": 98},
+                    "session": {"high_of_day": 100.5, "low_of_day": 99.5}}
+
+    tb = EngineToolbox(regime=None, vix=None, levels=BoomLevels(), volume=None,
+                       momentum=None, rotation=None, screener=None,
+                       options=None, composer=None)
+    svc = ChatService(tb)
+    out = svc.ask("What are the key levels for BADX and NVDA?")
+    assert out["mode"] == "deterministic"
+    assert "BADX: no data" in out["reply"]          # bad symbol noted
+    assert "NVDA 100.0" in out["reply"]             # good symbol still answered
+
+
+def test_gateway_chat_never_500s(monkeypatch):
+    from fastapi.testclient import TestClient
+    from apps.api import main as gateway
+    client = TestClient(gateway.app)
+    monkeypatch.setattr(gateway.get_state()["chat"], "ask",
+                        lambda *a, **k: (_ for _ in ()).throw(RuntimeError("boom")))
+    r = client.post("/api/chat", json={"message": "anything"})
+    assert r.status_code == 200
+    body = r.json()
+    assert body["error"] is True and "boom" in body["reply"]

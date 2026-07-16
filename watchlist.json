@@ -1,4 +1,5 @@
 {
+  "_pinned": [ "OUST", "AAOI", "TMC" ],
   "SMH": [ "NVDA", "AVGO", "AMD", "MU" ],
   "SOXX": [ "NVDA", "AVGO", "AMD" ],
   "XLK": [ "MSFT", "AAPL", "ORCL" ],
@@ -12,5 +13,7 @@
   "PAVE": [ "PWR", "ETN" ],
   "GRID": [ "ETN", "VRT" ],
   "XLV": [ "LLY", "UNH" ],
-  "XLF": [ "JPM", "GS" ]
+  "XLF": [ "JPM", "GS" ],
+  "BTC": [ "BTC-USD" ],
+  "ETH": [ "ETH-USD" ]
 }

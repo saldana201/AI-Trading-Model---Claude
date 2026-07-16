@@ -135,3 +135,11 @@ footer{margin-top:26px;color:var(--faint);font-size:11.5px;border-top:1px solid 
 .armbtn:disabled{opacity:.5;cursor:default}
 .refresher{display:flex;align-items:center;gap:8px}
 .refresher .chip{cursor:pointer;background:none;font:inherit}
+
+/* ---- pinned tickers (Phase 10) ---- */
+.rotchip.pinned{background:rgba(217,179,106,.12);color:var(--gold);border:1px solid rgba(217,179,106,.35)}
+
+/* ---- pinned trace (Phase 11) ---- */
+.pinned-trace{margin-top:14px;border-top:1px dashed var(--line);padding-top:10px}
+.pintrace{display:flex;gap:10px;align-items:baseline;font-size:12px;margin-top:5px}
+.pintrace .num{min-width:90px;color:var(--gold)}

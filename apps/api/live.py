@@ -13,7 +13,11 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
+import pathlib
 import time
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from alerts.engine import AlertEngine
 from alerts.store import Store
@@ -76,13 +80,32 @@ class BroadcastSink:
 
 class LiveAlerts:
     def __init__(self, provider, levels_engine, vix_engine,
-                 broadcaster: Broadcaster, db_path: str = ":memory:"):
+                 broadcaster: Broadcaster, db_path: str = ":memory:",
+                 data_source: str = "unknown"):
+        self.data_source = data_source
         self.engine = AlertEngine(
             provider, levels_engine, vix_engine,
             store=Store(db_path), sinks=[BroadcastSink(broadcaster)])
+        # Restart resilience: re-arm every non-terminal trade from the store
+        # so a gateway restart never orphans an open position's monitoring.
+        from alerts.lifecycle import Trade
+        for stored in self.engine.store.load_trades(active_only=True):
+            # A trade armed under synthetic prices must never tick against
+            # live bars (or vice versa): mismatched/unknown source -> skip.
+            if (stored.get("setup_meta") or {}).get("data_source") != data_source:
+                continue
+            try:
+                trade = Trade(**stored)
+                self.engine.trades[trade.id] = trade
+            except TypeError:
+                pass   # schema drift in an old row: skip rather than crash
 
     def arm(self, game_plan: dict) -> dict:
         ids = self.engine.arm_setups(game_plan)
+        for tid in ids:
+            trade = self.engine.trades[tid]
+            trade.setup_meta["data_source"] = self.data_source
+            self.engine.store.save_trade(trade.to_dict())
         return {"armed": len(ids), "trade_ids": ids}
 
     def tick(self) -> list[dict]:
@@ -100,12 +123,75 @@ class LiveAlerts:
         return any(t.state not in TERMINAL for t in self.engine.trades.values())
 
 
+EASTERN = ZoneInfo("America/New_York")
+
+
+def maybe_autoarm(state: dict, now_et: datetime, arm_time: str | None,
+                  build_snapshot_fn, briefs_dir: str | None = None) -> dict | None:
+    """Once per day at/after arm_time (ET, "HH:MM"): rebuild the snapshot,
+    arm the game plan, write the markdown brief, broadcast, optional Discord.
+
+    Pure-ish and injected for testability: the pump supplies real time and
+    the real snapshot builder; tests supply fakes."""
+    if not arm_time:
+        return None
+    try:
+        hh, mm = (int(x) for x in arm_time.split(":"))
+    except ValueError:
+        return None
+    if (now_et.hour, now_et.minute) < (hh, mm):
+        return None
+    today = now_et.date().isoformat()
+    if state.get("autoarm_date") == today:
+        return None
+    state["autoarm_date"] = today   # set first: a failure shouldn't retry-spam
+
+    snap = build_snapshot_fn()
+    state["snapshot"] = snap
+    state["snapshot_at"] = time.time()
+    armed = state["live_alerts"].arm(snap.get("setups") or {})
+
+    from orchestrator.brief import render_brief
+    brief = render_brief(snap)
+    out_dir = pathlib.Path(briefs_dir or
+                           pathlib.Path(__file__).resolve().parents[2] / "briefs")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    path = out_dir / f"{today}.md"
+    path.write_text(brief, encoding="utf-8")
+
+    result = {"date": today, "armed": armed.get("armed", 0),
+              "brief_path": str(path)}
+    broadcaster = state.get("broadcaster")
+    if broadcaster is not None:
+        broadcaster.publish("brief", result)
+
+    hook = os.environ.get("CONFLUENCE_DISCORD_WEBHOOK")
+    if hook:
+        try:
+            import urllib.request
+            body = json.dumps({"content": brief[:1900]}).encode()
+            req = urllib.request.Request(
+                hook, data=body, headers={"Content-Type": "application/json"})
+            urllib.request.urlopen(req, timeout=10)
+            result["discord"] = "sent"
+        except Exception as exc:
+            result["discord"] = f"failed: {exc}"
+    return result
+
+
 async def pump(state: dict, quote_interval: float, alert_interval: float,
                stop: asyncio.Event) -> None:
-    """Background loop: quotes to listeners, alert ticks while armed."""
+    """Background loop: quotes to listeners, alert ticks while armed,
+    auto-arm once per day when CONFLUENCE_AUTOARM_ET is set."""
     last_alert = 0.0
     while not stop.is_set():
         try:
+            arm_time = os.environ.get("CONFLUENCE_AUTOARM_ET")
+            if arm_time:
+                from scripts.snapshot import build_snapshot
+                await asyncio.to_thread(
+                    maybe_autoarm, state, datetime.now(EASTERN), arm_time,
+                    build_snapshot)
             broadcaster: Broadcaster = state["broadcaster"]
             if broadcaster.clients:
                 quotes = await asyncio.to_thread(

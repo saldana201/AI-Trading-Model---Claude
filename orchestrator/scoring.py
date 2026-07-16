@@ -27,6 +27,7 @@ ALIGN_VALUE = {
     "diverging_warning": 0.25, "confirming_bearish": 0.0,
 }
 ROTATION_VALUE = {"leading": 1.0, "improving": 0.8, "neutral": 0.45,
+                  "pinned": 0.5,
                   "deteriorating": 0.15, "lagging": 0.1}
 GRADE_VALUE = {"strong": 1.0, "moderate": 0.6, "weak": 0.25, "unknown": 0.45}
 

@@ -54,7 +54,12 @@ class YFinanceProvider:
         # yfinance caps intraday history; clamp sensibly.
         if req.interval.endswith("m") and req.lookback_days > 59:
             period = "59d"
-        df = yf.Ticker(req.symbol).history(period=period, interval=req.interval)
+        try:
+            df = yf.Ticker(req.symbol).history(period=period, interval=req.interval)
+        except Exception as exc:   # yfinance raises raw HTTP errors on bad symbols
+            raise RuntimeError(
+                f"no data for {req.symbol} — unknown ticker or feed error ({exc})"
+            ) from exc
         if df.empty:
             raise RuntimeError(f"No data returned for {req.symbol} ({req.interval})")
         df.index = pd.to_datetime(df.index)

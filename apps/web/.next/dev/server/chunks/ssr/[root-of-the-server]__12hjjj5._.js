@@ -115,6 +115,8 @@ __turbopack_context__.s([
     ()=>AlertFeed,
     "IndexPanel",
     ()=>IndexPanel,
+    "JournalPanel",
+    ()=>JournalPanel,
     "Ladder",
     ()=>Ladder,
     "OptionsPanel",
@@ -1458,6 +1460,110 @@ function SetupCards({ setups }) {
                 lineNumber: 326,
                 columnNumber: 7
             }, this),
+            setups.setups.length === 0 && setups.funnel && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "notrade",
+                style: {
+                    marginTop: 10
+                },
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("b", {
+                        children: "No setups cleared the gates."
+                    }, void 0, false, {
+                        fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                        lineNumber: 331,
+                        columnNumber: 11
+                    }, this),
+                    " ",
+                    setups.funnel.candidate_stocks,
+                    " candidate",
+                    setups.funnel.candidate_stocks === 1 ? "" : "s",
+                    " from",
+                    " ",
+                    setups.funnel.active_sectors.join(", ") || "no active sectors",
+                    ";",
+                    " ",
+                    "screen results: ",
+                    Object.entries(setups.funnel.screen_classifications).map(([k, v])=>`${k.replaceAll("_", " ")} ×${v}`).join(", ") || "none",
+                    ";",
+                    " ",
+                    setups.funnel.passed_screen,
+                    " passed the screen (",
+                    setups.funnel.kept_classes.join(" / "),
+                    ").",
+                    setups.funnel.sectors_without_watchlist_entries.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["Fragment"], {
+                        children: [
+                            " Active sectors with no watchlist entries:",
+                            " ",
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "num",
+                                children: setups.funnel.sectors_without_watchlist_entries.join(", ")
+                            }, void 0, false, {
+                                fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                lineNumber: 340,
+                                columnNumber: 13
+                            }, this),
+                            " ",
+                            "— add names for these in watchlist.json."
+                        ]
+                    }, void 0, true),
+                    (setups.suppressed || []).length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["Fragment"], {
+                        children: [
+                            " Suppressed: ",
+                            setups.suppressed.map((s)=>`${s.symbol}${s.pinned ? " 📌" : ""} (${s.reason})`).join("; "),
+                            "."
+                        ]
+                    }, void 0, true)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                lineNumber: 330,
+                columnNumber: 9
+            }, this),
+            setups.funnel?.pinned_outcomes && Object.keys(setups.funnel.pinned_outcomes).length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "pinned-trace",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "eyebrow",
+                        children: "Pinned tickers"
+                    }, void 0, false, {
+                        fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                        lineNumber: 350,
+                        columnNumber: 11
+                    }, this),
+                    Object.entries(setups.funnel.pinned_outcomes).map(([sym, disp])=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "pintrace",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "num",
+                                    children: [
+                                        "📌 ",
+                                        sym
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                    lineNumber: 353,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: disp === "setup" ? "state good" : "why",
+                                    children: disp === "setup" ? "active setup" : disp
+                                }, void 0, false, {
+                                    fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                    lineNumber: 354,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, sym, true, {
+                            fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                            lineNumber: 352,
+                            columnNumber: 13
+                        }, this))
+                ]
+            }, void 0, true, {
+                fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                lineNumber: 349,
+                columnNumber: 9
+            }, this),
             setups.setups.map((x)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "setup",
                     children: [
@@ -1469,7 +1575,7 @@ function SetupCards({ setups }) {
                                     children: x.symbol
                                 }, void 0, false, {
                                     fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                    lineNumber: 332,
+                                    lineNumber: 364,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1477,7 +1583,7 @@ function SetupCards({ setups }) {
                                     children: x.direction
                                 }, void 0, false, {
                                     fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                    lineNumber: 333,
+                                    lineNumber: 365,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1489,7 +1595,7 @@ function SetupCards({ setups }) {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                    lineNumber: 334,
+                                    lineNumber: 366,
                                     columnNumber: 13
                                 }, this),
                                 x.earnings_flag && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1497,7 +1603,7 @@ function SetupCards({ setups }) {
                                     children: "earnings window"
                                 }, void 0, false, {
                                     fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                    lineNumber: 335,
+                                    lineNumber: 367,
                                     columnNumber: 33
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1515,19 +1621,19 @@ function SetupCards({ setups }) {
                                             children: "/10"
                                         }, void 0, false, {
                                             fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                            lineNumber: 338,
+                                            lineNumber: 370,
                                             columnNumber: 41
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                    lineNumber: 336,
+                                    lineNumber: 368,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                            lineNumber: 331,
+                            lineNumber: 363,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1562,7 +1668,7 @@ function SetupCards({ setups }) {
                                                 children: label
                                             }, void 0, false, {
                                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                                lineNumber: 345,
+                                                lineNumber: 377,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1573,13 +1679,13 @@ function SetupCards({ setups }) {
                                                 children: fmt(v)
                                             }, void 0, false, {
                                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                                lineNumber: 346,
+                                                lineNumber: 378,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, label, true, {
                                         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                        lineNumber: 344,
+                                        lineNumber: 376,
                                         columnNumber: 17
                                     }, this)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1590,7 +1696,7 @@ function SetupCards({ setups }) {
                                             children: "R:R T1/T2"
                                         }, void 0, false, {
                                             fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                            lineNumber: 350,
+                                            lineNumber: 382,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1602,26 +1708,26 @@ function SetupCards({ setups }) {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                            lineNumber: 351,
+                                            lineNumber: 383,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                    lineNumber: 349,
+                                    lineNumber: 381,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                            lineNumber: 340,
+                            lineNumber: 372,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(InstrumentLine, {
                             setup: x
                         }, void 0, false, {
                             fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                            lineNumber: 354,
+                            lineNumber: 386,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1629,7 +1735,7 @@ function SetupCards({ setups }) {
                             children: x.thesis
                         }, void 0, false, {
                             fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                            lineNumber: 355,
+                            lineNumber: 387,
                             columnNumber: 11
                         }, this),
                         (x.risks || []).length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1640,13 +1746,13 @@ function SetupCards({ setups }) {
                             ]
                         }, void 0, true, {
                             fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                            lineNumber: 356,
+                            lineNumber: 388,
                             columnNumber: 42
                         }, this)
                     ]
                 }, x.symbol, true, {
                     fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                    lineNumber: 330,
+                    lineNumber: 362,
                     columnNumber: 9
                 }, this))
         ]
@@ -1672,13 +1778,13 @@ function AlertFeed({ feed }) {
                         children: feed.label
                     }, void 0, false, {
                         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                        lineNumber: 366,
+                        lineNumber: 398,
                         columnNumber: 22
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                lineNumber: 366,
+                lineNumber: 398,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1691,7 +1797,7 @@ function AlertFeed({ feed }) {
                                 children: (e.bar_time || "").slice(0, 10)
                             }, void 0, false, {
                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                lineNumber: 370,
+                                lineNumber: 402,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1699,7 +1805,7 @@ function AlertFeed({ feed }) {
                                 children: e.symbol
                             }, void 0, false, {
                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                lineNumber: 371,
+                                lineNumber: 403,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1708,12 +1814,12 @@ function AlertFeed({ feed }) {
                                     children: e.to_state.replaceAll("_", " ")
                                 }, void 0, false, {
                                     fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                    lineNumber: 372,
+                                    lineNumber: 404,
                                     columnNumber: 19
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                lineNumber: 372,
+                                lineNumber: 404,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1721,7 +1827,7 @@ function AlertFeed({ feed }) {
                                 children: e.reason
                             }, void 0, false, {
                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                lineNumber: 373,
+                                lineNumber: 405,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1729,24 +1835,241 @@ function AlertFeed({ feed }) {
                                 children: e.price == null ? "—" : Number(e.price).toFixed(2)
                             }, void 0, false, {
                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                                lineNumber: 374,
+                                lineNumber: 406,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, i, true, {
                         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                        lineNumber: 369,
+                        lineNumber: 401,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-                lineNumber: 367,
+                lineNumber: 399,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
-        lineNumber: 365,
+        lineNumber: 397,
+        columnNumber: 5
+    }, this);
+}
+function JournalPanel({ journal }) {
+    const s = journal.summary?.overall || {};
+    const rows = (journal.rows || []).slice().reverse().slice(0, 20);
+    const rTone = (r)=>r == null ? "var(--muted)" : r > 0 ? "var(--bull)" : "var(--bear)";
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
+        className: "card",
+        style: {
+            marginTop: 18
+        },
+        "aria-label": "Trade journal",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                children: [
+                    "Journal ",
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: "num",
+                        children: [
+                            s.n ? `${s.n} resolved · win ${(s.win_rate * 100).toFixed(0)}% · avg ${s.avg_r > 0 ? "+" : ""}${s.avg_r}R` : "no resolved trades yet",
+                            journal.counts?.open ? ` · ${journal.counts.open} open` : "",
+                            journal.counts?.pending ? ` · ${journal.counts.pending} armed` : ""
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                        lineNumber: 420,
+                        columnNumber: 19
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                lineNumber: 420,
+                columnNumber: 7
+            }, this),
+            rows.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "empty",
+                style: {
+                    marginTop: 10
+                },
+                children: "Arm the game plan — every trade lifecycle lands here as an R-multiple outcome."
+            }, void 0, false, {
+                fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                lineNumber: 426,
+                columnNumber: 9
+            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
+                className: "rot",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                    children: "Symbol"
+                                }, void 0, false, {
+                                    fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                    lineNumber: 431,
+                                    columnNumber: 22
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                    children: "Dir"
+                                }, void 0, false, {
+                                    fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                    lineNumber: 431,
+                                    columnNumber: 37
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                    children: "Status"
+                                }, void 0, false, {
+                                    fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                    lineNumber: 431,
+                                    columnNumber: 49
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                    children: "Entry"
+                                }, void 0, false, {
+                                    fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                    lineNumber: 431,
+                                    columnNumber: 64
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                    children: "Exit / mark"
+                                }, void 0, false, {
+                                    fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                    lineNumber: 431,
+                                    columnNumber: 78
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                    children: "R"
+                                }, void 0, false, {
+                                    fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                    lineNumber: 431,
+                                    columnNumber: 98
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                    children: "Conf"
+                                }, void 0, false, {
+                                    fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                    lineNumber: 431,
+                                    columnNumber: 108
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                    children: "Reason"
+                                }, void 0, false, {
+                                    fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                    lineNumber: 431,
+                                    columnNumber: 121
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                            lineNumber: 431,
+                            columnNumber: 18
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                        lineNumber: 431,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
+                        children: rows.map((r)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                        className: "num",
+                                        children: r.symbol
+                                    }, void 0, false, {
+                                        fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                        lineNumber: 435,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                        children: r.direction
+                                    }, void 0, false, {
+                                        fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                        lineNumber: 436,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: `badge ${r.final_state}`,
+                                            children: r.status
+                                        }, void 0, false, {
+                                            fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                            lineNumber: 437,
+                                            columnNumber: 21
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                        lineNumber: 437,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                        className: "num",
+                                        children: r.entry_price ?? "—"
+                                    }, void 0, false, {
+                                        fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                        lineNumber: 438,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                        className: "num",
+                                        children: r.exit_or_mark ?? "—"
+                                    }, void 0, false, {
+                                        fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                        lineNumber: 439,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                        className: "num",
+                                        style: {
+                                            color: rTone(r.realized_r)
+                                        },
+                                        children: r.realized_r == null ? "—" : `${r.realized_r > 0 ? "+" : ""}${r.realized_r}`
+                                    }, void 0, false, {
+                                        fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                        lineNumber: 440,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                        className: "num",
+                                        children: r.confidence ?? "—"
+                                    }, void 0, false, {
+                                        fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                        lineNumber: 443,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                        className: "why",
+                                        style: {
+                                            textAlign: "left"
+                                        },
+                                        children: r.exit_reason
+                                    }, void 0, false, {
+                                        fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                        lineNumber: 444,
+                                        columnNumber: 17
+                                    }, this)
+                                ]
+                            }, r.trade_id, true, {
+                                fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                                lineNumber: 434,
+                                columnNumber: 15
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                        lineNumber: 432,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+                lineNumber: 430,
+                columnNumber: 9
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/components/panels.jsx",
+        lineNumber: 419,
         columnNumber: 5
     }, this);
 }
@@ -1781,8 +2104,22 @@ async function getSnapshot() {
         return null;
     }
 }
+async function getJournal() {
+    try {
+        const r = await fetch(`${API}/api/journal`, {
+            cache: "no-store"
+        });
+        if (!r.ok) throw new Error(String(r.status));
+        return await r.json();
+    } catch  {
+        return null;
+    }
+}
 async function Page() {
-    const d = await getSnapshot();
+    const [d, journal] = await Promise.all([
+        getSnapshot(),
+        getJournal()
+    ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "wrap",
         children: [
@@ -1796,13 +2133,13 @@ async function Page() {
                                 children: "."
                             }, void 0, false, {
                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                                lineNumber: 27,
+                                lineNumber: 37,
                                 columnNumber: 41
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                        lineNumber: 27,
+                        lineNumber: 37,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1810,7 +2147,7 @@ async function Page() {
                         children: "pre-market command surface · phase 6"
                     }, void 0, false, {
                         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                        lineNumber: 28,
+                        lineNumber: 38,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1821,7 +2158,7 @@ async function Page() {
                                 children: d ? `${d.source} data` : "api offline"
                             }, void 0, false, {
                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                                lineNumber: 30,
+                                lineNumber: 40,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1829,24 +2166,24 @@ async function Page() {
                                 children: d ? (d.generated_at || "").slice(0, 16) : ""
                             }, void 0, false, {
                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                                lineNumber: 31,
+                                lineNumber: 41,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$components$2f$Live$2e$jsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["SnapshotRefresher"], {}, void 0, false, {
                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                                lineNumber: 32,
+                                lineNumber: 42,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                        lineNumber: 29,
+                        lineNumber: 39,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                lineNumber: 26,
+                lineNumber: 36,
                 columnNumber: 7
             }, this),
             !d ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1859,7 +2196,7 @@ async function Page() {
                         children: "API offline."
                     }, void 0, false, {
                         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                        lineNumber: 38,
+                        lineNumber: 48,
                         columnNumber: 11
                     }, this),
                     "Start the gateway, then reload: ",
@@ -1868,26 +2205,26 @@ async function Page() {
                         children: "CONFLUENCE_DATA=synthetic uvicorn apps.api.main:app --port 8000"
                     }, void 0, false, {
                         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                        lineNumber: 39,
+                        lineNumber: 49,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                lineNumber: 37,
+                lineNumber: 47,
                 columnNumber: 9
             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["Fragment"], {
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$components$2f$Live$2e$jsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["LiveTicker"], {}, void 0, false, {
                         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                        lineNumber: 43,
+                        lineNumber: 53,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$components$2f$panels$2e$jsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["RegimeStrip"], {
                         regime: d.regime
                     }, void 0, false, {
                         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                        lineNumber: 44,
+                        lineNumber: 54,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -1896,7 +2233,7 @@ async function Page() {
                                 vix: d.vix
                             }, void 0, false, {
                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                                lineNumber: 46,
+                                lineNumber: 56,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$components$2f$panels$2e$jsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["IndexPanel"], {
@@ -1904,7 +2241,7 @@ async function Page() {
                                 data: d.indices.QQQ
                             }, void 0, false, {
                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                                lineNumber: 47,
+                                lineNumber: 57,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$components$2f$panels$2e$jsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["TapePanel"], {
@@ -1912,13 +2249,13 @@ async function Page() {
                                 spy: d.indices.SPY
                             }, void 0, false, {
                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                                lineNumber: 48,
+                                lineNumber: 58,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                        lineNumber: 45,
+                        lineNumber: 55,
                         columnNumber: 11
                     }, this),
                     d.options?.QQQ && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -1928,7 +2265,7 @@ async function Page() {
                                 gex: d.options.QQQ
                             }, void 0, false, {
                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                                lineNumber: 52,
+                                lineNumber: 62,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$components$2f$panels$2e$jsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["IndexPanel"], {
@@ -1936,13 +2273,13 @@ async function Page() {
                                 data: d.indices.SPY
                             }, void 0, false, {
                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                                lineNumber: 53,
+                                lineNumber: 63,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                        lineNumber: 51,
+                        lineNumber: 61,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -1952,7 +2289,7 @@ async function Page() {
                                 rotation: d.rotation
                             }, void 0, false, {
                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                                lineNumber: 57,
+                                lineNumber: 67,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1961,51 +2298,58 @@ async function Page() {
                                         setups: d.setups
                                     }, void 0, false, {
                                         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                                        lineNumber: 59,
+                                        lineNumber: 69,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$components$2f$Live$2e$jsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["ArmButton"], {}, void 0, false, {
                                         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                                        lineNumber: 60,
+                                        lineNumber: 70,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                                lineNumber: 58,
+                                lineNumber: 68,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                        lineNumber: 56,
+                        lineNumber: 66,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$components$2f$Live$2e$jsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["LiveFeed"], {
                         initial: d.alert_feed
                     }, void 0, false, {
                         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                        lineNumber: 63,
+                        lineNumber: 73,
                         columnNumber: 11
+                    }, this),
+                    journal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$components$2f$panels$2e$jsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["JournalPanel"], {
+                        journal: journal
+                    }, void 0, false, {
+                        fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
+                        lineNumber: 74,
+                        columnNumber: 23
                     }, this)
                 ]
             }, void 0, true),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$components$2f$Chat$2e$jsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                lineNumber: 67,
+                lineNumber: 78,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$source$2f$repos$2f$AI__Trading__Model__$2d$__Claude$2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
                 children: "Levels are Williams-fractal clusters weighted by recency and touches; regime is a rules-first weighted composite — every number traces to engine evidence. Decision-support tooling, not investment advice."
             }, void 0, false, {
                 fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-                lineNumber: 69,
+                lineNumber: 80,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/source/repos/AI Trading Model - Claude/apps/web/app/page.jsx",
-        lineNumber: 25,
+        lineNumber: 35,
         columnNumber: 5
     }, this);
 }
