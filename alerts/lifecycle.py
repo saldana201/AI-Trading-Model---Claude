@@ -27,7 +27,16 @@ WATCHING, TRIGGERED, ACTIVE = "WATCHING", "TRIGGERED", "ACTIVE"
 TRIMMED_T1, TRAILING, CLOSED = "TRIMMED_T1", "TRAILING", "CLOSED"
 INVALIDATED, STOPPED, DETERIORATED = "INVALIDATED", "STOPPED", "DETERIORATED"
 TERMINAL = {CLOSED, INVALIDATED, STOPPED, DETERIORATED}
-MAX_TRIGGER_ATTEMPTS = 2
+MAX_TRIGGER_ATTEMPTS = 2  # historical default; effective value from config
+
+
+def _max_trigger_attempts() -> int:
+    """Phase 12: configurable, defaulting to the historical constant."""
+    try:
+        from config import get
+        return int(get("lifecycle", "max_trigger_attempts"))
+    except Exception:
+        return MAX_TRIGGER_ATTEMPTS
 
 
 @dataclass
@@ -101,7 +110,7 @@ def step(trade: Trade, bar: dict, market_guard=None) -> list[dict]:
                  entry_price=trade.entry_price)
             # fall through: an entry bar can also tag T1/stop
         else:
-            if trade.trigger_attempts >= MAX_TRIGGER_ATTEMPTS:
+            if trade.trigger_attempts >= _max_trigger_attempts():
                 move(INVALIDATED, "trigger failed twice — setup is suspect",
                      attempts=trade.trigger_attempts)
             else:

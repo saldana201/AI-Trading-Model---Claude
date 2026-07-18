@@ -27,7 +27,6 @@ ALIGN_VALUE = {
     "diverging_warning": 0.25, "confirming_bearish": 0.0,
 }
 ROTATION_VALUE = {"leading": 1.0, "improving": 0.8, "neutral": 0.45,
-                  "pinned": 0.5,
                   "deteriorating": 0.15, "lagging": 0.1}
 GRADE_VALUE = {"strong": 1.0, "moderate": 0.6, "weak": 0.25, "unknown": 0.45}
 
@@ -131,11 +130,18 @@ def score_setup(direction: str, ctx: dict) -> dict:
                      "in_earnings_window": fund["in_earnings_window"]},
     }
 
-    total_w = sum(WEIGHTS.values())
-    raw = sum(comps[k]["value"] * WEIGHTS[k] for k in WEIGHTS)
+    # Phase 12: weights come from the unified config (defaults above are the
+    # fallback and stay byte-identical to the historical values)
+    try:
+        from config import get_config
+        weights = {**WEIGHTS, **get_config()["scoring"]["weights"]}
+    except Exception:
+        weights = WEIGHTS
+    total_w = sum(weights.values())
+    raw = sum(comps[k]["value"] * weights[k] for k in weights)
     score = round(raw / total_w * 10, 1)
     for k in comps:
-        comps[k]["weight"] = WEIGHTS[k]
+        comps[k]["weight"] = weights[k]
         comps[k]["value"] = round(comps[k]["value"], 2)
 
     risks = []

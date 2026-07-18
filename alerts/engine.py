@@ -36,13 +36,22 @@ def market_guard_factory(ctx: AlertContext, index_symbol: str = "QQQ"):
     return guard
 
 
+def _trail_atr() -> float:
+    """Phase 12: trail multiple from config (historical default 1.5)."""
+    try:
+        from config import get
+        return float(get("lifecycle", "trail_atr"))
+    except Exception:
+        return 1.5
+
+
 def arm_from_setup(setup: dict, atr14: float, min_rvol: float = 1.2) -> Trade:
     """Convert one composer setup into an armed lifecycle trade."""
     return Trade(
         symbol=setup["symbol"], direction=setup["direction"],
         entry_trigger=setup["entry_trigger"], stop=setup["stop"],
         target_1=setup["target_1"], target_2=setup["target_2"],
-        trail_distance=round(1.5 * atr14, 4), min_rvol=min_rvol,
+        trail_distance=round(_trail_atr() * atr14, 4), min_rvol=min_rvol,
         setup_meta={"confidence": setup.get("confidence"),
                     "thesis": setup.get("thesis"),
                     "sector_etf": setup.get("sector_etf"),
