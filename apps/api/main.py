@@ -33,7 +33,7 @@ from engines.fundamentals_mcp.logic import (
     FundamentalsEngine, SyntheticFundamentals, YFinanceFundamentals)
 from engines.options_mcp.logic import OptionsEngine
 from engines.options_mcp.providers import SyntheticOptions, YFinanceOptions
-from orchestrator.composer import SetupComposer
+from orchestrator.composer import SetupComposer, load_pinned, load_watchlist
 from orchestrator.chat import ChatService, EngineToolbox
 from orchestrator.llm import make_thesis_writer
 from engines.shared.providers import CachedProvider
@@ -49,7 +49,12 @@ ALERT_INTERVAL_S = float(os.environ.get("CONFLUENCE_ALERT_INTERVAL", "60"))
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    import logging
+    logging.getLogger("confluence.watchlist").setLevel(logging.INFO)
     s = get_state()
+    _pins = load_pinned()
+    print(f"[confluence] data={s['source']} · pinned={_pins or 'none'} · "
+          f"autoarm={os.environ.get('CONFLUENCE_AUTOARM_ET') or 'off'}")
     stop = asyncio.Event()
     task = asyncio.create_task(
         pump(s, QUOTE_INTERVAL_S, ALERT_INTERVAL_S, stop))
@@ -109,7 +114,8 @@ def _build_state() -> dict:
             "broadcaster": broadcaster,
             "live_alerts": LiveAlerts(quote_provider, levels, vix, broadcaster,
                                       db_path=os.environ.get(
-                                          "CONFLUENCE_ALERT_DB", ":memory:")),
+                                          "CONFLUENCE_ALERT_DB", "alerts.db"),
+                                      data_source=source),
             "ticker_symbols": DEFAULT_TICKER_SYMBOLS,
             "snapshot": None, "snapshot_at": 0.0}
 
@@ -128,7 +134,11 @@ class ChatRequest(BaseModel):
 @app.get("/api/health")
 def health():
     s = get_state()
+    wl = load_watchlist()
     return {"ok": True, "data_source": s["source"], "chat_mode": s["chat"].mode,
+            "pinned": load_pinned(),
+            "watchlist_sectors": sorted(wl.keys()),
+            "autoarm_et": os.environ.get("CONFLUENCE_AUTOARM_ET"),
             "snapshot_age_s": (round(time.time() - s["snapshot_at"])
                                if s["snapshot"] else None)}
 
@@ -145,7 +155,14 @@ def snapshot(refresh: int = 0):
 
 @app.post("/api/chat")
 def chat(req: ChatRequest):
-    return get_state()["chat"].ask(req.message, req.history)
+    svc = get_state()["chat"]
+    try:
+        return svc.ask(req.message, req.history)
+    except Exception as exc:
+        return {"reply": f"I hit an error answering that ({type(exc).__name__}: "
+                         f"{exc}). If you named a ticker, double-check the "
+                         "symbol and try again.",
+                "mode": svc.mode, "tool_calls": [], "error": True}
 
 
 # ---------- live feed (Phase 7) ----------
@@ -185,6 +202,20 @@ def tick_alerts():
 @app.get("/api/alerts/state")
 def alerts_state():
     return get_state()["live_alerts"].state()
+
+
+@app.get("/api/journal")
+def journal():
+    from alerts.journal import build_journal
+    s = get_state()
+    qp = s["quote_provider"]
+
+    def mark(symbol: str):
+        from engines.shared.providers import BarRequest
+        bars = qp.get_bars(BarRequest(symbol, "1d", 10))
+        return float(bars["close"].iloc[-1])
+
+    return build_journal(s["live_alerts"].engine.store, mark_fn=mark)
 
 
 @app.get("/api/stream")
