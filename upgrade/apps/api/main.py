@@ -17,7 +17,7 @@ import os
 import time
 from contextlib import asynccontextmanager
 
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -210,6 +210,41 @@ def tick_alerts():
 @app.get("/api/alerts/state")
 def alerts_state():
     return get_state()["live_alerts"].state()
+
+
+# ---------- Phase 14: universe explorer ----------
+
+EXPLORE_TTL_S = 300
+
+
+@app.get("/api/explore")
+def explore_universe():
+    """Every sector + ticker with rotation status. Cheap; no per-ticker work."""
+    s = get_state()
+    cache = s.setdefault("explore_cache", {})
+    hit = cache.get("__universe__")
+    if hit and time.time() - hit["at"] < EXPLORE_TTL_S:
+        return hit["data"]
+    data = s["toolbox"].composer.explore_universe()
+    cache["__universe__"] = {"at": time.time(), "data": data}
+    return data
+
+
+@app.get("/api/explore/{symbol}")
+def explore_symbol(symbol: str, direction: str | None = None, refresh: int = 0):
+    """Full card + per-gate report for one ticker, gated or not."""
+    s = get_state()
+    cache = s.setdefault("explore_cache", {})
+    key = f"{symbol.upper()}:{direction or 'auto'}"
+    hit = cache.get(key)
+    if hit and time.time() - hit["at"] < EXPLORE_TTL_S and not refresh:
+        return hit["data"]
+    try:
+        data = s["toolbox"].composer.explore(symbol, direction=direction)
+    except Exception as exc:
+        raise HTTPException(422, f"could not explore {symbol.upper()}: {exc}")
+    cache[key] = {"at": time.time(), "data": data}
+    return data
 
 
 @app.get("/api/journal")

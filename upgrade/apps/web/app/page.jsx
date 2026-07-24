@@ -1,5 +1,6 @@
 import Chat from "../components/Chat";
 import Assistant from "../components/Assistant";
+import Explorer from "../components/Explorer";
 import Settings from "../components/Settings";
 import { LiveTicker, LiveFeed, ArmButton, SnapshotRefresher } from "../components/Live";
 import {
@@ -72,6 +73,7 @@ export default async function Page() {
               <ArmButton />
             </div>
           </section>
+          <Explorer />
           <Assistant />
           <LiveFeed initial={d.alert_feed} />
           <Settings />
