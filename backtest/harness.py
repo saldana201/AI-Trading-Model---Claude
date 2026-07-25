@@ -27,6 +27,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass, field
 
+from backtest.statistics import rigor_block, render_rigor
 from alerts.engine import arm_from_setup
 from alerts.lifecycle import step, TERMINAL, TRIGGERED, TRIMMED_T1
 from engines.shared.providers import BarRequest, ReplayProvider
@@ -88,16 +89,24 @@ def realized_r_from_events(trade, events: list[dict],
 class Backtest:
     def __init__(self, base_provider, composer_factory, span_bars: int = 252,
                  step_bars: int = 5, horizon_bars: int = 15,
-                 index_symbol: str = "QQQ"):
+                 index_symbol: str = "QQQ", n_trials: int = 1,
+                 trial_sharpe_variance: float | None = None):
         """composer_factory(provider) -> SetupComposer bound to that provider.
         span_bars of history are replayed; the composer runs every step_bars;
-        each setup is simulated horizon_bars forward."""
+        each setup is simulated horizon_bars forward.
+
+        n_trials / trial_sharpe_variance feed the Deflated Sharpe Ratio: set
+        n_trials to the number of distinct weight/threshold configurations you
+        have evaluated against this data, so the report deflates the result for
+        selection bias instead of reporting a naively optimistic PSR."""
         self.base = base_provider
         self.factory = composer_factory
         self.span = span_bars
         self.step = step_bars
         self.horizon = horizon_bars
         self.index_symbol = index_symbol
+        self.n_trials = n_trials
+        self.trial_sharpe_variance = trial_sharpe_variance
 
     # ---------- forward simulation ----------
 
@@ -196,7 +205,9 @@ class Backtest:
 
         return report([o.to_dict() for o in outcomes],
                       compose_points=compose_points,
-                      no_trade_points=no_trade_points)
+                      no_trade_points=no_trade_points,
+                      n_trials=self.n_trials,
+                      trial_sharpe_variance=self.trial_sharpe_variance)
 
 
 # ---------- reporting ----------
@@ -205,7 +216,8 @@ CONF_BUCKETS = [(0.0, 6.5, "<6.5"), (6.5, 7.5, "6.5–7.5"), (7.5, 11.0, "≥7.5
 
 
 def report(outcomes: list[dict], compose_points: int = 0,
-           no_trade_points: int = 0) -> dict:
+           no_trade_points: int = 0, n_trials: int = 1,
+           trial_sharpe_variance: float | None = None) -> dict:
     filled = [o for o in outcomes if o["realized_r"] is not None]
     wins = [o for o in filled if o["realized_r"] > 0]
 
@@ -246,6 +258,9 @@ def report(outcomes: list[dict], compose_points: int = 0,
         "by_confidence": by_bucket,
         "final_states": by_state,
         "component_signal": component_signal,
+        "rigor": rigor_block([o["realized_r"] for o in filled],
+                             n_trials=n_trials,
+                             trial_sharpe_variance=trial_sharpe_variance),
         "outcomes": outcomes,
         "caveats": [
             "fills at trigger-bar close; no slippage or commissions",
@@ -271,5 +286,7 @@ def render_text(rep: dict) -> str:
         for k, v in sorted(rep["component_signal"].items(),
                            key=lambda kv: -abs(kv[1]["edge"])):
             lines.append(f"  {k:24} {v['edge']:+.3f}")
+    if rep.get("rigor"):
+        lines.append(render_rigor(rep["rigor"]))
     lines.append("caveats: " + "; ".join(rep["caveats"]))
     return "\n".join(lines)

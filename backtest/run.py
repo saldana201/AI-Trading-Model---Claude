@@ -51,12 +51,16 @@ def main() -> None:
     ap.add_argument("--span", type=int, default=252, help="bars of history")
     ap.add_argument("--step", type=int, default=5, help="compose every N bars")
     ap.add_argument("--horizon", type=int, default=15, help="max bars per trade")
+    ap.add_argument("--trials", type=int, default=1,
+                    help="distinct weight/threshold configs tried against this "
+                         "data, for the Deflated Sharpe Ratio (selection-bias "
+                         "correction). Bump this each time you tune and re-run.")
     args = ap.parse_args()
 
     provider, source = build_provider()
     bt = Backtest(provider, composer_factory_for(source),
                   span_bars=args.span, step_bars=args.step,
-                  horizon_bars=args.horizon)
+                  horizon_bars=args.horizon, n_trials=args.trials)
     rep = bt.run()
 
     out = pathlib.Path(__file__).resolve().parent / "results.json"
