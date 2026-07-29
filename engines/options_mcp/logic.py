@@ -112,8 +112,88 @@ def contract_quality(chain: dict, strike: float, expiry: str,
     }
 
 
+def decide_structure(iv_rank: float | None, vrp: dict | None = None,
+                     high_iv_rank: float = HIGH_IV_RANK) -> dict:
+    """Single leg or debit spread? Combines the two vol signals.
+
+    `iv_rank` asks: is IV high *for this name, against its own history*?
+    `vrp` asks:     is IV high *against the volatility likely to be realized*?
+
+    The second is the sharper question — it is the one that determines whether
+    you are overpaying — so when the two disagree decisively, VRP wins. When VRP
+    is equivocal (slightly rich / fair / slightly cheap) it defers to iv_rank
+    rather than manufacturing a view from a number close to 1.0.
+
+    vrp=None reproduces the pre-Phase-19 behaviour exactly.
+
+    Returns {use_spread, reason, inputs} — `inputs` records both signals and
+    which one decided, so the choice is auditable rather than asserted.
+    """
+    rank_says_spread = iv_rank is not None and iv_rank >= high_iv_rank
+    inputs = {"iv_rank": iv_rank, "iv_rank_threshold": high_iv_rank,
+              "iv_rank_says": "spread" if rank_says_spread else "single_leg"}
+
+    verdict = (vrp or {}).get("verdict") if (vrp or {}).get("available") else None
+    if verdict is None:
+        inputs["vrp"] = None
+        inputs["decided_by"] = "iv_rank"
+        if rank_says_spread:
+            reason = (f"IV rank {iv_rank:.0%} ≥ {high_iv_rank:.0%} — define risk "
+                      "with a debit spread")
+        else:
+            reason = "IV not elevated — single leg acceptable"
+        return {"use_spread": rank_says_spread, "reason": reason, "inputs": inputs}
+
+    inputs["vrp"] = {"verdict": verdict, "ratio": vrp.get("ratio"),
+                     "implied_vol": vrp.get("implied_vol"),
+                     "forecast_vol": vrp.get("forecast_vol")}
+    ratio = vrp.get("ratio")
+
+    if verdict == "rich":
+        vrp_says_spread = True
+    elif verdict == "cheap":
+        vrp_says_spread = False
+    else:
+        inputs["vrp_says"] = "not decisive"
+        inputs["decided_by"] = "iv_rank"
+        base = ("IV rank elevated" if rank_says_spread else "IV not elevated")
+        reason = (f"{base}; variance risk premium {verdict.replace('_', ' ')} "
+                  f"(IV/forecast {ratio}) is not decisive, deferring to IV rank")
+        return {"use_spread": rank_says_spread, "reason": reason, "inputs": inputs}
+
+    inputs["vrp_says"] = "spread" if vrp_says_spread else "single_leg"
+
+    if vrp_says_spread == rank_says_spread:
+        inputs["decided_by"] = "both agree"
+        if vrp_says_spread:
+            reason = (f"IV rank {iv_rank:.0%} and variance risk premium agree "
+                      f"options are rich (IV {vrp['implied_vol']:.0%} vs forecast "
+                      f"{vrp['forecast_vol']:.0%}) — debit spread")
+        else:
+            reason = (f"IV rank and variance risk premium agree options are not "
+                      f"rich (IV {vrp['implied_vol']:.0%} vs forecast "
+                      f"{vrp['forecast_vol']:.0%}) — single leg")
+        return {"use_spread": vrp_says_spread, "reason": reason, "inputs": inputs}
+
+    # Disagreement: the sharper signal wins, and says so out loud.
+    inputs["decided_by"] = "variance_risk_premium (overrode iv_rank)"
+    if vrp_says_spread:
+        reason = (f"IV rank {iv_rank:.0%} is below the {high_iv_rank:.0%} "
+                  f"threshold, but IV {vrp['implied_vol']:.0%} is well above the "
+                  f"{vrp['forecast_vol']:.0%} forecast (ratio {ratio}) — options "
+                  "are rich despite an unremarkable rank; debit spread")
+    else:
+        reason = (f"IV rank {iv_rank:.0%} looks elevated, but IV "
+                  f"{vrp['implied_vol']:.0%} is below the "
+                  f"{vrp['forecast_vol']:.0%} forecast (ratio {ratio}) — options "
+                  "are cheap versus what should be realized; keep the convexity "
+                  "of a single long leg")
+    return {"use_spread": vrp_says_spread, "reason": reason, "inputs": inputs}
+
+
 def select_contract(chain: dict, direction: str, entry: float, target_1: float,
-                    target_2: float, horizon: str = "swing") -> dict:
+                    target_2: float, horizon: str = "swing",
+                    vrp: dict | None = None) -> dict:
     """PRD §13: call/put, strike, expiry, single-leg vs debit spread, with
     liquidity and expected-move checks. Falls back to stock with the reason."""
     opt_type = "call" if direction == "long" else "put"
@@ -157,12 +237,14 @@ def select_contract(chain: dict, direction: str, entry: float, target_1: float,
         notes.append(f"target 1 sits outside the {em} expected move for this expiry")
 
     iv_rank = chain.get("iv_rank")
-    use_spread = iv_rank is not None and iv_rank >= HIGH_IV_RANK
+    decision = decide_structure(iv_rank, vrp)
+    use_spread = decision["use_spread"]
     result = {
         "expiry": expiry["date"], "dte": expiry["dte"],
         "iv": chosen["iv"], "iv_rank": iv_rank,
         "oi": chosen["oi"], "spread_pct": chosen["spread_pct"],
         "expected_move": em, "t1_within_expected_move": t1_within_em,
+        "structure_decision": decision["inputs"],
         "notes": notes,
     }
     if use_spread:
@@ -174,12 +256,11 @@ def select_contract(chain: dict, direction: str, entry: float, target_1: float,
             "instrument": f"{opt_type}_debit_spread",
             "long_strike": chosen["strike"],
             "short_strike": short_leg["strike"] if short_leg else None,
-            "reason": f"IV rank {iv_rank:.0%} ≥ {HIGH_IV_RANK:.0%} — define risk "
-                      "with a debit spread",
+            "reason": decision["reason"],
         }
     else:
         result |= {"instrument": opt_type, "strike": chosen["strike"],
-                   "reason": "IV not elevated — single leg acceptable"}
+                   "reason": decision["reason"]}
     return result
 
 
@@ -214,9 +295,14 @@ def options_alignment(profile: dict, direction: str, entry: float,
 
 class OptionsEngine:
     def __init__(self, price_provider: DataProvider,
-                 options_provider: OptionsProvider):
+                 options_provider: OptionsProvider,
+                 volatility_engine=None):
+        """volatility_engine (Phase 18) is optional. When attached, contract
+        selection consults the variance risk premium instead of relying on
+        iv_rank alone; when absent, behaviour is unchanged."""
         self.prices = price_provider
         self.options = options_provider
+        self.volatility = volatility_engine
         self._chains: dict[str, dict] = {}
 
     def _spot(self, symbol: str) -> float:
@@ -238,11 +324,33 @@ class OptionsEngine:
                              opt_type: str) -> dict:
         return contract_quality(self.chain(symbol), strike, expiry, opt_type)
 
+    def _vrp_for(self, symbol: str, chain: dict) -> dict | None:
+        """Variance risk premium for this chain's ATM IV, horizon-matched to the
+        nearest swing expiry. Returns None (silently) if no volatility engine is
+        attached or the fit is unavailable — the caller then falls back to
+        iv_rank alone rather than failing."""
+        if self.volatility is None:
+            return None
+        try:
+            expiries = chain.get("expiries") or []
+            swing = [e for e in expiries if 21 <= e["dte"] <= 50] or expiries
+            if not swing:
+                return None
+            dte = swing[0]["dte"]
+            spot = chain["spot"]
+            atm = min(chain["contracts"],
+                      key=lambda c: abs(c["strike"] - spot))
+            return self.volatility.get_iv_comparison(
+                symbol, atm["iv"], dte).get("variance_risk_premium")
+        except Exception:
+            return None
+
     def select_contract(self, symbol: str, direction: str, entry: float,
                         target_1: float, target_2: float,
                         horizon: str = "swing") -> dict:
-        return select_contract(self.chain(symbol), direction, entry,
-                               target_1, target_2, horizon)
+        chain = self.chain(symbol)
+        return select_contract(chain, direction, entry, target_1, target_2,
+                               horizon, vrp=self._vrp_for(symbol, chain))
 
     def get_alignment(self, symbol: str, direction: str, entry: float,
                       target_1: float) -> dict:

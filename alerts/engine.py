@@ -45,6 +45,34 @@ def _trail_atr() -> float:
         return 1.5
 
 
+def _preentry_invalidation(direction: str, stop: float, atr14: float):
+    """Where a PENDING setup is abandoned, per config gates.preentry_invalidation:
+
+      "stop" (default, legacy) — the post-entry stop doubles as the pre-entry
+              abandon level. Simple, but ordinary noise against a setup you are
+              not yet in discards it (96% of NO_FILLs on real data).
+      "none" — never abandon pre-entry; wait for the trigger or the horizon.
+              Expressed as -inf (long) / +inf (short) so the existing comparison
+              simply never fires.
+      "wide" — abandon only on a decisive move: the stop pushed a further
+              gates.preentry_invalidation_atr ATRs away.
+    """
+    try:
+        from config import get_config
+        g = get_config()["gates"]
+        mode = str(g.get("preentry_invalidation", "stop")).lower()
+        extra = float(g.get("preentry_invalidation_atr", 1.0))
+    except Exception:
+        mode, extra = "stop", 1.0
+
+    if mode == "none":
+        return float("-inf") if direction == "long" else float("inf")
+    if mode == "wide":
+        pad = extra * max(atr14, 0.0)
+        return stop - pad if direction == "long" else stop + pad
+    return stop
+
+
 def arm_from_setup(setup: dict, atr14: float, min_rvol: float = 1.2) -> Trade:
     """Convert one composer setup into an armed lifecycle trade."""
     return Trade(
@@ -52,6 +80,8 @@ def arm_from_setup(setup: dict, atr14: float, min_rvol: float = 1.2) -> Trade:
         entry_trigger=setup["entry_trigger"], stop=setup["stop"],
         target_1=setup["target_1"], target_2=setup["target_2"],
         trail_distance=round(_trail_atr() * atr14, 4), min_rvol=min_rvol,
+        preentry_invalidation=_preentry_invalidation(
+            setup["direction"], setup["stop"], atr14),
         setup_meta={"confidence": setup.get("confidence"),
                     "thesis": setup.get("thesis"),
                     "sector_etf": setup.get("sector_etf"),

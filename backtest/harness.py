@@ -28,6 +28,7 @@ import json
 from dataclasses import dataclass, field
 
 from backtest.statistics import rigor_block, render_rigor
+from backtest.costs import CostModel, cost_in_r, apply_cost, cost_sensitivity, render_costs
 from alerts.engine import arm_from_setup
 from alerts.lifecycle import step, TERMINAL, TRIGGERED, TRIMMED_T1
 from engines.shared.providers import BarRequest, ReplayProvider
@@ -48,9 +49,13 @@ class Outcome:
     sector_etf: str
     classification: str
     components: dict
+    instrument: str            # Phase 17: what was actually traded
+    spread_pct: float | None   # engine's per-contract spread, when available
     final_state: str          # NO_FILL / CLOSED / STOPPED / DETERIORATED /
                               # INVALIDATED / OPEN_AT_HORIZON
-    realized_r: float | None  # None when never filled
+    realized_r: float | None  # None when never filled — NET of costs
+    gross_r: float | None     # before costs, for the sensitivity curve
+    cost_r: float             # modeled round-trip drag in R
     bars_held: int
     exit_reason: str
 
@@ -90,7 +95,8 @@ class Backtest:
     def __init__(self, base_provider, composer_factory, span_bars: int = 252,
                  step_bars: int = 5, horizon_bars: int = 15,
                  index_symbol: str = "QQQ", n_trials: int = 1,
-                 trial_sharpe_variance: float | None = None):
+                 trial_sharpe_variance: float | None = None,
+                 cost_model: CostModel | None = None):
         """composer_factory(provider) -> SetupComposer bound to that provider.
         span_bars of history are replayed; the composer runs every step_bars;
         each setup is simulated horizon_bars forward.
@@ -107,6 +113,7 @@ class Backtest:
         self.index_symbol = index_symbol
         self.n_trials = n_trials
         self.trial_sharpe_variance = trial_sharpe_variance
+        self.cost_model = cost_model or CostModel()
 
     # ---------- forward simulation ----------
 
@@ -189,6 +196,14 @@ class Backtest:
                     as_of = str(bars.index[asof_idx])
                     r, state, held, reason = self._simulate(
                         s, bars, asof_idx, vix_full, idx_full, frozen)
+                    instrument = s.get("instrument") or "stock"
+                    sugg = s.get("instrument_suggestion") or {}
+                    spread_pct = sugg.get("spread_pct")
+                    cost = cost_in_r(s["entry_trigger"], s["stop"],
+                                     instrument=instrument,
+                                     spread_pct=spread_pct,
+                                     model=self.cost_model)
+                    drag = cost["r_drag"]
                     outcomes.append(Outcome(
                         symbol=s["symbol"], as_of=as_of,
                         direction=s["direction"], confidence=s["confidence"],
@@ -198,7 +213,10 @@ class Backtest:
                         classification=s["classification"],
                         components={k: v["value"]
                                     for k, v in s["score_components"].items()},
-                        final_state=state, realized_r=r,
+                        instrument=instrument, spread_pct=spread_pct,
+                        final_state=state,
+                        realized_r=apply_cost(r, drag),
+                        gross_r=r, cost_r=drag,
                         bars_held=held, exit_reason=reason))
             replay.advance(self.step)
             offset -= self.step
@@ -258,12 +276,20 @@ def report(outcomes: list[dict], compose_points: int = 0,
         "by_confidence": by_bucket,
         "final_states": by_state,
         "component_signal": component_signal,
+        "costs": (cost_sensitivity(
+            [o.get("gross_r") for o in filled],
+            [o.get("cost_r", 0.0) or 0.0 for o in filled])
+            if any("cost_r" in o for o in filled)
+            else {"available": False,
+                  "reason": "no cost model applied to these outcomes "
+                            "(live journal rows are gross by construction)"}),
         "rigor": rigor_block([o["realized_r"] for o in filled],
                              n_trials=n_trials,
                              trial_sharpe_variance=trial_sharpe_variance),
         "outcomes": outcomes,
         "caveats": [
-            "fills at trigger-bar close; no slippage or commissions",
+            "fills at trigger-bar close; slippage and commission modeled in R "
+            "(see costs block) but fill price itself is not adjusted",
             "market guard uses levels frozen at compose time",
             "daily bars: close decides when a bar spans stop and target",
         ],
@@ -286,6 +312,8 @@ def render_text(rep: dict) -> str:
         for k, v in sorted(rep["component_signal"].items(),
                            key=lambda kv: -abs(kv[1]["edge"])):
             lines.append(f"  {k:24} {v['edge']:+.3f}")
+    if rep.get("costs"):
+        lines.append(render_costs(rep["costs"]))
     if rep.get("rigor"):
         lines.append(render_rigor(rep["rigor"]))
     lines.append("caveats: " + "; ".join(rep["caveats"]))

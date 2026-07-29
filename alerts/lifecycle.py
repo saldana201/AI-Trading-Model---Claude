@@ -55,6 +55,12 @@ class Trade:
     stop_current: float | None = None
     water_mark: float | None = None   # high-water (long) / low-water (short)
     trigger_attempts: int = 0
+    # Phase 23: the level that abandons a PENDING setup. Distinct from `stop`,
+    # which exits a LIVE position. Historically these were the same level, which
+    # meant ordinary noise against a not-yet-entered setup discarded it — 96% of
+    # NO_FILLs on real data. None = never invalidate pre-entry (wait for the
+    # trigger or the horizon). Defaults to `stop` for backwards compatibility.
+    preentry_invalidation: float | None = None
     setup_meta: dict = field(default_factory=dict)
 
     def to_dict(self) -> dict:
@@ -91,9 +97,15 @@ def step(trade: Trade, bar: dict, market_guard=None) -> list[dict]:
 
     # ---------- pre-entry ----------
     if trade.state == WATCHING:
-        if against(trade.stop):
-            move(INVALIDATED, "price moved through the stop side before entry",
-                 stop=trade.stop)
+        # Phase 23: abandon a pending setup only at its own invalidation level.
+        # When None, a pending setup is never invalidated by price — you are not
+        # in the trade, so adverse movement has cost nothing; wait for the
+        # trigger or let the horizon expire it.
+        inval = (trade.preentry_invalidation if trade.preentry_invalidation
+                 is not None else trade.stop)
+        if inval is not None and against(inval):
+            move(INVALIDATED, "price moved through the invalidation level "
+                              "before entry", invalidation=inval)
         elif beyond(trade.entry_trigger) and rvol >= trade.min_rvol:
             trade.trigger_attempts += 1
             move(TRIGGERED, "entry trigger broken",

@@ -1,0 +1,633 @@
+{
+  "rows": [
+    {
+      "components": {
+        "vix_alignment": 1.0,
+        "index_alignment": 0.87,
+        "options_alignment": 0.5,
+        "sector_strength": 0.2,
+        "stock_relative_strength": 0.73,
+        "volume_rvol": 0.0,
+        "rsi_confirmation": 0.62,
+        "ma_structure": 0.83,
+        "risk_reward": 0.73,
+        "liquidity": 0.3,
+        "catalyst_fundamental": 1.0
+      },
+      "realized_r": -0.3646,
+      "gross_r": -0.292,
+      "t": 0,
+      "symbol": "CEG",
+      "direction": "short",
+      "date": "2022-12-28 00:00:00-05:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 1.0,
+        "index_alignment": 0.87,
+        "options_alignment": 0.5,
+        "sector_strength": 0.2,
+        "stock_relative_strength": 0.73,
+        "volume_rvol": 0.0,
+        "rsi_confirmation": 0.62,
+        "ma_structure": 0.83,
+        "risk_reward": 0.73,
+        "liquidity": 0.3,
+        "catalyst_fundamental": 1.0
+      },
+      "realized_r": -0.3646,
+      "gross_r": -0.292,
+      "t": 1,
+      "symbol": "CEG",
+      "direction": "short",
+      "date": "2022-12-28 00:00:00-05:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 1.0,
+        "index_alignment": 0.74,
+        "options_alignment": 0.5,
+        "sector_strength": 0.45,
+        "stock_relative_strength": 0.55,
+        "volume_rvol": 0.64,
+        "rsi_confirmation": 0.72,
+        "ma_structure": 0.83,
+        "risk_reward": 1.0,
+        "liquidity": 0.0,
+        "catalyst_fundamental": 0.45
+      },
+      "realized_r": -1.538,
+      "gross_r": -1.4,
+      "t": 2,
+      "symbol": "AAOI",
+      "direction": "long",
+      "date": "2023-01-12 00:00:00-05:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 1.0,
+        "index_alignment": 0.74,
+        "options_alignment": 0.5,
+        "sector_strength": 0.45,
+        "stock_relative_strength": 0.55,
+        "volume_rvol": 0.64,
+        "rsi_confirmation": 0.72,
+        "ma_structure": 0.83,
+        "risk_reward": 1.0,
+        "liquidity": 0.0,
+        "catalyst_fundamental": 0.45
+      },
+      "realized_r": -1.538,
+      "gross_r": -1.4,
+      "t": 3,
+      "symbol": "AAOI",
+      "direction": "long",
+      "date": "2023-01-12 00:00:00-05:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 1.0,
+        "index_alignment": 0.57,
+        "options_alignment": 0.5,
+        "sector_strength": 0.55,
+        "stock_relative_strength": 0.64,
+        "volume_rvol": 0.67,
+        "rsi_confirmation": 0.28,
+        "ma_structure": 0.67,
+        "risk_reward": 1.0,
+        "liquidity": 0.01,
+        "catalyst_fundamental": 0.45
+      },
+      "realized_r": -0.1255,
+      "gross_r": -0.105,
+      "t": 4,
+      "symbol": "OUST",
+      "direction": "short",
+      "date": "2023-02-17 00:00:00-05:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 1.0,
+        "index_alignment": 0.57,
+        "options_alignment": 0.5,
+        "sector_strength": 0.55,
+        "stock_relative_strength": 0.64,
+        "volume_rvol": 0.67,
+        "rsi_confirmation": 0.28,
+        "ma_structure": 0.67,
+        "risk_reward": 1.0,
+        "liquidity": 0.01,
+        "catalyst_fundamental": 0.45
+      },
+      "realized_r": -0.1255,
+      "gross_r": -0.105,
+      "t": 5,
+      "symbol": "OUST",
+      "direction": "short",
+      "date": "2023-02-17 00:00:00-05:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 0.45,
+        "index_alignment": 0.74,
+        "options_alignment": 0.5,
+        "sector_strength": 1.0,
+        "stock_relative_strength": 0.45,
+        "volume_rvol": 0.56,
+        "rsi_confirmation": 0.74,
+        "ma_structure": 0.83,
+        "risk_reward": 0.92,
+        "liquidity": 0.0,
+        "catalyst_fundamental": 0.45
+      },
+      "realized_r": 3.2352,
+      "gross_r": 3.3,
+      "t": 6,
+      "symbol": "AAOI",
+      "direction": "long",
+      "date": "2023-05-31 00:00:00-04:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 0.45,
+        "index_alignment": 0.74,
+        "options_alignment": 0.5,
+        "sector_strength": 1.0,
+        "stock_relative_strength": 0.45,
+        "volume_rvol": 0.56,
+        "rsi_confirmation": 0.74,
+        "ma_structure": 0.83,
+        "risk_reward": 0.92,
+        "liquidity": 0.0,
+        "catalyst_fundamental": 0.45
+      },
+      "realized_r": 3.2352,
+      "gross_r": 3.3,
+      "t": 7,
+      "symbol": "AAOI",
+      "direction": "long",
+      "date": "2023-05-31 00:00:00-04:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 1.0,
+        "index_alignment": 0.98,
+        "options_alignment": 0.5,
+        "sector_strength": 1.0,
+        "stock_relative_strength": 0.82,
+        "volume_rvol": 0.48,
+        "rsi_confirmation": 0.48,
+        "ma_structure": 1.0,
+        "risk_reward": 0.98,
+        "liquidity": 1.0,
+        "catalyst_fundamental": 0.3
+      },
+      "realized_r": -2.3195,
+      "gross_r": -2.2,
+      "t": 8,
+      "symbol": "AAPL",
+      "direction": "long",
+      "date": "2024-01-19 00:00:00-05:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 1.0,
+        "index_alignment": 0.98,
+        "options_alignment": 0.5,
+        "sector_strength": 1.0,
+        "stock_relative_strength": 0.82,
+        "volume_rvol": 0.48,
+        "rsi_confirmation": 0.48,
+        "ma_structure": 1.0,
+        "risk_reward": 0.98,
+        "liquidity": 1.0,
+        "catalyst_fundamental": 0.3
+      },
+      "realized_r": -2.3195,
+      "gross_r": -2.2,
+      "t": 9,
+      "symbol": "AAPL",
+      "direction": "long",
+      "date": "2024-01-19 00:00:00-05:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 1.0,
+        "index_alignment": 0.58,
+        "options_alignment": 0.5,
+        "sector_strength": 0.55,
+        "stock_relative_strength": 0.91,
+        "volume_rvol": 0.16,
+        "rsi_confirmation": 0.44,
+        "ma_structure": 1.0,
+        "risk_reward": 1.0,
+        "liquidity": 1.0,
+        "catalyst_fundamental": 0.45
+      },
+      "realized_r": -0.6565,
+      "gross_r": -0.131,
+      "t": 10,
+      "symbol": "XRP-USD",
+      "direction": "short",
+      "date": "2024-05-08 00:00:00+00:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 1.0,
+        "index_alignment": 0.58,
+        "options_alignment": 0.5,
+        "sector_strength": 0.55,
+        "stock_relative_strength": 0.91,
+        "volume_rvol": 0.16,
+        "rsi_confirmation": 0.44,
+        "ma_structure": 1.0,
+        "risk_reward": 1.0,
+        "liquidity": 1.0,
+        "catalyst_fundamental": 0.45
+      },
+      "realized_r": -0.6565,
+      "gross_r": -0.131,
+      "t": 11,
+      "symbol": "XRP-USD",
+      "direction": "short",
+      "date": "2024-05-08 00:00:00+00:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 0.75,
+        "index_alignment": 0.55,
+        "options_alignment": 0.5,
+        "sector_strength": 0.55,
+        "stock_relative_strength": 0.82,
+        "volume_rvol": 0.44,
+        "rsi_confirmation": 0.47,
+        "ma_structure": 1.0,
+        "risk_reward": 0.54,
+        "liquidity": 1.0,
+        "catalyst_fundamental": 0.45
+      },
+      "realized_r": 0.3416,
+      "gross_r": 0.367,
+      "t": 12,
+      "symbol": "ETH-USD",
+      "direction": "short",
+      "date": "2024-08-01 00:00:00+00:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 0.75,
+        "index_alignment": 0.55,
+        "options_alignment": 0.5,
+        "sector_strength": 0.55,
+        "stock_relative_strength": 0.82,
+        "volume_rvol": 0.44,
+        "rsi_confirmation": 0.47,
+        "ma_structure": 1.0,
+        "risk_reward": 0.54,
+        "liquidity": 1.0,
+        "catalyst_fundamental": 0.45
+      },
+      "realized_r": 0.3416,
+      "gross_r": 0.367,
+      "t": 13,
+      "symbol": "ETH-USD",
+      "direction": "short",
+      "date": "2024-08-01 00:00:00+00:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 0.55,
+        "index_alignment": 0.6,
+        "options_alignment": 0.5,
+        "sector_strength": 0.55,
+        "stock_relative_strength": 0.73,
+        "volume_rvol": 0.72,
+        "rsi_confirmation": 0.93,
+        "ma_structure": 1.0,
+        "risk_reward": 0.81,
+        "liquidity": 0.23,
+        "catalyst_fundamental": 0.45
+      },
+      "realized_r": -2.1968,
+      "gross_r": -2.187,
+      "t": 14,
+      "symbol": "AAOI",
+      "direction": "short",
+      "date": "2025-03-04 00:00:00-05:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 0.55,
+        "index_alignment": 0.6,
+        "options_alignment": 0.5,
+        "sector_strength": 0.55,
+        "stock_relative_strength": 0.73,
+        "volume_rvol": 0.72,
+        "rsi_confirmation": 0.93,
+        "ma_structure": 1.0,
+        "risk_reward": 0.81,
+        "liquidity": 0.23,
+        "catalyst_fundamental": 0.45
+      },
+      "realized_r": -2.1968,
+      "gross_r": -2.187,
+      "t": 15,
+      "symbol": "AAOI",
+      "direction": "short",
+      "date": "2025-03-04 00:00:00-05:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 0.7,
+        "index_alignment": 0.62,
+        "options_alignment": 0.5,
+        "sector_strength": 0.8,
+        "stock_relative_strength": 0.45,
+        "volume_rvol": 1.0,
+        "rsi_confirmation": 0.42,
+        "ma_structure": 0.67,
+        "risk_reward": 1.0,
+        "liquidity": 1.0,
+        "catalyst_fundamental": 1.0
+      },
+      "realized_r": 3.0833,
+      "gross_r": 3.12,
+      "t": 16,
+      "symbol": "AMD",
+      "direction": "long",
+      "date": "2025-05-07 00:00:00-04:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 0.7,
+        "index_alignment": 0.62,
+        "options_alignment": 0.5,
+        "sector_strength": 0.8,
+        "stock_relative_strength": 0.45,
+        "volume_rvol": 1.0,
+        "rsi_confirmation": 0.42,
+        "ma_structure": 0.67,
+        "risk_reward": 1.0,
+        "liquidity": 1.0,
+        "catalyst_fundamental": 1.0
+      },
+      "realized_r": 3.0833,
+      "gross_r": 3.12,
+      "t": 17,
+      "symbol": "AMD",
+      "direction": "long",
+      "date": "2025-05-07 00:00:00-04:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 0.25,
+        "index_alignment": 0.65,
+        "options_alignment": 0.5,
+        "sector_strength": 0.8,
+        "stock_relative_strength": 0.64,
+        "volume_rvol": 0.89,
+        "rsi_confirmation": 0.52,
+        "ma_structure": 0.83,
+        "risk_reward": 0.82,
+        "liquidity": 1.0,
+        "catalyst_fundamental": 1.0
+      },
+      "realized_r": -0.2892,
+      "gross_r": -0.229,
+      "t": 18,
+      "symbol": "LLY",
+      "direction": "long",
+      "date": "2025-09-30 00:00:00-04:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 0.25,
+        "index_alignment": 0.65,
+        "options_alignment": 0.5,
+        "sector_strength": 1.0,
+        "stock_relative_strength": 0.64,
+        "volume_rvol": 0.19,
+        "rsi_confirmation": 0.2,
+        "ma_structure": 0.67,
+        "risk_reward": 0.98,
+        "liquidity": 1.0,
+        "catalyst_fundamental": 1.0
+      },
+      "realized_r": 0.2338,
+      "gross_r": 0.281,
+      "t": 19,
+      "symbol": "CEG",
+      "direction": "long",
+      "date": "2025-09-30 00:00:00-04:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 0.25,
+        "index_alignment": 0.65,
+        "options_alignment": 0.5,
+        "sector_strength": 0.8,
+        "stock_relative_strength": 0.64,
+        "volume_rvol": 0.89,
+        "rsi_confirmation": 0.52,
+        "ma_structure": 0.83,
+        "risk_reward": 0.82,
+        "liquidity": 1.0,
+        "catalyst_fundamental": 1.0
+      },
+      "realized_r": -0.2892,
+      "gross_r": -0.229,
+      "t": 20,
+      "symbol": "LLY",
+      "direction": "long",
+      "date": "2025-09-30 00:00:00-04:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 0.25,
+        "index_alignment": 0.65,
+        "options_alignment": 0.5,
+        "sector_strength": 1.0,
+        "stock_relative_strength": 0.64,
+        "volume_rvol": 0.19,
+        "rsi_confirmation": 0.2,
+        "ma_structure": 0.67,
+        "risk_reward": 0.98,
+        "liquidity": 1.0,
+        "catalyst_fundamental": 1.0
+      },
+      "realized_r": 0.2338,
+      "gross_r": 0.281,
+      "t": 21,
+      "symbol": "CEG",
+      "direction": "long",
+      "date": "2025-09-30 00:00:00-04:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 1.0,
+        "index_alignment": 0.56,
+        "options_alignment": 0.5,
+        "sector_strength": 0.55,
+        "stock_relative_strength": 0.64,
+        "volume_rvol": 0.62,
+        "rsi_confirmation": 0.5,
+        "ma_structure": 0.83,
+        "risk_reward": 0.98,
+        "liquidity": 0.19,
+        "catalyst_fundamental": 0.45
+      },
+      "realized_r": 0.5914,
+      "gross_r": 0.608,
+      "t": 22,
+      "symbol": "OUST",
+      "direction": "short",
+      "date": "2025-11-04 00:00:00-05:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 1.0,
+        "index_alignment": 0.56,
+        "options_alignment": 0.5,
+        "sector_strength": 0.55,
+        "stock_relative_strength": 0.64,
+        "volume_rvol": 0.62,
+        "rsi_confirmation": 0.5,
+        "ma_structure": 0.83,
+        "risk_reward": 0.98,
+        "liquidity": 0.19,
+        "catalyst_fundamental": 0.45
+      },
+      "realized_r": 0.5914,
+      "gross_r": 0.608,
+      "t": 23,
+      "symbol": "OUST",
+      "direction": "short",
+      "date": "2025-11-04 00:00:00-05:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 1.0,
+        "index_alignment": 0.76,
+        "options_alignment": 0.5,
+        "sector_strength": 0.55,
+        "stock_relative_strength": 0.55,
+        "volume_rvol": 0.78,
+        "rsi_confirmation": 0.66,
+        "ma_structure": 0.67,
+        "risk_reward": 1.0,
+        "liquidity": 0.09,
+        "catalyst_fundamental": 0.45
+      },
+      "realized_r": -2.5699,
+      "gross_r": -2.48,
+      "t": 24,
+      "symbol": "TMC",
+      "direction": "short",
+      "date": "2025-11-18 00:00:00-05:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 1.0,
+        "index_alignment": 0.76,
+        "options_alignment": 0.5,
+        "sector_strength": 0.55,
+        "stock_relative_strength": 0.55,
+        "volume_rvol": 0.78,
+        "rsi_confirmation": 0.66,
+        "ma_structure": 0.67,
+        "risk_reward": 1.0,
+        "liquidity": 0.09,
+        "catalyst_fundamental": 0.45
+      },
+      "realized_r": -2.5699,
+      "gross_r": -2.48,
+      "t": 25,
+      "symbol": "TMC",
+      "direction": "short",
+      "date": "2025-11-18 00:00:00-05:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 1.0,
+        "index_alignment": 0.98,
+        "options_alignment": 0.5,
+        "sector_strength": 1.0,
+        "stock_relative_strength": 0.73,
+        "volume_rvol": 0.53,
+        "rsi_confirmation": 0.2,
+        "ma_structure": 0.83,
+        "risk_reward": 0.3,
+        "liquidity": 1.0,
+        "catalyst_fundamental": 0.3
+      },
+      "realized_r": -1.139,
+      "gross_r": -1.101,
+      "t": 26,
+      "symbol": "MSFT",
+      "direction": "long",
+      "date": "2026-05-28 00:00:00-04:00"
+    },
+    {
+      "components": {
+        "vix_alignment": 1.0,
+        "index_alignment": 0.98,
+        "options_alignment": 0.5,
+        "sector_strength": 1.0,
+        "stock_relative_strength": 0.73,
+        "volume_rvol": 0.53,
+        "rsi_confirmation": 0.2,
+        "ma_structure": 0.83,
+        "risk_reward": 0.3,
+        "liquidity": 1.0,
+        "catalyst_fundamental": 0.3
+      },
+      "realized_r": -1.139,
+      "gross_r": -1.101,
+      "t": 27,
+      "symbol": "MSFT",
+      "direction": "long",
+      "date": "2026-05-28 00:00:00-04:00"
+    }
+  ],
+  "meta": {
+    "span": 1000,
+    "step": 5,
+    "horizon": 15,
+    "directions": [
+      "long",
+      "short"
+    ],
+    "n_rows": 28,
+    "by_direction": {
+      "short": 14,
+      "long": 14
+    },
+    "source": "yfinance",
+    "diagnostics": {
+      "long": {
+        "compose_points": 197,
+        "no_trade_points": 0,
+        "setups": 41,
+        "filled": 14,
+        "final_states": {
+          "NO_FILL": 27,
+          "CLOSED": 4,
+          "STOPPED": 4,
+          "DETERIORATED": 6
+        }
+      },
+      "short": {
+        "compose_points": 197,
+        "no_trade_points": 0,
+        "setups": 39,
+        "filled": 14,
+        "final_states": {
+          "NO_FILL": 25,
+          "CLOSED": 4,
+          "STOPPED": 4,
+          "DETERIORATED": 6
+        }
+      }
+    }
+  }
+}

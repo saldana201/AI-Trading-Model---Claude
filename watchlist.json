@@ -1,75 +1,222 @@
 {
   "ARKQ": [
-    "OUST"
+    "OUST",
+    "TSLA",
+    "PATH",
+    "TER",
+    "AVAV",
+    "KTOS",
+    "TRMB",
+    "MTLS"
   ],
   "BTC": [
-    "BTC-USD"
+    "BTC-USD",
+    "MSTR",
+    "COIN",
+    "MARA",
+    "RIOT",
+    "CLSK",
+    "HUT"
   ],
   "ETH": [
-    "ETH-USD"
+    "ETH-USD",
+    "COIN",
+    "BMNR"
   ],
   "GRID": [
     "ETN",
-    "VRT"
+    "VRT",
+    "PWR",
+    "HUBB",
+    "AME",
+    "EMR",
+    "ROK",
+    "GEV",
+    "NVT"
   ],
   "IGV": [
     "CRM",
     "NOW",
-    "PLTR"
+    "PLTR",
+    "MSFT",
+    "ORCL",
+    "ADBE",
+    "INTU",
+    "PANW",
+    "SNOW",
+    "DDOG",
+    "CRWD",
+    "WDAY",
+    "TEAM",
+    "ZS",
+    "MDB",
+    "NET"
   ],
   "MAGS": [
     "META",
     "GOOGL",
-    "AMZN"
+    "AMZN",
+    "AAPL",
+    "MSFT",
+    "NVDA",
+    "TSLA"
   ],
   "NLR": [
     "CEG",
-    "VST"
+    "VST",
+    "NRG",
+    "TLN",
+    "BWXT",
+    "SMR",
+    "LEU",
+    "OKLO"
   ],
   "PAVE": [
     "PWR",
-    "ETN"
+    "ETN",
+    "URI",
+    "VMC",
+    "MLM",
+    "NUE",
+    "CAT",
+    "DE",
+    "EMR",
+    "FAST",
+    "GVA",
+    "ACM"
   ],
   "SMH": [
     "NVDA",
     "AVGO",
     "AMD",
     "MU",
-    "AAOI"
+    "AAOI",
+    "TSM",
+    "QCOM",
+    "INTC",
+    "ADI",
+    "KLAC",
+    "LRCX",
+    "AMAT",
+    "NXPI",
+    "MRVL",
+    "ON",
+    "MCHP"
   ],
   "SOXX": [
     "NVDA",
     "AVGO",
-    "AMD"
+    "AMD",
+    "TSM",
+    "QCOM",
+    "TXN",
+    "ADI",
+    "KLAC",
+    "LRCX",
+    "AMAT",
+    "MRVL",
+    "MPWR",
+    "SWKS",
+    "TER"
   ],
   "URA": [
     "CCJ",
-    "LEU"
+    "LEU",
+    "UEC",
+    "DNN",
+    "NXE",
+    "UUUU",
+    "SMR",
+    "OKLO"
   ],
   "URNM": [
     "CCJ",
-    "UEC"
+    "UEC",
+    "DNN",
+    "NXE",
+    "UUUU",
+    "LEU",
+    "SMR"
   ],
   "XLE": [
     "XOM",
-    "CVX"
+    "CVX",
+    "COP",
+    "EOG",
+    "SLB",
+    "MPC",
+    "PSX",
+    "VLO",
+    "OXY",
+    "WMB",
+    "KMI",
+    "HAL",
+    "DVN",
+    "FANG"
   ],
   "XLF": [
     "JPM",
-    "GS"
+    "GS",
+    "BAC",
+    "WFC",
+    "MS",
+    "C",
+    "SCHW",
+    "BLK",
+    "AXP",
+    "SPGI",
+    "CB",
+    "PGR",
+    "COF",
+    "USB"
   ],
   "XLK": [
     "MSFT",
     "AAPL",
-    "ORCL"
+    "ORCL",
+    "NVDA",
+    "AVGO",
+    "CRM",
+    "ACN",
+    "ADBE",
+    "AMD",
+    "CSCO",
+    "IBM",
+    "INTU",
+    "NOW",
+    "TXN",
+    "QCOM"
   ],
   "XLV": [
     "LLY",
-    "UNH"
+    "UNH",
+    "JNJ",
+    "ABBV",
+    "MRK",
+    "TMO",
+    "ABT",
+    "PFE",
+    "AMGN",
+    "DHR",
+    "BSX",
+    "ISRG",
+    "VRTX",
+    "REGN",
+    "GILD"
   ],
   "XOP": [
     "FANG",
-    "DVN"
+    "DVN",
+    "APA",
+    "OVV",
+    "MTDR",
+    "SM",
+    "CHRD",
+    "MUR",
+    "CTRA",
+    "MRO",
+    "PR",
+    "AR"
   ],
   "_pinned": [
     "OUST",

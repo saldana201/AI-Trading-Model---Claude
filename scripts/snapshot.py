@@ -26,6 +26,7 @@ from engines.fundamentals_mcp.logic import (
     FundamentalsEngine, SyntheticFundamentals, YFinanceFundamentals)
 from engines.options_mcp.logic import OptionsEngine
 from engines.options_mcp.providers import SyntheticOptions, YFinanceOptions
+from engines.volatility_mcp.logic import VolatilityEngine
 from orchestrator.composer import SetupComposer
 from orchestrator.llm import make_thesis_writer
 from scripts.demo_alerts import run_demo
@@ -57,24 +58,40 @@ def build_provider():
     return YFinanceProvider(), "yfinance"
 
 
-def build_snapshot() -> dict:
-    provider, source = build_provider()
-    vix = VixEngine(provider)
-    levels = LevelsEngine(provider)
-    volume = VolumeEngine(provider)
-    momentum = MomentumEngine(provider)
+def build_composer(provider=None, source: str | None = None):
+    """The exact engine wiring build_snapshot uses, as one reusable call.
+
+    Extracted so any surface needing a live composer (the Phase 16 Book's
+    both-directions view) gets identical engines rather than its own copy that
+    silently drifts when an engine is added here.
+    Returns (composer, options_engine, regime_engine, rotation_engine, source).
+    """
+    if provider is None:
+        provider, source = build_provider()
     rotation = RotationEngine(provider)
     regime = RegimeEngine(provider, rotation_engine=rotation)
     fundamentals = FundamentalsEngine(
         SyntheticFundamentals() if source == "synthetic" else YFinanceFundamentals())
     options = OptionsEngine(
         provider,
-        SyntheticOptions(iv_rank=0.62) if source == "synthetic" else YFinanceOptions())
+        SyntheticOptions(iv_rank=0.62) if source == "synthetic" else YFinanceOptions(),
+        volatility_engine=VolatilityEngine(provider))
     composer = SetupComposer(
         provider=provider, regime_engine=regime, rotation_engine=rotation,
-        levels_engine=levels, volume_engine=volume, momentum_engine=momentum,
+        levels_engine=LevelsEngine(provider), volume_engine=VolumeEngine(provider),
+        momentum_engine=MomentumEngine(provider),
         fundamentals_engine=fundamentals, screener_engine=ScreenerEngine(provider),
         thesis_writer=make_thesis_writer(), options_engine=options)
+    return composer, options, regime, rotation, source
+
+
+def build_snapshot() -> dict:
+    provider, source = build_provider()
+    vix = VixEngine(provider)
+    levels = LevelsEngine(provider)
+    volume = VolumeEngine(provider)
+    momentum = MomentumEngine(provider)
+    composer, options, regime, rotation, source = build_composer(provider, source)
 
     vix_levels = vix.get_levels()
     snapshot = {

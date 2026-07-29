@@ -292,3 +292,15 @@ install_phase12(app, get_state, _ensure_snapshot)
 
 from apps.api.resources import install as install_resources  # noqa: E402
 install_resources(app, get_state)
+
+
+# ---------- Phase 16: the Book (long / short / options views) ----------
+
+from apps.api.book import install as install_book  # noqa: E402
+install_book(app, get_state, _ensure_snapshot)
+
+
+# ---------- Phase 29: honest mode (calibration disclosure) ----------
+
+from apps.api.honest import install as install_honest  # noqa: E402
+install_honest(app, get_state, _ensure_snapshot)

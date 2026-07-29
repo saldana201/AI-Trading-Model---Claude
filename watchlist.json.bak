@@ -1,0 +1,81 @@
+{
+  "ARKQ": [
+    "OUST"
+  ],
+  "BTC": [
+    "BTC-USD"
+  ],
+  "ETH": [
+    "ETH-USD"
+  ],
+  "GRID": [
+    "ETN",
+    "VRT"
+  ],
+  "IGV": [
+    "CRM",
+    "NOW",
+    "PLTR"
+  ],
+  "MAGS": [
+    "META",
+    "GOOGL",
+    "AMZN"
+  ],
+  "NLR": [
+    "CEG",
+    "VST"
+  ],
+  "PAVE": [
+    "PWR",
+    "ETN"
+  ],
+  "SMH": [
+    "NVDA",
+    "AVGO",
+    "AMD",
+    "MU",
+    "AAOI"
+  ],
+  "SOXX": [
+    "NVDA",
+    "AVGO",
+    "AMD"
+  ],
+  "URA": [
+    "CCJ",
+    "LEU"
+  ],
+  "URNM": [
+    "CCJ",
+    "UEC"
+  ],
+  "XLE": [
+    "XOM",
+    "CVX"
+  ],
+  "XLF": [
+    "JPM",
+    "GS"
+  ],
+  "XLK": [
+    "MSFT",
+    "AAPL",
+    "ORCL"
+  ],
+  "XLV": [
+    "LLY",
+    "UNH"
+  ],
+  "XOP": [
+    "FANG",
+    "DVN"
+  ],
+  "_pinned": [
+    "OUST",
+    "AAOI",
+    "TMC",
+    "ETH-USD",
+    "XRP-USD"
+  ]
+}

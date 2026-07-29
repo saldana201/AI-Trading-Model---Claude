@@ -15,6 +15,7 @@ from __future__ import annotations
 import copy
 
 CHOP_MODES = ("hard", "soft", "off")
+PREENTRY_MODES = ("stop", "none", "wide")
 DIRECTIONS = ("", "long", "short")
 
 DEFAULTS: dict = {
@@ -60,6 +61,13 @@ DEFAULTS: dict = {
     },
     "gates": {
         "chop_mode": "hard",     # hard: no-trade | soft: compose + warn | off
+        # Phase 23: what abandons a PENDING setup (one you are not yet in).
+        #   stop (default, legacy) — the post-entry stop doubles as the abandon
+        #        level; adverse noise discards setups that cost you nothing
+        #   none — never abandon pre-entry; wait for the trigger or the horizon
+        #   wide — abandon only past stop +/- preentry_invalidation_atr ATRs
+        "preentry_invalidation": "stop",
+        "preentry_invalidation_atr": 1.0,
         "force_direction": "",   # "" | "long" | "short"
     },
     "compose": {
@@ -138,6 +146,8 @@ def validate(cfg: dict) -> list[str]:
         errors.append(f"'gates.chop_mode' must be one of {CHOP_MODES}")
     if str(get("gates", "force_direction")).lower() not in DIRECTIONS:
         errors.append(f"'gates.force_direction' must be one of {DIRECTIONS}")
+    if str(get("gates", "preentry_invalidation")).lower() not in PREENTRY_MODES:
+        errors.append(f"'gates.preentry_invalidation' must be one of {PREENTRY_MODES}")
 
     # geometry sanity: T2 beyond T1, stop cap beyond stop fallback
     setup = deep_merge(DEFAULTS["setup"], cfg.get("setup", {}))

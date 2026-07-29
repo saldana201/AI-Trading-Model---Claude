@@ -236,7 +236,11 @@ class SetupComposer:
 
     # ---------- pipeline ----------
 
-    def compose(self, max_setups: int | None = None) -> dict:
+    def compose(self, max_setups: int | None = None,
+                force_direction: str | None = None) -> dict:
+        """force_direction ("long"/"short") overrides the regime's choice for
+        this call only — used by the Book's both-sides view. None (default)
+        preserves the existing config/regime resolution exactly."""
         cfg = get_config()
         if max_setups is None:
             max_setups = cfg["compose"]["max_setups"]
@@ -248,10 +252,13 @@ class SetupComposer:
         vix_state = next(c for c in regime["components"]
                          if c["name"] == "vix_alignment")["evidence"]["state"]
 
-        # config gate honors the legacy env var through the loader overlay
+        # config gate honors the legacy env var through the loader overlay;
+        # an explicit per-call force_direction wins over both.
         forced = str(cfg["gates"]["force_direction"]).lower()
         if forced not in ("long", "short"):
             forced = None
+        if force_direction in ("long", "short"):
+            forced = force_direction
 
         chop_warning = None
         if regime["regime"] == "chop" and not forced:
