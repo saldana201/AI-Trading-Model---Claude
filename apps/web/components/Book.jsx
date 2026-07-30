@@ -12,6 +12,7 @@
 // look like a broken fetch.
 
 import { useEffect, useState } from "react";
+import { ConfluenceScore } from "./Honest";
 
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -86,8 +87,9 @@ function Card({ s }) {
         <Badge tone={s.is_options ? "opt" : "neutral"}>{s.instrument_label}</Badge>
         {s.pinned && <Badge>PINNED</Badge>}
         {s.earnings_flag && <Badge tone="neutral">EARNINGS</Badge>}
-        <span style={{ marginLeft: "auto", fontSize: 12, color: "var(--faint,#888)" }}>
-          conf {s.confidence} · {s.sector_etf}
+        <span style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 8 }}>
+          <ConfluenceScore value={s.confidence} calibration={s.calibration} compact />
+          <span style={{ fontSize: 12, color: "var(--faint,#888)" }}>{s.sector_etf}</span>
         </span>
       </div>
 
