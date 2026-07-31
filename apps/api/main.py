@@ -142,7 +142,9 @@ def health():
     s = get_state()
     wl = load_watchlist()
     from apps.api.auth import auth_mode
+    from orchestrator.llm_client import describe as _llm_describe
     return {"ok": True, "data_source": s["source"], "chat_mode": s["chat"].mode,
+            "llm": _llm_describe(),
             "auth": auth_mode(),
             "pinned": load_pinned(),
             "watchlist_sectors": sorted(wl.keys()),

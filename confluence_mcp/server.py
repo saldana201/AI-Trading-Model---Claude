@@ -92,6 +92,106 @@ def compare_iv_to_forecast(symbol: str, implied_vol: float,
         indent=2, default=str)
 
 
+def _all_engines():
+    """Construct every engine once, sharing one provider."""
+    from scripts.snapshot import build_provider
+    from engines.vix_mcp.logic import VixEngine
+    from engines.levels_mcp.logic import LevelsEngine
+    from engines.volume_mcp.logic import VolumeEngine
+    from engines.momentum_mcp.logic import MomentumEngine
+    from engines.regime_mcp.logic import RegimeEngine
+    from engines.rotation_mcp.logic import RotationEngine
+    from engines.screener_mcp.logic import ScreenerEngine
+    from engines.volatility_mcp.logic import VolatilityEngine
+    from engines.fundamentals_mcp.logic import (
+        FundamentalsEngine, YFinanceFundamentals, SyntheticFundamentals)
+    from engines.options_mcp.logic import OptionsEngine
+    from engines.options_mcp.providers import SyntheticOptions, YFinanceOptions
+    provider, source = build_provider()
+    rot = RotationEngine(provider)
+    fund_p = SyntheticFundamentals() if source == "synthetic" else YFinanceFundamentals()
+    opt_p = SyntheticOptions(iv_rank=0.62) if source == "synthetic" else YFinanceOptions()
+    vol = VolatilityEngine(provider)
+    return {
+        "vix": VixEngine(provider),
+        "levels": LevelsEngine(provider),
+        "volume": VolumeEngine(provider),
+        "momentum": MomentumEngine(provider),
+        "regime": RegimeEngine(provider, rotation_engine=rot),
+        "rotation": rot,
+        "screener": ScreenerEngine(provider),
+        "volatility": vol,
+        "fundamentals": FundamentalsEngine(fund_p),
+        "options": OptionsEngine(provider, opt_p, volatility_engine=vol),
+    }
+
+
+@mcp.tool()
+def engine_brief(symbol: str) -> str:
+    """EVERYTHING the deterministic engines know about one symbol: support and
+    resistance clusters, VIX pivot and alignment, RVOL and volume phase, RSI
+    stack and divergences, market regime, sector rotation, GARCH volatility
+    forecast and vol cone, gamma walls and the zero-gamma flip, fundamentals and
+    screen classification.
+
+    Facts only — no score, no direction, no suggested trade. Every value carries
+    the method that produced it. This is the recommended entry point: the
+    engines are what survived validation, while the system's composed setups
+    underperformed buy-and-hold over the tested window."""
+    from orchestrator.engine_brief import build_brief, assert_no_recommendation
+    b = build_brief(symbol, _all_engines())
+    assert_no_recommendation(b)
+    return json.dumps(b, indent=2, default=str)
+
+
+@mcp.tool()
+def get_vix() -> str:
+    """VIX pivot, upside/downside targets from fractal clusters, and term
+    structure state (contango / flat / backwardation)."""
+    from engines.vix_mcp.logic import VixEngine
+    from scripts.snapshot import build_provider
+    return json.dumps(VixEngine(build_provider()[0]).get_levels(),
+                      indent=2, default=str)
+
+
+@mcp.tool()
+def get_volume(symbol: str) -> str:
+    """Relative volume vs 20/50-day averages and the Wyckoff-style phase
+    classification (accumulation / mark-up / distribution / consolidation /
+    exhaustion / failed breakout)."""
+    from engines.volume_mcp.logic import VolumeEngine
+    from scripts.snapshot import build_provider
+    p = build_provider()[0]
+    e = VolumeEngine(p)
+    return json.dumps({"rvol": e.get_rvol(symbol), "phase": e.get_phase(symbol)},
+                      indent=2, default=str)
+
+
+@mcp.tool()
+def get_momentum(symbol: str) -> str:
+    """RSI across timeframes plus price/RSI divergences, with the pivot pairs
+    used to detect them."""
+    from engines.momentum_mcp.logic import MomentumEngine
+    from scripts.snapshot import build_provider
+    e = MomentumEngine(build_provider()[0])
+    return json.dumps({"rsi_stack": e.get_rsi_stack(symbol),
+                       "divergences": e.get_divergences(symbol)},
+                      indent=2, default=str)
+
+
+@mcp.tool()
+def get_fundamentals(symbol: str) -> str:
+    """EPS/revenue growth, margins, valuation, institutional sponsorship and the
+    earnings date (a hard input to any swing timing decision)."""
+    from scripts.snapshot import build_provider
+    from engines.fundamentals_mcp.logic import (
+        FundamentalsEngine, YFinanceFundamentals, SyntheticFundamentals)
+    _, source = build_provider()
+    p = SyntheticFundamentals() if source == "synthetic" else YFinanceFundamentals()
+    return json.dumps(FundamentalsEngine(p).get_snapshot(symbol),
+                      indent=2, default=str)
+
+
 @mcp.tool()
 def ask(question: str) -> str:
     """Ask the Confluence chat service a PRD-style question (regime, levels,

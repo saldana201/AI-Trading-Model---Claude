@@ -23,15 +23,17 @@ SYSTEM = (
 
 def make_thesis_writer():
     """Returns a thesis_writer callable, or None if no API key is configured."""
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
+    from orchestrator.llm_client import build_client, model_name, provider_name
+    client = build_client()
+    if client is None:
         return None
-    model = os.environ.get("CONFLUENCE_MODEL")
+    model = model_name()
     if not model:
-        raise RuntimeError(
-            "Set CONFLUENCE_MODEL (see https://docs.claude.com/en/docs/about-claude/models)")
-    import anthropic
-    client = anthropic.Anthropic()
+        hint = ("the Foundry DEPLOYMENT name, e.g. claude-fable-5"
+                if provider_name() == "foundry"
+                else "an Anthropic model id, see "
+                     "https://docs.claude.com/en/docs/about-claude/models")
+        raise RuntimeError(f"Set CONFLUENCE_MODEL to {hint}")
 
     def write(setup: dict, ctx: dict, evidence: dict) -> str:
         msg = client.messages.create(

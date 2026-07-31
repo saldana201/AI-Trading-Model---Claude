@@ -156,11 +156,11 @@ def extract_symbols(text: str) -> list[str]:
 class ChatService:
     def __init__(self, toolbox: EngineToolbox):
         self.toolbox = toolbox
+        from orchestrator.llm_client import build_client, model_name
         self._client = None
-        self.model = os.environ.get("CONFLUENCE_MODEL")
-        if os.environ.get("ANTHROPIC_API_KEY") and self.model:
-            import anthropic
-            self._client = anthropic.Anthropic()
+        self.model = model_name()
+        if self.model:
+            self._client = build_client()
 
     @property
     def mode(self) -> str:

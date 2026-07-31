@@ -27,7 +27,7 @@ def api_key() -> str | None:
 
 
 def auth_mode() -> str:
-    return "api_key" if api_key() else "disabled"
+    return "api_key" if api_key() else "enabled"
 
 
 def _warn_once() -> None:

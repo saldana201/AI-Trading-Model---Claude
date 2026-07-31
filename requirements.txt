@@ -6,3 +6,6 @@ pytest>=8.0
 fastapi>=0.115
 uvicorn>=0.30
 httpx>=0.27
+
+# optional: enables LLM chat + thesis prose (direct API or Azure AI Foundry)
+anthropic>=0.69
