@@ -143,3 +143,46 @@ footer{margin-top:26px;color:var(--faint);font-size:11.5px;border-top:1px solid 
 .pinned-trace{margin-top:14px;border-top:1px dashed var(--line);padding-top:10px}
 .pintrace{display:flex;gap:10px;align-items:baseline;font-size:12px;margin-top:5px}
 .pintrace .num{min-width:90px;color:var(--gold)}
+
+/* ---- explainer layer (Phase 33) ---- */
+.panelcap{color:var(--muted);font-size:12px;line-height:1.5;margin-top:4px;max-width:52ch}
+.hint{margin-left:6px}
+.hintbtn{width:16px;height:16px;border-radius:50%;border:1px solid var(--line);background:var(--panel2);
+  color:var(--muted);font-family:var(--mono);font-size:10px;font-style:italic;line-height:1;
+  cursor:pointer;padding:0;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle}
+.hintbtn:hover{color:var(--gold);border-color:var(--gold)}
+.hintpop{position:absolute;top:22px;left:0;z-index:20;width:320px;background:var(--panel);
+  border:1px solid var(--line);border-radius:10px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.5);
+  font-size:12px;line-height:1.5;color:var(--text);cursor:default}
+.hintpop b{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:600;display:block;margin-bottom:8px}
+.hintpop ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin:0}
+.hintpop li{color:var(--muted);padding-left:12px;position:relative}
+.hintpop li:before{content:"";position:absolute;left:0;top:7px;width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:.6}
+.hintcaveat{display:block;margin-top:10px;padding-top:9px;border-top:1px dashed var(--line);color:var(--gold);font-size:11.5px}
+@media (max-width:680px){ .hintpop{width:min(320px,86vw)} }
+
+/* ---- clean level list (Phase 33 — replaces the sparse SVG ladder) ---- */
+.levels{margin-top:12px;display:flex;flex-direction:column}
+.lvlrow{display:grid;grid-template-columns:64px 1fr 54px 52px;gap:10px;align-items:center;
+  padding:4px 6px;border-bottom:1px solid var(--panel2);font-size:12.5px}
+.lvlrow:last-child{border-bottom:0}
+.lvlrow .px{font-weight:500}
+.lvlrow .lbl{font-size:10px;letter-spacing:.06em}
+.lvlrow .str{height:5px;background:var(--panel2);border-radius:3px;overflow:hidden}
+.lvlrow .str i{display:block;height:100%;border-radius:3px;opacity:.85}
+.lvlrow .dist{text-align:right;color:var(--faint);font-size:11px}
+.lvlrow.spot{background:rgba(232,237,244,.06);border-radius:6px;border-bottom:0;margin:2px 0}
+.lvlrow.spot .px{color:var(--text)}
+.lvlrow.spot .lbl{color:var(--text);font-weight:600;letter-spacing:.1em}
+
+/* ---- three-tier hierarchy (Phase 33) ---- */
+.tier{display:flex;align-items:center;gap:10px;margin:22px 0 10px}
+.tier-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:600;white-space:nowrap}
+.tier-note{font-size:11px;color:var(--faint);opacity:.8;white-space:nowrap}
+.tier-rule{flex:1;height:1px;background:var(--line)}
+.tier2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media (max-width:900px){ .tier2{grid-template-columns:1fr} }
+
+/* Tier-3 evidence: every panel (.card root) demoted; hover focuses that panel */
+.demoted .card{opacity:.5;transition:opacity .18s ease}
+.demoted .card:hover{opacity:1}

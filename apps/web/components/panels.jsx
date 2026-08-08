@@ -2,6 +2,8 @@
 // Class names match app/globals.css (ported from the Phase 2–5 dashboard),
 // so this is a 1:1 migration of the proven UI.
 
+import { InfoHint, PanelCaption } from "./Hints";
+
 const fmt = (v, d = 2) => (v == null ? "—" : Number(v).toFixed(d));
 
 /* ---------------- shared SVG: price ladder ---------------- */
@@ -47,6 +49,46 @@ export function Ladder({ spot, rungs, w, h }) {
   );
 }
 
+/* ---------------- shared: clean level list (replaces Ladder) ---------------- */
+
+export function LevelList({ spot, rungs }) {
+  const sorted = [...rungs].sort((a, b) => b.price - a.price);
+  // find the gap where spot sits, so we render one highlighted "spot" row inline
+  let spotIdx = sorted.findIndex((r) => r.price < spot);
+  if (spotIdx < 0) spotIdx = sorted.length;
+  const rows = [];
+  sorted.forEach((r, i) => {
+    if (i === spotIdx) rows.push({ spot: true });
+    const dist = ((r.price - spot) / spot) * 100;
+    rows.push({ ...r, dist });
+  });
+  if (spotIdx >= sorted.length) rows.push({ spot: true });
+  return (
+    <div className="levels" role="table" aria-label="Price levels">
+      {rows.map((r, i) =>
+        r.spot ? (
+          <div className="lvlrow spot" role="row" key={`s${i}`}>
+            <span className="num px">{fmt(spot)}</span>
+            <span className="lbl">SPOT</span>
+            <span className="num dist">—</span>
+          </div>
+        ) : (
+          <div className="lvlrow" role="row" key={i} style={{ "--c": r.color }}>
+            <span className="num px" style={{ color: r.color }}>{fmt(r.price)}</span>
+            <span className="lbl" style={{ color: r.label ? r.color : "var(--muted)" }}>
+              {r.label ? r.label.toUpperCase() : r.kind || ""}
+            </span>
+            <span className="str" aria-hidden="true">
+              <i style={{ width: `${Math.round((r.strength ?? 0.5) * 100)}%`, background: r.color }} />
+            </span>
+            <span className="num dist">{r.dist > 0 ? "+" : ""}{r.dist.toFixed(1)}%</span>
+          </div>
+        )
+      )}
+    </div>
+  );
+}
+
 /* ---------------- regime strip ---------------- */
 
 export function RegimeStrip({ regime }) {
@@ -55,7 +97,7 @@ export function RegimeStrip({ regime }) {
   return (
     <section className="regime" aria-label="Market regime">
       <div>
-        <div className="eyebrow">Market regime</div>
+        <div className="eyebrow">Market regime <InfoHint k="regime" /></div>
         <div className={`verdict ${regime.regime}`}>{regime.regime.replace("_", "-")}</div>
         <div className="mods">
           {(regime.modifiers?.length ? regime.modifiers : ["no vol modifier"]).map((m) => (
@@ -132,11 +174,12 @@ export function VixPanel({ vix }) {
   }
   return (
     <article className="card" aria-label="VIX framework">
-      <h2>VIX <span className="num">{fmt(L.spot)}</span></h2>
+      <h2>VIX <span className="num">{fmt(L.spot)}</span><InfoHint k="vix" /></h2>
+      <PanelCaption k="vix" />
       <div>
         <span className={`state ${TONE[A.state] || "flat"}`}>{A.state.replaceAll("_", " ")}</span>
       </div>
-      <Ladder spot={L.spot} rungs={rungs} w={360} h={330} />
+      <LevelList spot={L.spot} rungs={rungs} />
       <dl className="kv">
         <dt>Spot vs pivot</dt><dd className="num">{L.spot_vs_pivot ?? "—"}</dd>
         <dt>Window</dt><dd className="num">{L.window_sessions} sessions</dd>
@@ -165,7 +208,8 @@ export function IndexPanel({ symbol, data }) {
   }
   return (
     <article className="card" aria-label={`${symbol} levels`}>
-      <h2>{symbol} <span className="num">{fmt(L.spot)}</span></h2>
+      <h2>{symbol} <span className="num">{fmt(L.spot)}</span><InfoHint k="index" /></h2>
+      <PanelCaption k="index" />
       <div>
         <span className={`state ${aboveWp ? "good" : "bad"}`}>
           {aboveWp ? "above weekly pivot" : "below weekly pivot"}
@@ -174,7 +218,7 @@ export function IndexPanel({ symbol, data }) {
           RVOL {fmt(L.rvol_20d)}×
         </span>
       </div>
-      <Ladder spot={L.spot} rungs={rungs} w={420} h={380} />
+      <LevelList spot={L.spot} rungs={rungs} />
       <dl className="kv">
         <dt>High / low of day</dt>
         <dd className="num">{fmt(L.session.high_of_day)} / {fmt(L.session.low_of_day)}</dd>
@@ -196,7 +240,8 @@ export function TapePanel({ qqq, spy }) {
   const ph = qqq.phase, ev = ph.evidence;
   return (
     <article className="card" aria-label="Tape character">
-      <h2>Tape character <span className="num">QQQ</span></h2>
+      <h2>Tape character <span className="num">QQQ</span><InfoHint k="tape" /></h2>
+      <PanelCaption k="tape" />
       <span className={`state ${PHASE_TONE[ph.phase] || "flat"}`}>{ph.phase.replaceAll("_", " ")}</span>
       <dl className="kv">
         <dt>Trend slope</dt><dd className="num">{fmt(ev.trend_slope_pct_per_bar, 3)}%/bar</dd>
@@ -237,7 +282,8 @@ export function OptionsPanel({ gex }) {
   };
   return (
     <article className="card" aria-label="Options positioning">
-      <h2>Options positioning <span className="num">{gex.symbol} · net {gex["net_gex_$m"].toLocaleString()} $m / 1%</span></h2>
+      <h2>Options positioning <span className="num">{gex.symbol} · net {gex["net_gex_$m"].toLocaleString()} $m / 1%</span><InfoHint k="options" /></h2>
+      <PanelCaption k="options" />
       <span className={`state ${gex.gamma_regime === "positive" ? "good" : "warn"}`}>
         {gex.gamma_regime} gamma — {gex.gamma_regime === "positive" ? "dealers dampen, walls pin" : "dealers amplify, breaks accelerate"}
       </span>
@@ -279,7 +325,8 @@ export function RotationTable({ rotation }) {
       <td className={v > 0 ? "pos" : v < 0 ? "neg" : ""}>{v > 0 ? "+" : ""}{v.toFixed(1)}</td>;
   return (
     <article className="card" aria-label="Sector rotation">
-      <h2>Sector rotation</h2>
+      <h2>Sector rotation <InfoHint k="rotation" /></h2>
+      <PanelCaption k="rotation" />
       <table className="rot">
         <thead><tr><th>ETF</th><th>Status</th><th>1w</th><th>4w</th><th>12w</th><th>RVOL</th></tr></thead>
         <tbody>
@@ -316,7 +363,7 @@ export function SetupCards({ setups }) {
   if (setups.no_trade) {
     return (
       <article className="card" aria-label="Trade setups">
-        <h2>Setups <span className="num">no-trade conditions</span></h2>
+        <h2>Setups <span className="num">no-trade conditions</span><InfoHint k="setups" /></h2>
         <div className="notrade"><b>Standing aside.</b> {setups.reason}</div>
       </article>
     );
@@ -325,7 +372,7 @@ export function SetupCards({ setups }) {
     <article className="card" aria-label="Trade setups">
       <h2>Setups <span className="num">
         {setups.setups.length} active · {setups.direction} · {(setups.suppressed || []).length} suppressed
-      </span>{setups.forced && <span className="state warn" style={{ marginLeft: 10 }}>FORCED — test mode, regime gate bypassed</span>}</h2>
+      </span>{setups.forced && <span className="state warn" style={{ marginLeft: 10 }}>FORCED — test mode, regime gate bypassed</span>}<InfoHint k="setups" /></h2>
       {setups.setups.length === 0 && setups.funnel && (
         <div className="notrade" style={{ marginTop: 10 }}>
           <b>No setups cleared the gates.</b>{" "}
@@ -395,7 +442,7 @@ export function SetupCards({ setups }) {
 export function AlertFeed({ feed }) {
   return (
     <section className="card" style={{ marginTop: 18 }} aria-label="Alert feed">
-      <h2>Alert feed <span className="num">{feed.label}</span></h2>
+      <h2>Alert feed <span className="num">{feed.label}</span><InfoHint k="alerts" /></h2>
       <div className="feed">
         {feed.events.map((e, i) => (
           <div className="fevent" key={i}>
@@ -421,7 +468,7 @@ export function JournalPanel({ journal }) {
         {s.n ? `${s.n} resolved · win ${(s.win_rate * 100).toFixed(0)}% · avg ${s.avg_r > 0 ? "+" : ""}${s.avg_r}R` : "no resolved trades yet"}
         {journal.counts?.open ? ` · ${journal.counts.open} open` : ""}
         {journal.counts?.pending ? ` · ${journal.counts.pending} armed` : ""}
-      </span></h2>
+      </span><InfoHint k="journal" /></h2>
       {rows.length === 0 ? (
         <div className="empty" style={{ marginTop: 10 }}>
           Arm the game plan — every trade lifecycle lands here as an R-multiple outcome.
