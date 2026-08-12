@@ -186,3 +186,52 @@ footer{margin-top:26px;color:var(--faint);font-size:11.5px;border-top:1px solid 
 /* Tier-3 evidence: every panel (.card root) demoted; hover focuses that panel */
 .demoted .card{opacity:.5;transition:opacity .18s ease}
 .demoted .card:hover{opacity:1}
+
+/* ---- fundamentals badge + suppressed section (Phase 34) ---- */
+.fundwrap{position:relative;display:inline-flex;align-items:center;gap:6px}
+.fundbadge{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:4px;
+  border:1px solid var(--line);background:var(--panel2);color:var(--muted);
+  cursor:pointer;letter-spacing:.04em}
+.fundbadge:hover{background:var(--panel)}
+.fundbadge:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.fundbadge.loading,.fundbadge.err{cursor:default;color:var(--faint)}
+.fundearn{font-family:var(--mono);font-size:10px;padding:2px 6px;border-radius:4px;
+  border:1px solid var(--gold);color:var(--gold);background:rgba(217,179,106,.10);
+  letter-spacing:.08em;white-space:nowrap}
+.fundpop{position:absolute;top:24px;left:0;z-index:25;width:420px;background:var(--panel);
+  border:1px solid var(--line);border-radius:8px;padding:12px 13px;
+  box-shadow:0 12px 34px rgba(0,0,0,.5);font-size:11.5px;line-height:1.5;
+  display:flex;flex-direction:column;gap:9px}
+.fundpop b{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+  font-weight:600;display:block}
+.fundhead .num{color:var(--text)}
+.fundtable{width:100%;border-collapse:collapse;font-size:11px}
+.fundtable th{text-align:left;color:var(--faint);font-weight:500;font-size:10px;
+  letter-spacing:.08em;text-transform:uppercase;padding-bottom:4px;
+  border-bottom:1px solid var(--line)}
+.fundtable td{padding:4px 0;border-bottom:1px solid var(--line);color:var(--muted);
+  vertical-align:top}
+.fundtable td:last-child,.fundtable th:last-child{text-align:right}
+.fundtable tr.na td{color:var(--faint);font-style:italic}
+.fundlow{color:var(--faint);font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+.fundnote{color:var(--faint);font-size:11px}
+.fundcaveat{margin-top:2px;padding-top:8px;border-top:1px dashed var(--line);
+  color:var(--gold);font-size:11px}
+@media (max-width:680px){ .fundpop{width:min(420px,88vw)} }
+
+/* suppressed setups — visible whether or not any setup cleared the gates */
+.suppressed{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
+.suppressed summary{cursor:pointer;font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--faint);font-weight:600;list-style:none}
+.suppressed summary::-webkit-details-marker{display:none}
+.suppressed summary:before{content:"▸ ";color:var(--gold)}
+.suppressed[open] summary:before{content:"▾ "}
+.suppressed summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.suprow{display:grid;grid-template-columns:auto auto 1fr;gap:10px;align-items:baseline;
+  padding:5px 0;border-bottom:1px solid var(--line);font-size:11.5px}
+.suprow:last-child{border-bottom:0}
+.suprow .why{color:var(--muted)}
+.supnote{margin-top:8px;color:var(--faint);font-size:11px}
+
+/* tables inside cards scroll rather than overflow (Phase 34) */
+.tablescroll{overflow-x:auto;-webkit-overflow-scrolling:touch}

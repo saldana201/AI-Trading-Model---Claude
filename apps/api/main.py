@@ -306,3 +306,9 @@ install_book(app, get_state, _ensure_snapshot)
 
 from apps.api.honest import install as install_honest  # noqa: E402
 install_honest(app, get_state, _ensure_snapshot)
+
+
+# ---------- Phase 34: fundamentals confluence ----------
+
+from apps.api.fundamentals import install as install_fundamentals  # noqa: E402
+install_fundamentals(app, get_state, _ensure_snapshot)

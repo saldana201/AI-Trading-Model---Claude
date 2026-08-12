@@ -3,6 +3,8 @@
 // so this is a 1:1 migration of the proven UI.
 
 import { InfoHint, PanelCaption } from "./Hints";
+import { ConfluenceScore } from "./Honest";
+import { FundamentalsBadge } from "./FundamentalsBadge";
 
 const fmt = (v, d = 2) => (v == null ? "—" : Number(v).toFixed(d));
 
@@ -359,12 +361,43 @@ function InstrumentLine({ setup }) {
   );
 }
 
+
+/* ---------------- suppressed setups (Phase 34) ----------------
+   Previously the suppressed list rendered ONLY inside the "no setups cleared
+   the gates" branch, so the moment one setup passed, the gate that rejected
+   the others became invisible — while the header kept counting them. Avoided
+   trades are output; they are shown whenever the list is non-empty. */
+
+export function SuppressedSetups({ suppressed }) {
+  const rows = suppressed || [];
+  if (rows.length === 0) return null;
+  return (
+    <details className="suppressed">
+      <summary>
+        {rows.length} suppressed — {rows.length === 1 ? "candidate" : "candidates"} the gates removed
+      </summary>
+      {rows.map((r, i) => (
+        <div className="suprow" key={`${r.symbol}-${i}`}>
+          <span className="num">{r.pinned ? "📌 " : ""}{r.symbol}</span>
+          <FundamentalsBadge symbol={r.symbol} compact />
+          <span className="why">{r.reason}</span>
+        </div>
+      ))}
+      <div className="supnote">
+        A suppressed candidate is a decision, not a gap. Each reason names the
+        gate that stopped it.
+      </div>
+    </details>
+  );
+}
+
 export function SetupCards({ setups }) {
   if (setups.no_trade) {
     return (
       <article className="card" aria-label="Trade setups">
         <h2>Setups <span className="num">no-trade conditions</span><InfoHint k="setups" /></h2>
         <div className="notrade"><b>Standing aside.</b> {setups.reason}</div>
+        <SuppressedSetups suppressed={setups.suppressed} />
       </article>
     );
   }
@@ -386,9 +419,6 @@ export function SetupCards({ setups }) {
             <> Active sectors with no watchlist entries:{" "}
             <span className="num">{setups.funnel.sectors_without_watchlist_entries.join(", ")}</span>
             {" "}— add names for these in watchlist.json.</>
-          )}
-          {(setups.suppressed || []).length > 0 && (
-            <> Suppressed: {setups.suppressed.map((s) => `${s.symbol}${s.pinned ? " 📌" : ""} (${s.reason})`).join("; ")}.</>
           )}
         </div>
       )}
@@ -412,9 +442,12 @@ export function SetupCards({ setups }) {
             <span className={`state ${x.direction === "long" ? "good" : "bad"}`}>{x.direction}</span>
             <span className={`rotchip ${x.sector_status}`}>{x.sector_etf} {x.sector_status}</span>
             {x.earnings_flag && <span className="state warn">earnings window</span>}
-            <span className="conf num" style={{
-              color: x.confidence >= 7.5 ? "var(--bull)" : x.confidence >= 6.5 ? "var(--gold)" : "var(--muted)",
-            }}>{x.confidence.toFixed(1)}<span style={{ color: "var(--faint)", fontSize: 11 }}>/10</span></span>
+            <FundamentalsBadge
+              symbol={x.symbol}
+              direction={x.direction}
+              assessment={x.fundamentals_assessment}
+            />
+            <ConfluenceScore value={x.confidence} calibration={x.calibration} compact />
           </div>
           <div className="lvls">
             {[["Entry", x.entry_trigger, "var(--gold)"], ["Stop", x.stop, "var(--bear)"],
@@ -435,6 +468,7 @@ export function SetupCards({ setups }) {
           {(x.risks || []).length > 0 && <div className="riskline">⚠ {x.risks.join(" · ")}</div>}
         </div>
       ))}
+      <SuppressedSetups suppressed={setups.suppressed} />
     </article>
   );
 }

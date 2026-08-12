@@ -25,6 +25,32 @@ from engines.shared.indicators import rsi
 from engines.shared.providers import BarRequest
 from .scoring import score_setup
 from .validator import validate_setup
+from . import fundamentals_confluence
+
+
+def _validation_evidence(evidence: dict) -> dict:
+    """Phase 34 — optional stricter anti-hallucination scope.
+
+    validator.collect_numbers() walks the WHOLE evidence payload, so passing
+    the fundamentals snapshot in means forward_pe (a ratio, commonly 15-55)
+    joins the set of numbers a price level may "trace" to at 0.15% tolerance.
+    For a sub-$60 symbol that lets a fabricated stop validate against a P/E.
+
+    Fundamentals carry no price levels, so dropping that branch loses nothing
+    legitimate — but it can only make validation STRICTER, which is a
+    behaviour change. It is therefore opt-in via fundamentals.strict_validation
+    (default False) and measurable with scripts/strict_validation_probe.py.
+    The audit `evidence` record itself is never filtered.
+    """
+    try:
+        from config import get_config
+        strict = bool(get_config()["fundamentals"]["strict_validation"])
+    except Exception:
+        strict = False
+    if not strict:
+        return evidence
+    return {k: v for k, v in evidence.items() if k != "fundamentals"}
+
 
 import os as _os
 
@@ -355,6 +381,11 @@ class SetupComposer:
             phase = self.volume.get_phase(sym)
             divs = self.momentum.get_divergences(sym)["divergences"]
             fund = self.fundamentals.get_snapshot(sym)
+            fx = fundamentals_confluence.apply(setup, fund, direction)
+            if not fx["allowed"]:
+                suppressed.append({"symbol": sym, "pinned": sym in self.pinned,
+                                   "reason": fx["reason"]})
+                continue
             dollar_vol = float((daily["close"] * daily["volume"]).tail(20).mean() / 1e6)
 
             ctx = {
@@ -372,6 +403,7 @@ class SetupComposer:
                 "risk_reward_t2": setup["risk_reward_t2"],
                 "avg_dollar_volume_m": round(dollar_vol, 1),
                 "fundamentals": fund,
+                "fundamentals_assessment": fx["assessment"],
             }
             options_payload = None
             if self.options is not None:
@@ -393,7 +425,7 @@ class SetupComposer:
             evidence = {"levels": level_payload, "regime": regime, "screen": screen,
                         "phase": phase, "fundamentals": fund, "sector": etf,
                         "options": options_payload}
-            check = validate_setup(setup, evidence)
+            check = validate_setup(setup, _validation_evidence(evidence))
             if not check["valid"]:
                 suppressed.append({"symbol": sym, "pinned": sym in self.pinned,
                                    "reason": "failed evidence validation",
@@ -406,7 +438,7 @@ class SetupComposer:
                 "instrument": (ctx.get("contract") or {}).get("instrument", "stock"),
                 "confidence": scored["score"],
                 "score_components": scored["components"],
-                "risks": scored["risks"],
+                "risks": scored["risks"] + fx["warnings"],
                 "sector_etf": etf["symbol"], "sector_status": etf["status"],
                 "pinned": sym in self.pinned,
                 "classification": screen["classification"],
@@ -573,6 +605,8 @@ class SetupComposer:
         phase = self.volume.get_phase(sym)
         divs = self.momentum.get_divergences(sym)["divergences"]
         fund = self.fundamentals.get_snapshot(sym)
+        fx = fundamentals_confluence.apply(setup, fund, direction)
+        gate("fundamentals", fx["allowed"], fx["reason"])
         dollar_vol = float((daily["close"] * daily["volume"]).tail(20).mean() / 1e6)
         ctx = {
             "regime": regime["regime"], "regime_risk_score": regime["risk_score"],
@@ -589,6 +623,7 @@ class SetupComposer:
             "risk_reward_t2": setup["risk_reward_t2"],
             "avg_dollar_volume_m": round(dollar_vol, 1),
             "fundamentals": fund,
+            "fundamentals_assessment": fx["assessment"],
         }
         options_payload = None
         if self.options is not None:
@@ -610,7 +645,7 @@ class SetupComposer:
                     "phase": phase, "fundamentals": fund,
                     "sector": {"symbol": home or "N/A", "status": sector_status},
                     "options": options_payload}
-        check = validate_setup(setup, evidence)
+        check = validate_setup(setup, _validation_evidence(evidence))
         gate("evidence_validation", check["valid"],
              "every price traces to engine evidence" if check["valid"]
              else f"violations: {check['violations']}")
@@ -621,7 +656,7 @@ class SetupComposer:
             "instrument": (ctx.get("contract") or {}).get("instrument", "stock"),
             "confidence": scored["score"],
             "score_components": scored["components"],
-            "risks": scored["risks"],
+            "risks": scored["risks"] + fx["warnings"],
             "sector_etf": home or "N/A", "sector_status": sector_status,
             "pinned": sym in self.pinned,
             "classification": screen["classification"],

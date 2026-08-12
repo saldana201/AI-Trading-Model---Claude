@@ -73,7 +73,32 @@ DEFAULTS: dict = {
     "compose": {
         "max_setups": 6,
     },
+    # Phase 34 — fundamentals confluence. Every default here is chosen so
+    # that an unconfigured system behaves exactly as it did before:
+    #   score_mode "legacy"       -> scoring.py takes its original branch
+    #   strict_validation False   -> validator sees the same evidence as before
+    #   earnings_window_days 7    -> matches engines/fundamentals_mcp/logic.py
+    #                                EARNINGS_WINDOW_DAYS, so out of the box
+    #                                there is exactly ONE earnings window in
+    #                                the system. Overriding it makes the gate
+    #                                and the display flag diverge on purpose.
+    "fundamentals": {
+        "enabled": True,
+        "earnings_gate": "suppress",     # suppress | flag | ignore
+        "earnings_window_days": 7,
+        "score_mode": "legacy",          # legacy | assessment
+        "strict_validation": False,
+        "weights": {
+            "growth": 0.40,
+            "profitability": 0.20,
+            "valuation": 0.20,
+            "sponsorship": 0.20,
+        },
+    },
 }
+
+EARNINGS_GATES = ("suppress", "flag", "ignore")
+SCORE_MODES = ("legacy", "assessment")
 
 # legacy env vars -> config paths (backwards compatibility)
 ENV_MAP = {
@@ -166,6 +191,34 @@ def validate(cfg: dict) -> list[str]:
                 errors.append(f"unknown scoring weight '{k}'")
             elif not isinstance(v, (int, float)) or isinstance(v, bool) or v < 0:
                 errors.append(f"scoring weight '{k}' must be a non-negative number")
+
+    # fundamentals (Phase 34): enums, window, and weights
+    if get("fundamentals", "earnings_gate") not in EARNINGS_GATES:
+        errors.append(f"'fundamentals.earnings_gate' must be one of {EARNINGS_GATES}")
+    if get("fundamentals", "score_mode") not in SCORE_MODES:
+        errors.append(f"'fundamentals.score_mode' must be one of {SCORE_MODES}")
+    for key in ("enabled", "strict_validation"):
+        if not isinstance(get("fundamentals", key), bool):
+            errors.append(f"'fundamentals.{key}' must be a boolean")
+    ewd = get("fundamentals", "earnings_window_days")
+    if not isinstance(ewd, int) or isinstance(ewd, bool) or ewd < 0:
+        errors.append(
+            f"'fundamentals.earnings_window_days' must be an int >= 0 (got {ewd!r})")
+    fweights = cfg.get("fundamentals", {}).get("weights", {})
+    if not isinstance(fweights, dict):
+        errors.append("'fundamentals.weights' must be an object")
+    else:
+        for k, v in fweights.items():
+            if k not in DEFAULTS["fundamentals"]["weights"]:
+                errors.append(f"unknown fundamentals weight '{k}'")
+            elif not isinstance(v, (int, float)) or isinstance(v, bool) or v < 0:
+                errors.append(f"fundamentals weight '{k}' must be a non-negative number")
+        if fweights and all(
+                isinstance(v, (int, float)) and not isinstance(v, bool) and v >= 0
+                for v in fweights.values()):
+            merged = {**DEFAULTS["fundamentals"]["weights"], **fweights}
+            if sum(merged.values()) <= 0:
+                errors.append("'fundamentals.weights' cannot sum to zero")
 
     if get("risk", "max_position_pct") > 100:
         errors.append("'risk.max_position_pct' cannot exceed 100")

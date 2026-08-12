@@ -19,7 +19,11 @@ os.environ.setdefault("CONFLUENCE_DATA", "synthetic")
 REPO = pathlib.Path(__file__).resolve().parents[1]
 
 GATE_NAMES = {"regime", "sector_rotation", "screen_class", "risk_reward",
-              "confidence", "evidence_validation"}
+              "confidence", "evidence_validation",
+              # Phase 34 — the earnings-window gate. explore() exists to
+              # report EVERY gate, so a gate that can suppress a setup in
+              # compose() must be visible here too.
+              "fundamentals"}
 
 
 @pytest.fixture

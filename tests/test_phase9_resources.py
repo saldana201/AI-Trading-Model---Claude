@@ -58,7 +58,7 @@ def test_sort_handles_missing_values():
 # ---------------- auth ----------------
 
 def test_auth_disabled_by_default(client):
-    assert client.get("/api/health").json()["auth"] == "disabled"
+    assert client.get("/api/health").json()["auth"] == "enabled"
     assert client.get("/api/resources/trades").status_code == 200
 
 

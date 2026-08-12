@@ -82,10 +82,14 @@ def arm_from_setup(setup: dict, atr14: float, min_rvol: float = 1.2) -> Trade:
         trail_distance=round(_trail_atr() * atr14, 4), min_rvol=min_rvol,
         preentry_invalidation=_preentry_invalidation(
             setup["direction"], setup["stop"], atr14),
+        # Phase 34: the grade STRING only. setup_meta is rendered in alert
+        # text and the journal, so the full assessment does not belong here.
         setup_meta={"confidence": setup.get("confidence"),
                     "thesis": setup.get("thesis"),
                     "sector_etf": setup.get("sector_etf"),
-                    "invalidation": setup.get("invalidation")},
+                    "invalidation": setup.get("invalidation"),
+                    "fundamentals_grade": (
+                        setup.get("fundamentals_assessment") or {}).get("grade")},
     )
 
 

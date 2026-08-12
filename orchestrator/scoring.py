@@ -35,6 +35,16 @@ def _clamp(v, lo=0.0, hi=1.0):
     return max(lo, min(hi, v))
 
 
+def _score_mode() -> str:
+    """Phase 34: "legacy" (default, unchanged behaviour) or "assessment".
+    Read defensively — scoring must not require the config package."""
+    try:
+        from config import get_config
+        return str(get_config()["fundamentals"]["score_mode"]).lower()
+    except Exception:
+        return "legacy"
+
+
 def score_setup(direction: str, ctx: dict) -> dict:
     """ctx carries engine outputs; every component reports value + evidence."""
     flip = direction == "short"
@@ -120,15 +130,39 @@ def score_setup(direction: str, ctx: dict) -> dict:
                          "note": "no liquid contract — dollar-volume proxy"},
         }
     fund = ctx["fundamentals"]
-    cat_v = GRADE_VALUE[fund["growth_grade"]]
-    if fund["in_earnings_window"]:
-        cat_v *= 0.5  # binary-event risk inside the window
-    comps["catalyst_fundamental"] = {
-        "value": cat_v,
-        "evidence": {"growth_grade": fund["growth_grade"],
-                     "days_to_earnings": fund["days_to_earnings"],
-                     "in_earnings_window": fund["in_earnings_window"]},
-    }
+    # Phase 34 — the catalyst slot has two modes. The composite SHAPE is
+    # identical in both: same key, same weight, same total_w. Only the value
+    # inside this one slot changes, so switching modes cannot shift the
+    # denominator, the meaning of risk.min_score, or the calibration bands.
+    assessment = ctx.get("fundamentals_assessment")
+    mode = _score_mode()
+    if mode == "assessment" and (assessment or {}).get("alignment_score") is not None:
+        # The earnings halving is deliberately NOT applied here: the earnings
+        # gate in fundamentals_confluence already acts on the same fact, and
+        # gate + halving + alignment would count it three times.
+        cat_v = float(assessment["alignment_score"])
+        cat_ev = {"mode": "assessment",
+                  "grade": assessment["grade"],
+                  "quality_score": assessment["quality_score"],
+                  "alignment_score": assessment["alignment_score"],
+                  "unavailable": [u["component"] for u in assessment["unavailable"]],
+                  "renormalized": assessment["evidence"]["renormalized"],
+                  "days_to_earnings": fund["days_to_earnings"],
+                  "note": ("earnings risk handled by the fundamentals gate, not "
+                           "double-counted here")}
+    else:
+        cat_v = GRADE_VALUE[fund["growth_grade"]]
+        if fund["in_earnings_window"]:
+            cat_v *= 0.5  # binary-event risk inside the window
+        cat_ev = {"mode": "legacy",
+                  "growth_grade": fund["growth_grade"],
+                  "days_to_earnings": fund["days_to_earnings"],
+                  "in_earnings_window": fund["in_earnings_window"]}
+        if mode == "assessment":
+            cat_ev["fallback"] = ("assessment mode requested but no scoreable "
+                                  "fundamentals were available; fell back to "
+                                  "the legacy growth grade")
+    comps["catalyst_fundamental"] = {"value": cat_v, "evidence": cat_ev}
 
     # Phase 12: weights come from the unified config (defaults above are the
     # fallback and stay byte-identical to the historical values)

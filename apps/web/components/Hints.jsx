@@ -13,6 +13,7 @@ import { useState, useId } from "react";
 
 export const HINTS = {
   regime: {
+    title: "Market regime",
     caption: "The one-glance verdict: is the tape favorable, hostile, or directionless right now?",
     read: [
       "Verdict (risk-on / risk-off / chop) is a rules-first composite over VIX, index levels, the MA stack, breadth, index RVOL, and gamma sign — not an LLM opinion. It is reproducible bar-by-bar.",
@@ -22,6 +23,7 @@ export const HINTS = {
     caveat: "chop isn't a failure state — it's the system telling you to stand aside. Most no-trade days come from here.",
   },
   vix: {
+    title: "VIX framework",
     caption: "Where fear sits relative to its own recent structure — the market's risk backdrop.",
     read: [
       "Spot is current VIX. The gold pivot is the fractal cluster nearest spot; VIX below pivot is the constructive backdrop for longs, above pivot is the warning.",
@@ -31,6 +33,7 @@ export const HINTS = {
     caveat: "your own backtest found VIX alignment carried little predictive signal — treat it as context, not a trigger.",
   },
   index: {
+    title: "Index levels (QQQ / SPY)",
     caption: "The level map for QQQ / SPY: the rungs price has to clear or lose to change character.",
     read: [
       "Gold rungs are the bullish/bearish triggers — the alert-arming levels. A break-and-hold above the bull trigger is what arms long setups.",
@@ -41,6 +44,7 @@ export const HINTS = {
     caveat: "levels are structured pattern detection, not price predictions — they mark where behavior tends to change, nothing more.",
   },
   tape: {
+    title: "Tape character",
     caption: "The character of the move: who's in control and whether momentum agrees with price.",
     read: [
       "Phase is a Wyckoff-style read: mark_up / accumulation / failed_breakdown are constructive; distribution / mark_down are not; exhaustion and failed_breakout are caution flags.",
@@ -50,6 +54,7 @@ export const HINTS = {
     caveat: "phase labels describe the recent past; they tell you the current regime of the move, not its next bar.",
   },
   options: {
+    title: "Options positioning",
     caption: "Where dealer hedging is likely to dampen or accelerate moves — the invisible hand on intraday price.",
     read: [
       "Net GEX is dollar gamma per 1% move. Positive gamma (green header) = dealers dampen moves, walls act as magnets/pins. Negative gamma (amber) = dealers amplify, breaks accelerate.",
@@ -59,6 +64,7 @@ export const HINTS = {
     caveat: "this is a documented approximation (dealers long calls / short puts) — a positioning estimate, never dealer ground truth.",
   },
   rotation: {
+    title: "Sector rotation",
     caption: "Which sectors money is moving into and out of — where to hunt, and where to avoid.",
     read: [
       "Relative performance is each ETF vs SPY over 1 / 4 / 12 weeks. Green outperformed, red lagged. The multi-window view catches early rotation, not just what already ran.",
@@ -68,6 +74,7 @@ export const HINTS = {
     caveat: "sector strength is a where-to-look filter, not a setup on its own — a leading sector still needs a stock that passes every quality gate.",
   },
   setups: {
+    title: "Trade setups",
     caption: "The composed trade ideas — or the explicit reason there aren't any.",
     read: [
       "Each card: entry trigger (a condition to wait for, not a prediction), stop, target 1/2, and R:R. A setup only exists if R:R clears the gate (T1 ≥ 1.0, T2 ≥ 2.0).",
@@ -77,6 +84,7 @@ export const HINTS = {
     caveat: "confidence is a confluence measure. The composed-setup product underperformed buy-and-hold in backtest — treat every card as one input to your own decision.",
   },
   alerts: {
+    title: "Alert feed",
     caption: "The live lifecycle: what each armed setup is doing right now.",
     read: [
       "Each row is a state transition with the price and reason that caused it. Gold badges (TRIGGERED, TRIMMED_T1) are progress; green (ACTIVE, TRAILING, CLOSED) is a working trade; red (STOPPED, DETERIORATED, INVALIDATED) is an exit.",
@@ -84,7 +92,19 @@ export const HINTS = {
     ],
     caveat: "the bar feed is daily unless you've wired intraday ingest — so transitions evaluate on daily closes, not tick by tick.",
   },
+  fundamentals: {
+    title: "Fundamentals grade",
+    caption: "Business quality behind the ticker, and whether it argues for or against the direction.",
+    read: [
+      "The grade (A–F) is absolute quality: growth 40%, profitability 20%, valuation 20%, sponsorship 20%. Alignment re-reads that same quality for the direction — strong fundamentals favour longs, weak favour shorts.",
+      "A dash instead of a letter means unavailable, not bad. Components with no data are dropped and the remaining weights renormalize; the drill-down names every component that was missing and why. 'Not measured' and 'measured and bad' are different claims.",
+      "An amber EARNINGS chip overrides everything on the badge. Swing setups inside the earnings window are suppressed by default and appear in the suppressed list with their reason — set fundamentals.earnings_gate to flag to warn instead of suppress.",
+      "Click the badge for the per-component table: the actual input, the rule applied, and the resulting score. Every number is traceable.",
+    ],
+    caveat: "this is business quality, NOT a price signal, and it is thin: valuation is bare forward P/E with no peer set, and sponsorship is an ownership level with no trend behind it. Growth is the only component with two real inputs.",
+  },
   journal: {
+    title: "Outcome journal",
     caption: "The honest scorecard: what the system's ideas actually did, in R-multiples.",
     read: [
       "R is the outcome in units of initial risk: +2R means twice what you risked, −1R is a full stop. Win rate and average R at the top are the resolved-trade summary.",
